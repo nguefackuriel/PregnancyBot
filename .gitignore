@@ -23,3 +23,6 @@ data/models/crnn_*.onnx
 
 # système
 .DS_Store
+
+# local-only submission draft
+docs/SOUMISSION.md
