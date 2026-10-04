@@ -1,0 +1,3 @@
+# entraînement du lecteur local (CPU suffit)
+torch>=2.2
+onnx>=1.15

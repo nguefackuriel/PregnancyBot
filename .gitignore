@@ -1,0 +1,25 @@
+# secrets et données locales
+.env
+data/local/
+*.db
+*.db.key
+out/
+
+# vraies photos et données brutes du défi : à placer à côté du dépôt (../data), jamais publiées
+data/samples/1-*.jpg
+data/Paper\ Registry/
+
+# python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+*.egg-info/
+
+# modèles intermédiaires d'entraînement
+data/models/crnn_*.pt
+data/models/crnn_*.onnx
+
+# système
+.DS_Store

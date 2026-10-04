@@ -1,0 +1,9784 @@
+{
+ "COUVERTURE": {
+  "size_px": [
+   1654,
+   2339
+  ],
+  "title": "FICHE DE SURVEILLANCE DE LA GROSSESSE ET DU POST-PARTUM Modèle de formulaire neutre (spécimen)",
+  "lines": {
+   "h": [
+    78,
+    150,
+    311,
+    408,
+    506,
+    1075,
+    1193,
+    1613
+   ],
+   "v": [
+    139,
+    1473
+   ]
+  },
+  "fields": {
+   "numero_fiche": {
+    "bbox_px": [
+     296,
+     274,
+     718,
+     318
+    ],
+    "kind": "underline"
+   },
+   "region": {
+    "bbox_px": [
+     234,
+     371,
+     767,
+     415
+    ],
+    "kind": "underline"
+   },
+   "province": {
+    "bbox_px": [
+     1000,
+     370,
+     1422,
+     415
+    ],
+    "kind": "underline"
+   },
+   "etablissement": {
+    "bbox_px": [
+     484,
+     468,
+     1240,
+     513
+    ],
+    "kind": "underline"
+   },
+   "nom_prenom_parturiente": {
+    "bbox_px": [
+     461,
+     1036,
+     1189,
+     1080
+    ],
+    "kind": "underline"
+   }
+  },
+  "checkboxes": {
+   "type_etablissement.dr": [
+    250,
+    661,
+    272,
+    683
+   ],
+   "type_etablissement.csc": [
+    639,
+    661,
+    661,
+    684
+   ],
+   "type_etablissement.csu": [
+    973,
+    661,
+    995,
+    684
+   ],
+   "type_etablissement.csca": [
+    250,
+    744,
+    272,
+    767
+   ],
+   "type_etablissement.csua": [
+    639,
+    745,
+    661,
+    767
+   ],
+   "mode_couverture.fixe": [
+    250,
+    897,
+    272,
+    919
+   ],
+   "mode_couverture.mobile": [
+    639,
+    897,
+    661,
+    920
+   ],
+   "grossesse_a_risque.oui": [
+    167,
+    1225,
+    189,
+    1247
+   ],
+   "type_risque.anemie": [
+    180,
+    1356,
+    203,
+    1378
+   ],
+   "type_risque.metrorragie": [
+    806,
+    1356,
+    828,
+    1378
+   ],
+   "type_risque.hta": [
+    180,
+    1406,
+    203,
+    1428
+   ],
+   "type_risque.infection": [
+    806,
+    1406,
+    828,
+    1428
+   ],
+   "type_risque.diabete": [
+    180,
+    1456,
+    203,
+    1478
+   ],
+   "type_risque.pre_eclampsie": [
+    806,
+    1456,
+    828,
+    1478
+   ],
+   "type_risque.cardiopathie": [
+    180,
+    1506,
+    203,
+    1528
+   ],
+   "type_risque.eclampsie": [
+    806,
+    1506,
+    828,
+    1528
+   ]
+  },
+  "anchors": {
+   "fiche": [
+    225,
+    288,
+    272,
+    310
+   ],
+   "Région": [
+    139,
+    385,
+    210,
+    407
+   ],
+   "Province": [
+    890,
+    385,
+    976,
+    408
+   ],
+   "Type": [
+    139,
+    579,
+    189,
+    602
+   ],
+   "CSCA": [
+    172,
+    746,
+    234,
+    768
+   ],
+   "CSUA": [
+    561,
+    746,
+    623,
+    769
+   ],
+   "Fixe": [
+    284,
+    899,
+    326,
+    921
+   ],
+   "Mobile": [
+    673,
+    899,
+    738,
+    921
+   ],
+   "Nom/Prénom": [
+    139,
+    1052,
+    270,
+    1074
+   ],
+   "parturiente": [
+    330,
+    1052,
+    437,
+    1074
+   ],
+   "Grossesse": [
+    208,
+    1227,
+    322,
+    1249
+   ],
+   "classée": [
+    328,
+    1227,
+    409,
+    1249
+   ],
+   "grossesse": [
+    193,
+    1288,
+    294,
+    1310
+   ],
+   "risque,": [
+    319,
+    1288,
+    385,
+    1310
+   ],
+   "type": [
+    500,
+    1288,
+    542,
+    1310
+   ],
+   "Anémie": [
+    214,
+    1357,
+    289,
+    1380
+   ],
+   "Métrorragie": [
+    839,
+    1358,
+    953,
+    1380
+   ],
+   "H.T.A": [
+    214,
+    1407,
+    271,
+    1430
+   ],
+   "Infection": [
+    839,
+    1408,
+    923,
+    1430
+   ],
+   "Diabète": [
+    214,
+    1457,
+    290,
+    1480
+   ],
+   "Pré-éclampsie": [
+    839,
+    1458,
+    981,
+    1480
+   ],
+   "Cardiopathie": [
+    214,
+    1507,
+    340,
+    1530
+   ],
+   "Eclampsie": [
+    839,
+    1508,
+    941,
+    1530
+   ],
+   "Autres": [
+    806,
+    1561,
+    870,
+    1583
+   ],
+   "......................................": [
+    992,
+    1561,
+    1227,
+    1583
+   ],
+   "Document": [
+    111,
+    2282,
+    187,
+    2298
+   ],
+   "synthétique": [
+    191,
+    2282,
+    276,
+    2298
+   ],
+   "généré": [
+    281,
+    2282,
+    333,
+    2298
+   ],
+   "pour": [
+    338,
+    2282,
+    371,
+    2298
+   ],
+   "l'entraînement": [
+    376,
+    2282,
+    481,
+    2298
+   ],
+   "modèles": [
+    509,
+    2282,
+    572,
+    2298
+   ],
+   "aucune": [
+    597,
+    2282,
+    652,
+    2298
+   ],
+   "donnée": [
+    657,
+    2282,
+    712,
+    2298
+   ],
+   "réelle": [
+    717,
+    2282,
+    758,
+    2298
+   ],
+   "utiliser": [
+    838,
+    2282,
+    887,
+    2299
+   ],
+   "comme": [
+    891,
+    2282,
+    946,
+    2299
+   ],
+   "dossier": [
+    950,
+    2282,
+    1004,
+    2299
+   ],
+   "médical.": [
+    1009,
+    2282,
+    1071,
+    2299
+   ]
+  },
+  "zones": [
+   {
+    "id": "page",
+    "bbox_px": [
+     0,
+     0,
+     1654,
+     2339
+    ],
+    "fields": [
+     "etablissement",
+     "nom_prenom_parturiente",
+     "numero_fiche",
+     "province",
+     "region"
+    ],
+    "kind": "form"
+   }
+  ]
+ },
+ "IDENTIFICATION_ANTECEDENTS": {
+  "size_px": [
+   1654,
+   2339
+  ],
+  "title": "IDENTIFICATION ET ANTÉCÉDENTS",
+  "lines": {
+   "h": [
+    78,
+    151,
+    191,
+    256,
+    317,
+    378,
+    439,
+    531,
+    594,
+    634,
+    649,
+    705,
+    761,
+    816,
+    872,
+    928,
+    997,
+    1050,
+    1106,
+    1161,
+    1217,
+    1281,
+    1347,
+    1467,
+    1545,
+    1623,
+    1700,
+    1778,
+    1856,
+    1951,
+    2020,
+    2140,
+    2184,
+    2234
+   ],
+   "v": [
+    111,
+    362,
+    417,
+    584,
+    611,
+    641,
+    807,
+    863,
+    917,
+    1043,
+    1091,
+    1167,
+    1265,
+    1316,
+    1543
+   ]
+  },
+  "fields": {
+   "antecedents_familiaux.hta.famille_femme": {
+    "bbox_px": [
+     362,
+     649,
+     584,
+     705
+    ],
+    "kind": "cell"
+   },
+   "antecedents_familiaux.hta.famille_mari": {
+    "bbox_px": [
+     584,
+     649,
+     807,
+     705
+    ],
+    "kind": "cell"
+   },
+   "antecedents_familiaux.diabete.famille_femme": {
+    "bbox_px": [
+     362,
+     705,
+     584,
+     761
+    ],
+    "kind": "cell"
+   },
+   "antecedents_familiaux.diabete.famille_mari": {
+    "bbox_px": [
+     584,
+     705,
+     807,
+     761
+    ],
+    "kind": "cell"
+   },
+   "antecedents_familiaux.maladies_hereditaires.famille_femme": {
+    "bbox_px": [
+     362,
+     761,
+     584,
+     816
+    ],
+    "kind": "cell"
+   },
+   "antecedents_familiaux.maladies_hereditaires.famille_mari": {
+    "bbox_px": [
+     584,
+     761,
+     807,
+     816
+    ],
+    "kind": "cell"
+   },
+   "antecedents_familiaux.malformations.famille_femme": {
+    "bbox_px": [
+     362,
+     816,
+     584,
+     872
+    ],
+    "kind": "cell"
+   },
+   "antecedents_familiaux.malformations.famille_mari": {
+    "bbox_px": [
+     584,
+     816,
+     807,
+     872
+    ],
+    "kind": "cell"
+   },
+   "antecedents_familiaux.allergies.famille_femme": {
+    "bbox_px": [
+     362,
+     872,
+     584,
+     928
+    ],
+    "kind": "cell"
+   },
+   "antecedents_familiaux.allergies.famille_mari": {
+    "bbox_px": [
+     584,
+     872,
+     807,
+     928
+    ],
+    "kind": "cell"
+   },
+   "antecedents_femme.medicaux": {
+    "bbox_px": [
+     862,
+     635,
+     1044,
+     931
+    ],
+    "kind": "cell"
+   },
+   "antecedents_femme.chirurgicaux": {
+    "bbox_px": [
+     1043,
+     635,
+     1266,
+     930
+    ],
+    "kind": "cell"
+   },
+   "antecedents_femme.gynecologiques": {
+    "bbox_px": [
+     1266,
+     635,
+     1544,
+     930
+    ],
+    "kind": "cell"
+   },
+   "antecedents_obstetricaux.avortement.nombre": {
+    "bbox_px": [
+     417,
+     1050,
+     611,
+     1106
+    ],
+    "kind": "cell"
+   },
+   "antecedents_obstetricaux.avortement.date": {
+    "bbox_px": [
+     611,
+     1050,
+     917,
+     1106
+    ],
+    "kind": "cell"
+   },
+   "antecedents_obstetricaux.avortement.lieu": {
+    "bbox_px": [
+     917,
+     1050,
+     1167,
+     1106
+    ],
+    "kind": "cell"
+   },
+   "antecedents_obstetricaux.avortement.age_gestationnel_sa": {
+    "bbox_px": [
+     1167,
+     1050,
+     1543,
+     1106
+    ],
+    "kind": "cell"
+   },
+   "antecedents_obstetricaux.accouchement_premature.nombre": {
+    "bbox_px": [
+     417,
+     1106,
+     611,
+     1161
+    ],
+    "kind": "cell"
+   },
+   "antecedents_obstetricaux.accouchement_premature.date": {
+    "bbox_px": [
+     611,
+     1106,
+     917,
+     1161
+    ],
+    "kind": "cell"
+   },
+   "antecedents_obstetricaux.accouchement_premature.lieu": {
+    "bbox_px": [
+     917,
+     1106,
+     1167,
+     1161
+    ],
+    "kind": "cell"
+   },
+   "antecedents_obstetricaux.accouchement_premature.age_gestationnel_sa": {
+    "bbox_px": [
+     1167,
+     1106,
+     1543,
+     1161
+    ],
+    "kind": "cell"
+   },
+   "antecedents_obstetricaux.mort_foetale_in_utero.nombre": {
+    "bbox_px": [
+     417,
+     1161,
+     611,
+     1217
+    ],
+    "kind": "cell"
+   },
+   "antecedents_obstetricaux.mort_foetale_in_utero.date": {
+    "bbox_px": [
+     611,
+     1161,
+     917,
+     1217
+    ],
+    "kind": "cell"
+   },
+   "antecedents_obstetricaux.mort_foetale_in_utero.lieu": {
+    "bbox_px": [
+     917,
+     1161,
+     1167,
+     1217
+    ],
+    "kind": "cell"
+   },
+   "antecedents_obstetricaux.mort_foetale_in_utero.age_gestationnel_sa": {
+    "bbox_px": [
+     1167,
+     1161,
+     1543,
+     1217
+    ],
+    "kind": "cell"
+   },
+   "antecedents_obstetricaux.autres.nombre": {
+    "bbox_px": [
+     417,
+     1217,
+     611,
+     1281
+    ],
+    "kind": "cell"
+   },
+   "antecedents_obstetricaux.autres.date": {
+    "bbox_px": [
+     611,
+     1217,
+     917,
+     1281
+    ],
+    "kind": "cell"
+   },
+   "antecedents_obstetricaux.autres.lieu": {
+    "bbox_px": [
+     917,
+     1217,
+     1167,
+     1281
+    ],
+    "kind": "cell"
+   },
+   "antecedents_obstetricaux.autres.age_gestationnel_sa": {
+    "bbox_px": [
+     1167,
+     1217,
+     1543,
+     1281
+    ],
+    "kind": "cell"
+   },
+   "accouchements_anterieurs.1.date": {
+    "bbox_px": [
+     416,
+     1467,
+     641,
+     1545
+    ],
+    "kind": "cell"
+   },
+   "accouchements_anterieurs.2.date": {
+    "bbox_px": [
+     641,
+     1467,
+     866,
+     1545
+    ],
+    "kind": "cell"
+   },
+   "accouchements_anterieurs.3.date": {
+    "bbox_px": [
+     866,
+     1467,
+     1091,
+     1545
+    ],
+    "kind": "cell"
+   },
+   "accouchements_anterieurs.4.date": {
+    "bbox_px": [
+     1091,
+     1467,
+     1316,
+     1545
+    ],
+    "kind": "cell"
+   },
+   "accouchements_anterieurs.5.date": {
+    "bbox_px": [
+     1316,
+     1467,
+     1542,
+     1545
+    ],
+    "kind": "cell"
+   },
+   "accouchements_anterieurs.1.modalite": {
+    "bbox_px": [
+     416,
+     1545,
+     641,
+     1623
+    ],
+    "kind": "cell"
+   },
+   "accouchements_anterieurs.2.modalite": {
+    "bbox_px": [
+     641,
+     1545,
+     866,
+     1623
+    ],
+    "kind": "cell"
+   },
+   "accouchements_anterieurs.3.modalite": {
+    "bbox_px": [
+     866,
+     1545,
+     1091,
+     1623
+    ],
+    "kind": "cell"
+   },
+   "accouchements_anterieurs.4.modalite": {
+    "bbox_px": [
+     1091,
+     1545,
+     1316,
+     1623
+    ],
+    "kind": "cell"
+   },
+   "accouchements_anterieurs.5.modalite": {
+    "bbox_px": [
+     1316,
+     1545,
+     1542,
+     1623
+    ],
+    "kind": "cell"
+   },
+   "accouchements_anterieurs.1.indication_cesarienne": {
+    "bbox_px": [
+     416,
+     1623,
+     641,
+     1700
+    ],
+    "kind": "cell"
+   },
+   "accouchements_anterieurs.2.indication_cesarienne": {
+    "bbox_px": [
+     641,
+     1623,
+     866,
+     1700
+    ],
+    "kind": "cell"
+   },
+   "accouchements_anterieurs.3.indication_cesarienne": {
+    "bbox_px": [
+     866,
+     1623,
+     1091,
+     1700
+    ],
+    "kind": "cell"
+   },
+   "accouchements_anterieurs.4.indication_cesarienne": {
+    "bbox_px": [
+     1091,
+     1623,
+     1316,
+     1700
+    ],
+    "kind": "cell"
+   },
+   "accouchements_anterieurs.5.indication_cesarienne": {
+    "bbox_px": [
+     1316,
+     1623,
+     1542,
+     1700
+    ],
+    "kind": "cell"
+   },
+   "accouchements_anterieurs.1.complication": {
+    "bbox_px": [
+     416,
+     1700,
+     641,
+     1778
+    ],
+    "kind": "cell"
+   },
+   "accouchements_anterieurs.2.complication": {
+    "bbox_px": [
+     641,
+     1700,
+     866,
+     1778
+    ],
+    "kind": "cell"
+   },
+   "accouchements_anterieurs.3.complication": {
+    "bbox_px": [
+     866,
+     1700,
+     1091,
+     1778
+    ],
+    "kind": "cell"
+   },
+   "accouchements_anterieurs.4.complication": {
+    "bbox_px": [
+     1091,
+     1700,
+     1316,
+     1778
+    ],
+    "kind": "cell"
+   },
+   "accouchements_anterieurs.5.complication": {
+    "bbox_px": [
+     1316,
+     1700,
+     1542,
+     1778
+    ],
+    "kind": "cell"
+   },
+   "accouchements_anterieurs.1.poids_nn_g": {
+    "bbox_px": [
+     416,
+     1778,
+     641,
+     1856
+    ],
+    "kind": "cell"
+   },
+   "accouchements_anterieurs.2.poids_nn_g": {
+    "bbox_px": [
+     641,
+     1778,
+     866,
+     1856
+    ],
+    "kind": "cell"
+   },
+   "accouchements_anterieurs.3.poids_nn_g": {
+    "bbox_px": [
+     866,
+     1778,
+     1091,
+     1856
+    ],
+    "kind": "cell"
+   },
+   "accouchements_anterieurs.4.poids_nn_g": {
+    "bbox_px": [
+     1091,
+     1778,
+     1316,
+     1856
+    ],
+    "kind": "cell"
+   },
+   "accouchements_anterieurs.5.poids_nn_g": {
+    "bbox_px": [
+     1316,
+     1778,
+     1542,
+     1856
+    ],
+    "kind": "cell"
+   },
+   "accouchements_anterieurs.1.complication_nn": {
+    "bbox_px": [
+     416,
+     1856,
+     641,
+     1951
+    ],
+    "kind": "cell"
+   },
+   "accouchements_anterieurs.2.complication_nn": {
+    "bbox_px": [
+     641,
+     1856,
+     866,
+     1951
+    ],
+    "kind": "cell"
+   },
+   "accouchements_anterieurs.3.complication_nn": {
+    "bbox_px": [
+     866,
+     1856,
+     1091,
+     1951
+    ],
+    "kind": "cell"
+   },
+   "accouchements_anterieurs.4.complication_nn": {
+    "bbox_px": [
+     1091,
+     1856,
+     1316,
+     1951
+    ],
+    "kind": "cell"
+   },
+   "accouchements_anterieurs.5.complication_nn": {
+    "bbox_px": [
+     1316,
+     1856,
+     1542,
+     1951
+    ],
+    "kind": "cell"
+   },
+   "age": {
+    "bbox_px": [
+     199,
+     216,
+     621,
+     261
+    ],
+    "kind": "underline"
+   },
+   "cin": {
+    "bbox_px": [
+     898,
+     218,
+     1292,
+     263
+    ],
+    "kind": "underline"
+   },
+   "niveau_instruction": {
+    "bbox_px": [
+     352,
+     278,
+     775,
+     323
+    ],
+    "kind": "underline"
+   },
+   "profession": {
+    "bbox_px": [
+     964,
+     279,
+     1359,
+     324
+    ],
+    "kind": "underline"
+   },
+   "adresse": {
+    "bbox_px": [
+     240,
+     339,
+     663,
+     383
+    ],
+    "kind": "underline"
+   },
+   "telephone": {
+    "bbox_px": [
+     964,
+     341,
+     1359,
+     385
+    ],
+    "kind": "underline"
+   },
+   "nom_mari": {
+    "bbox_px": [
+     286,
+     400,
+     708,
+     445
+    ],
+    "kind": "underline"
+   },
+   "profession_mari": {
+    "bbox_px": [
+     964,
+     402,
+     1359,
+     446
+    ],
+    "kind": "underline"
+   },
+   "gestation": {
+    "bbox_px": [
+     229,
+     1980,
+     318,
+     2024
+    ],
+    "kind": "underline"
+   },
+   "parite": {
+    "bbox_px": [
+     525,
+     1981,
+     614,
+     2026
+    ],
+    "kind": "underline"
+   },
+   "enfants_vivants": {
+    "bbox_px": [
+     1051,
+     1981,
+     1140,
+     2025
+    ],
+    "kind": "underline"
+   },
+   "date_vaccin_rubeole": {
+    "bbox_px": [
+     868,
+     2102,
+     1096,
+     2146
+    ],
+    "kind": "underline"
+   },
+   "frottis_iva": {
+    "bbox_px": [
+     503,
+     2195,
+     786,
+     2240
+    ],
+    "kind": "underline"
+   },
+   "date_vaccin_hepatite_b": {
+    "bbox_px": [
+     869,
+     2147,
+     1097,
+     2191
+    ],
+    "kind": "underline"
+   }
+  },
+  "checkboxes": {
+   "consanguinite.oui": [
+    135,
+    485,
+    157,
+    507
+   ],
+   "grossesse_desiree.oui": [
+    835,
+    486,
+    857,
+    508
+   ],
+   "vat.1": [
+    207,
+    2058,
+    229,
+    2080
+   ],
+   "vat.2": [
+    318,
+    2058,
+    340,
+    2080
+   ],
+   "vat.3": [
+    429,
+    2058,
+    451,
+    2080
+   ],
+   "vat.4": [
+    540,
+    2058,
+    562,
+    2081
+   ],
+   "vat.5": [
+    651,
+    2059,
+    674,
+    2081
+   ],
+   "vaccin_rubeole.oui": [
+    109,
+    2113,
+    132,
+    2135
+   ],
+   "vaccin_hepatite_b.oui": [
+    109,
+    2158,
+    132,
+    2180
+   ]
+  },
+  "anchors": {
+   "Niveau": [
+    135,
+    292,
+    204,
+    315
+   ],
+   "d'instruction": [
+    210,
+    292,
+    328,
+    315
+   ],
+   "Adresse": [
+    135,
+    353,
+    216,
+    376
+   ],
+   "Téléphone": [
+    835,
+    355,
+    940,
+    377
+   ],
+   "Mari": [
+    219,
+    415,
+    262,
+    437
+   ],
+   "Consanguinité": [
+    168,
+    487,
+    310,
+    509
+   ],
+   "Grossesse": [
+    868,
+    488,
+    974,
+    511
+   ],
+   "désirée": [
+    981,
+    488,
+    1053,
+    511
+   ],
+   "HÉRÉDITAIRES": [
+    285,
+    559,
+    451,
+    582
+   ],
+   "FAMILIAUX": [
+    491,
+    560,
+    612,
+    582
+   ],
+   "Famille": [
+    376,
+    607,
+    434,
+    625
+   ],
+   "femme": [
+    484,
+    607,
+    539,
+    626
+   ],
+   "Mari/famille": [
+    598,
+    608,
+    691,
+    626
+   ],
+   "Diabète": [
+    123,
+    724,
+    195,
+    745
+   ],
+   "Maladies": [
+    123,
+    780,
+    206,
+    801
+   ],
+   "héréditaires": [
+    212,
+    780,
+    321,
+    801
+   ],
+   "Malformations": [
+    123,
+    835,
+    254,
+    856
+   ],
+   "Allergie(s)": [
+    123,
+    891,
+    217,
+    912
+   ],
+   "FEMME": [
+    1108,
+    561,
+    1189,
+    583
+   ],
+   "Médicaux": [
+    876,
+    607,
+    960,
+    627
+   ],
+   "Chirurgicaux": [
+    1057,
+    607,
+    1166,
+    627
+   ],
+   "Gynécologiques": [
+    1274,
+    608,
+    1413,
+    628
+   ],
+   "OBSTÉTRICAUX": [
+    284,
+    965,
+    460,
+    988
+   ],
+   "Anomalies": [
+    494,
+    965,
+    607,
+    988
+   ],
+   "grossesses": [
+    657,
+    966,
+    780,
+    988
+   ],
+   "antérieures": [
+    786,
+    966,
+    906,
+    988
+   ],
+   "Nature": [
+    123,
+    1017,
+    181,
+    1036
+   ],
+   "Lieu": [
+    928,
+    1018,
+    965,
+    1038
+   ],
+   "gestationnel": [
+    1218,
+    1019,
+    1323,
+    1039
+   ],
+   "(SA)": [
+    1329,
+    1019,
+    1368,
+    1039
+   ],
+   "Avortement": [
+    122,
+    1070,
+    222,
+    1089
+   ],
+   "prématuré": [
+    256,
+    1125,
+    345,
+    1145
+   ],
+   "Mort": [
+    122,
+    1181,
+    161,
+    1200
+   ],
+   "fœtale": [
+    167,
+    1181,
+    222,
+    1200
+   ],
+   "utéro": [
+    248,
+    1181,
+    292,
+    1201
+   ],
+   "Autres": [
+    122,
+    1236,
+    178,
+    1256
+   ],
+   "préciser": [
+    200,
+    1237,
+    269,
+    1256
+   ],
+   "DÉROULEMENT": [
+    111,
+    1315,
+    283,
+    1337
+   ],
+   "ACCOUCHEMENTS": [
+    341,
+    1315,
+    547,
+    1338
+   ],
+   "ANTÉRIEURS": [
+    553,
+    1316,
+    697,
+    1338
+   ],
+   "Modalité": [
+    121,
+    1563,
+    190,
+    1581
+   ],
+   "d'extraction": [
+    195,
+    1563,
+    287,
+    1581
+   ],
+   "césarienne": [
+    142,
+    1640,
+    231,
+    1659
+   ],
+   "indication": [
+    246,
+    1641,
+    322,
+    1659
+   ],
+   "Complication": [
+    121,
+    1718,
+    226,
+    1736
+   ],
+   "Poids": [
+    121,
+    1796,
+    166,
+    1814
+   ],
+   "nouveau-né(s)": [
+    171,
+    1796,
+    288,
+    1814
+   ],
+   "Compl.": [
+    121,
+    1874,
+    178,
+    1892
+   ],
+   "nouveau-né": [
+    183,
+    1874,
+    279,
+    1892
+   ],
+   "Gestation": [
+    110,
+    1995,
+    205,
+    2018
+   ],
+   "Parité": [
+    443,
+    1996,
+    501,
+    2018
+   ],
+   "d'enfants": [
+    862,
+    1997,
+    951,
+    2019
+   ],
+   "vivants": [
+    957,
+    1997,
+    1027,
+    2019
+   ],
+   "rubéole": [
+    332,
+    2115,
+    406,
+    2138
+   ],
+   "l'hépatite": [
+    308,
+    2160,
+    396,
+    2182
+   ],
+   "Frottis": [
+    109,
+    2209,
+    171,
+    2232
+   ],
+   "cervical": [
+    177,
+    2210,
+    252,
+    2232
+   ],
+   "(moins": [
+    313,
+    2210,
+    380,
+    2232
+   ],
+   "ans)": [
+    435,
+    2210,
+    479,
+    2232
+   ],
+   "Document": [
+    109,
+    2281,
+    185,
+    2297
+   ],
+   "synthétique": [
+    190,
+    2281,
+    275,
+    2298
+   ],
+   "généré": [
+    280,
+    2281,
+    331,
+    2298
+   ],
+   "pour": [
+    336,
+    2281,
+    369,
+    2298
+   ],
+   "l'entraînement": [
+    374,
+    2281,
+    479,
+    2298
+   ],
+   "modèles": [
+    507,
+    2281,
+    570,
+    2298
+   ],
+   "aucune": [
+    596,
+    2281,
+    651,
+    2298
+   ],
+   "donnée": [
+    655,
+    2282,
+    711,
+    2298
+   ],
+   "réelle": [
+    715,
+    2282,
+    756,
+    2298
+   ],
+   "utiliser": [
+    837,
+    2282,
+    885,
+    2299
+   ],
+   "comme": [
+    890,
+    2282,
+    944,
+    2299
+   ],
+   "dossier": [
+    949,
+    2282,
+    1003,
+    2299
+   ],
+   "médical.": [
+    1007,
+    2282,
+    1069,
+    2299
+   ]
+  },
+  "zones": [
+   {
+    "id": "page",
+    "bbox_px": [
+     0,
+     0,
+     1654,
+     2339
+    ],
+    "fields": [
+     "accouchements_anterieurs.1.complication",
+     "accouchements_anterieurs.1.complication_nn",
+     "accouchements_anterieurs.1.date",
+     "accouchements_anterieurs.1.indication_cesarienne",
+     "accouchements_anterieurs.1.modalite",
+     "accouchements_anterieurs.1.poids_nn_g",
+     "accouchements_anterieurs.2.complication",
+     "accouchements_anterieurs.2.complication_nn",
+     "accouchements_anterieurs.2.date",
+     "accouchements_anterieurs.2.indication_cesarienne",
+     "accouchements_anterieurs.2.modalite",
+     "accouchements_anterieurs.2.poids_nn_g",
+     "accouchements_anterieurs.3.complication",
+     "accouchements_anterieurs.3.complication_nn",
+     "accouchements_anterieurs.3.date",
+     "accouchements_anterieurs.3.indication_cesarienne",
+     "accouchements_anterieurs.3.modalite",
+     "accouchements_anterieurs.3.poids_nn_g",
+     "accouchements_anterieurs.4.complication",
+     "accouchements_anterieurs.4.complication_nn",
+     "accouchements_anterieurs.4.date",
+     "accouchements_anterieurs.4.indication_cesarienne",
+     "accouchements_anterieurs.4.modalite",
+     "accouchements_anterieurs.4.poids_nn_g",
+     "accouchements_anterieurs.5.complication",
+     "accouchements_anterieurs.5.complication_nn",
+     "accouchements_anterieurs.5.date",
+     "accouchements_anterieurs.5.indication_cesarienne",
+     "accouchements_anterieurs.5.modalite",
+     "accouchements_anterieurs.5.poids_nn_g",
+     "adresse",
+     "age",
+     "antecedents_familiaux.allergies.famille_femme",
+     "antecedents_familiaux.allergies.famille_mari",
+     "antecedents_familiaux.diabete.famille_femme",
+     "antecedents_familiaux.diabete.famille_mari",
+     "antecedents_familiaux.hta.famille_femme",
+     "antecedents_familiaux.hta.famille_mari",
+     "antecedents_familiaux.maladies_hereditaires.famille_femme",
+     "antecedents_familiaux.maladies_hereditaires.famille_mari",
+     "antecedents_familiaux.malformations.famille_femme",
+     "antecedents_familiaux.malformations.famille_mari",
+     "antecedents_femme.chirurgicaux",
+     "antecedents_femme.gynecologiques",
+     "antecedents_femme.medicaux",
+     "antecedents_obstetricaux.accouchement_premature.age_gestationnel_sa",
+     "antecedents_obstetricaux.accouchement_premature.date",
+     "antecedents_obstetricaux.accouchement_premature.lieu",
+     "antecedents_obstetricaux.accouchement_premature.nombre",
+     "antecedents_obstetricaux.autres.age_gestationnel_sa",
+     "antecedents_obstetricaux.autres.date",
+     "antecedents_obstetricaux.autres.lieu",
+     "antecedents_obstetricaux.autres.nombre",
+     "antecedents_obstetricaux.avortement.age_gestationnel_sa",
+     "antecedents_obstetricaux.avortement.date",
+     "antecedents_obstetricaux.avortement.lieu",
+     "antecedents_obstetricaux.avortement.nombre",
+     "antecedents_obstetricaux.mort_foetale_in_utero.age_gestationnel_sa",
+     "antecedents_obstetricaux.mort_foetale_in_utero.date",
+     "antecedents_obstetricaux.mort_foetale_in_utero.lieu",
+     "antecedents_obstetricaux.mort_foetale_in_utero.nombre",
+     "cin",
+     "date_vaccin_hepatite_b",
+     "date_vaccin_rubeole",
+     "enfants_vivants",
+     "frottis_iva",
+     "gestation",
+     "niveau_instruction",
+     "nom_mari",
+     "parite",
+     "profession",
+     "profession_mari",
+     "telephone"
+    ],
+    "kind": "form"
+   }
+  ]
+ },
+ "GROSSESSE_ACTUELLE": {
+  "size_px": [
+   1654,
+   2339
+  ],
+  "title": "GROSSESSE ACTUELLE",
+  "lines": {
+   "h": [
+    78,
+    150,
+    222,
+    269,
+    297,
+    339,
+    383,
+    433,
+    482,
+    532,
+    581,
+    631,
+    680,
+    730,
+    779,
+    829,
+    878,
+    927,
+    977,
+    1026,
+    1076,
+    1125,
+    1175,
+    1224,
+    1274,
+    1323,
+    1373,
+    1422,
+    1472,
+    1521,
+    1570,
+    1620,
+    1669,
+    1719,
+    1768,
+    1818,
+    1867,
+    1917,
+    1966,
+    2016,
+    2068
+   ],
+   "v": [
+    107,
+    422,
+    547,
+    671,
+    796,
+    920,
+    1045,
+    1169,
+    1294,
+    1418,
+    1543
+   ]
+  },
+  "fields": {
+   "visites.t1_v1.rendez_vous": {
+    "bbox_px": [
+     422,
+     383,
+     547,
+     433
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v2.rendez_vous": {
+    "bbox_px": [
+     547,
+     383,
+     671,
+     433
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v3.rendez_vous": {
+    "bbox_px": [
+     671,
+     383,
+     796,
+     433
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v1.rendez_vous": {
+    "bbox_px": [
+     796,
+     383,
+     920,
+     433
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v2.rendez_vous": {
+    "bbox_px": [
+     920,
+     383,
+     1045,
+     433
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v3.rendez_vous": {
+    "bbox_px": [
+     1045,
+     383,
+     1169,
+     433
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m7.rendez_vous": {
+    "bbox_px": [
+     1169,
+     383,
+     1294,
+     433
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m8.rendez_vous": {
+    "bbox_px": [
+     1294,
+     383,
+     1418,
+     433
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m9.rendez_vous": {
+    "bbox_px": [
+     1418,
+     383,
+     1543,
+     433
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v1.venue_le": {
+    "bbox_px": [
+     422,
+     433,
+     547,
+     482
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v2.venue_le": {
+    "bbox_px": [
+     547,
+     433,
+     671,
+     482
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v3.venue_le": {
+    "bbox_px": [
+     671,
+     433,
+     796,
+     482
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v1.venue_le": {
+    "bbox_px": [
+     796,
+     433,
+     920,
+     482
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v2.venue_le": {
+    "bbox_px": [
+     920,
+     433,
+     1045,
+     482
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v3.venue_le": {
+    "bbox_px": [
+     1045,
+     433,
+     1169,
+     482
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m7.venue_le": {
+    "bbox_px": [
+     1169,
+     433,
+     1294,
+     482
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m8.venue_le": {
+    "bbox_px": [
+     1294,
+     433,
+     1418,
+     482
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m9.venue_le": {
+    "bbox_px": [
+     1418,
+     433,
+     1543,
+     482
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v1.visite_relance": {
+    "bbox_px": [
+     422,
+     482,
+     547,
+     532
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v2.visite_relance": {
+    "bbox_px": [
+     547,
+     482,
+     671,
+     532
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v3.visite_relance": {
+    "bbox_px": [
+     671,
+     482,
+     796,
+     532
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v1.visite_relance": {
+    "bbox_px": [
+     796,
+     482,
+     920,
+     532
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v2.visite_relance": {
+    "bbox_px": [
+     920,
+     482,
+     1045,
+     532
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v3.visite_relance": {
+    "bbox_px": [
+     1045,
+     482,
+     1169,
+     532
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m7.visite_relance": {
+    "bbox_px": [
+     1169,
+     482,
+     1294,
+     532
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m8.visite_relance": {
+    "bbox_px": [
+     1294,
+     482,
+     1418,
+     532
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m9.visite_relance": {
+    "bbox_px": [
+     1418,
+     482,
+     1543,
+     532
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v1.age_gestationnel": {
+    "bbox_px": [
+     422,
+     532,
+     547,
+     580
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v2.age_gestationnel": {
+    "bbox_px": [
+     547,
+     532,
+     671,
+     580
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v3.age_gestationnel": {
+    "bbox_px": [
+     671,
+     532,
+     796,
+     580
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v1.age_gestationnel": {
+    "bbox_px": [
+     796,
+     532,
+     920,
+     580
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v2.age_gestationnel": {
+    "bbox_px": [
+     920,
+     532,
+     1045,
+     580
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v3.age_gestationnel": {
+    "bbox_px": [
+     1045,
+     532,
+     1169,
+     580
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m7.age_gestationnel": {
+    "bbox_px": [
+     1169,
+     532,
+     1294,
+     580
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m8.age_gestationnel": {
+    "bbox_px": [
+     1294,
+     532,
+     1418,
+     580
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m9.age_gestationnel": {
+    "bbox_px": [
+     1418,
+     532,
+     1543,
+     580
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v1.poids_kg": {
+    "bbox_px": [
+     422,
+     632,
+     547,
+     680
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v2.poids_kg": {
+    "bbox_px": [
+     547,
+     632,
+     671,
+     680
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v3.poids_kg": {
+    "bbox_px": [
+     671,
+     632,
+     796,
+     680
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v1.poids_kg": {
+    "bbox_px": [
+     796,
+     632,
+     920,
+     680
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v2.poids_kg": {
+    "bbox_px": [
+     920,
+     632,
+     1045,
+     680
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v3.poids_kg": {
+    "bbox_px": [
+     1045,
+     632,
+     1169,
+     680
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m7.poids_kg": {
+    "bbox_px": [
+     1169,
+     632,
+     1294,
+     680
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m8.poids_kg": {
+    "bbox_px": [
+     1294,
+     632,
+     1418,
+     680
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m9.poids_kg": {
+    "bbox_px": [
+     1418,
+     632,
+     1543,
+     680
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v1.ta": {
+    "bbox_px": [
+     422,
+     680,
+     547,
+     730
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v2.ta": {
+    "bbox_px": [
+     547,
+     680,
+     671,
+     730
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v3.ta": {
+    "bbox_px": [
+     671,
+     680,
+     796,
+     730
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v1.ta": {
+    "bbox_px": [
+     796,
+     680,
+     920,
+     730
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v2.ta": {
+    "bbox_px": [
+     920,
+     680,
+     1045,
+     730
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v3.ta": {
+    "bbox_px": [
+     1045,
+     680,
+     1169,
+     730
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m7.ta": {
+    "bbox_px": [
+     1169,
+     680,
+     1294,
+     730
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m8.ta": {
+    "bbox_px": [
+     1294,
+     680,
+     1418,
+     730
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m9.ta": {
+    "bbox_px": [
+     1418,
+     680,
+     1543,
+     730
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v1.anomalies_squelette": {
+    "bbox_px": [
+     422,
+     730,
+     547,
+     779
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v2.anomalies_squelette": {
+    "bbox_px": [
+     547,
+     730,
+     671,
+     779
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v3.anomalies_squelette": {
+    "bbox_px": [
+     671,
+     730,
+     796,
+     779
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v1.anomalies_squelette": {
+    "bbox_px": [
+     796,
+     730,
+     920,
+     779
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v2.anomalies_squelette": {
+    "bbox_px": [
+     920,
+     730,
+     1045,
+     779
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v3.anomalies_squelette": {
+    "bbox_px": [
+     1045,
+     730,
+     1169,
+     779
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m7.anomalies_squelette": {
+    "bbox_px": [
+     1169,
+     730,
+     1294,
+     779
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m8.anomalies_squelette": {
+    "bbox_px": [
+     1294,
+     730,
+     1418,
+     779
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m9.anomalies_squelette": {
+    "bbox_px": [
+     1418,
+     730,
+     1543,
+     779
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v1.conjonctives": {
+    "bbox_px": [
+     422,
+     779,
+     547,
+     829
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v2.conjonctives": {
+    "bbox_px": [
+     547,
+     779,
+     671,
+     829
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v3.conjonctives": {
+    "bbox_px": [
+     671,
+     779,
+     796,
+     829
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v1.conjonctives": {
+    "bbox_px": [
+     796,
+     779,
+     920,
+     829
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v2.conjonctives": {
+    "bbox_px": [
+     920,
+     779,
+     1045,
+     829
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v3.conjonctives": {
+    "bbox_px": [
+     1045,
+     779,
+     1169,
+     829
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m7.conjonctives": {
+    "bbox_px": [
+     1169,
+     779,
+     1294,
+     829
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m8.conjonctives": {
+    "bbox_px": [
+     1294,
+     779,
+     1418,
+     829
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m9.conjonctives": {
+    "bbox_px": [
+     1418,
+     779,
+     1543,
+     829
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v1.seins": {
+    "bbox_px": [
+     422,
+     829,
+     547,
+     878
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v2.seins": {
+    "bbox_px": [
+     547,
+     829,
+     671,
+     878
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v3.seins": {
+    "bbox_px": [
+     671,
+     829,
+     796,
+     878
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v1.seins": {
+    "bbox_px": [
+     796,
+     829,
+     920,
+     878
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v2.seins": {
+    "bbox_px": [
+     920,
+     829,
+     1045,
+     878
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v3.seins": {
+    "bbox_px": [
+     1045,
+     829,
+     1169,
+     878
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m7.seins": {
+    "bbox_px": [
+     1169,
+     829,
+     1294,
+     878
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m8.seins": {
+    "bbox_px": [
+     1294,
+     829,
+     1418,
+     878
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m9.seins": {
+    "bbox_px": [
+     1418,
+     829,
+     1543,
+     878
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v1.oedemes": {
+    "bbox_px": [
+     422,
+     878,
+     547,
+     927
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v2.oedemes": {
+    "bbox_px": [
+     547,
+     878,
+     671,
+     927
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v3.oedemes": {
+    "bbox_px": [
+     671,
+     878,
+     796,
+     927
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v1.oedemes": {
+    "bbox_px": [
+     796,
+     878,
+     920,
+     927
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v2.oedemes": {
+    "bbox_px": [
+     920,
+     878,
+     1045,
+     927
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v3.oedemes": {
+    "bbox_px": [
+     1045,
+     878,
+     1169,
+     927
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m7.oedemes": {
+    "bbox_px": [
+     1169,
+     878,
+     1294,
+     927
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m8.oedemes": {
+    "bbox_px": [
+     1294,
+     878,
+     1418,
+     927
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m9.oedemes": {
+    "bbox_px": [
+     1418,
+     878,
+     1543,
+     927
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v1.mouvements_actifs": {
+    "bbox_px": [
+     422,
+     927,
+     547,
+     977
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v2.mouvements_actifs": {
+    "bbox_px": [
+     547,
+     927,
+     671,
+     977
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v3.mouvements_actifs": {
+    "bbox_px": [
+     671,
+     927,
+     796,
+     977
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v1.mouvements_actifs": {
+    "bbox_px": [
+     796,
+     927,
+     920,
+     977
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v2.mouvements_actifs": {
+    "bbox_px": [
+     920,
+     927,
+     1045,
+     977
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v3.mouvements_actifs": {
+    "bbox_px": [
+     1045,
+     927,
+     1169,
+     977
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m7.mouvements_actifs": {
+    "bbox_px": [
+     1169,
+     927,
+     1294,
+     977
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m8.mouvements_actifs": {
+    "bbox_px": [
+     1294,
+     927,
+     1418,
+     977
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m9.mouvements_actifs": {
+    "bbox_px": [
+     1418,
+     927,
+     1543,
+     977
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v1.hu_cm": {
+    "bbox_px": [
+     422,
+     977,
+     547,
+     1026
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v2.hu_cm": {
+    "bbox_px": [
+     547,
+     977,
+     671,
+     1026
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v3.hu_cm": {
+    "bbox_px": [
+     671,
+     977,
+     796,
+     1026
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v1.hu_cm": {
+    "bbox_px": [
+     796,
+     977,
+     920,
+     1026
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v2.hu_cm": {
+    "bbox_px": [
+     920,
+     977,
+     1045,
+     1026
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v3.hu_cm": {
+    "bbox_px": [
+     1045,
+     977,
+     1169,
+     1026
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m7.hu_cm": {
+    "bbox_px": [
+     1169,
+     977,
+     1294,
+     1026
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m8.hu_cm": {
+    "bbox_px": [
+     1294,
+     977,
+     1418,
+     1026
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m9.hu_cm": {
+    "bbox_px": [
+     1418,
+     977,
+     1543,
+     1026
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v1.bcf": {
+    "bbox_px": [
+     422,
+     1026,
+     547,
+     1076
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v2.bcf": {
+    "bbox_px": [
+     547,
+     1026,
+     671,
+     1076
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v3.bcf": {
+    "bbox_px": [
+     671,
+     1026,
+     796,
+     1076
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v1.bcf": {
+    "bbox_px": [
+     796,
+     1026,
+     920,
+     1076
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v2.bcf": {
+    "bbox_px": [
+     920,
+     1026,
+     1045,
+     1076
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v3.bcf": {
+    "bbox_px": [
+     1045,
+     1026,
+     1169,
+     1076
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m7.bcf": {
+    "bbox_px": [
+     1169,
+     1026,
+     1294,
+     1076
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m8.bcf": {
+    "bbox_px": [
+     1294,
+     1026,
+     1418,
+     1076
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m9.bcf": {
+    "bbox_px": [
+     1418,
+     1026,
+     1543,
+     1076
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v1.speculum": {
+    "bbox_px": [
+     422,
+     1076,
+     547,
+     1125
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v2.speculum": {
+    "bbox_px": [
+     547,
+     1076,
+     671,
+     1125
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v3.speculum": {
+    "bbox_px": [
+     671,
+     1076,
+     796,
+     1125
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v1.speculum": {
+    "bbox_px": [
+     796,
+     1076,
+     920,
+     1125
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v2.speculum": {
+    "bbox_px": [
+     920,
+     1076,
+     1045,
+     1125
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v3.speculum": {
+    "bbox_px": [
+     1045,
+     1076,
+     1169,
+     1125
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m7.speculum": {
+    "bbox_px": [
+     1169,
+     1076,
+     1294,
+     1125
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m8.speculum": {
+    "bbox_px": [
+     1294,
+     1076,
+     1418,
+     1125
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m9.speculum": {
+    "bbox_px": [
+     1418,
+     1076,
+     1543,
+     1125
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v1.tv_col": {
+    "bbox_px": [
+     422,
+     1125,
+     547,
+     1175
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v2.tv_col": {
+    "bbox_px": [
+     547,
+     1125,
+     671,
+     1175
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v3.tv_col": {
+    "bbox_px": [
+     671,
+     1125,
+     796,
+     1175
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v1.tv_col": {
+    "bbox_px": [
+     796,
+     1125,
+     921,
+     1175
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v2.tv_col": {
+    "bbox_px": [
+     921,
+     1125,
+     1045,
+     1175
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v3.tv_col": {
+    "bbox_px": [
+     1045,
+     1125,
+     1169,
+     1175
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m7.tv_col": {
+    "bbox_px": [
+     1169,
+     1125,
+     1294,
+     1175
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m8.tv_col": {
+    "bbox_px": [
+     1294,
+     1125,
+     1418,
+     1175
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m9.tv_col": {
+    "bbox_px": [
+     1418,
+     1125,
+     1543,
+     1175
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v1.tv_presentation": {
+    "bbox_px": [
+     422,
+     1175,
+     547,
+     1224
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v2.tv_presentation": {
+    "bbox_px": [
+     547,
+     1175,
+     671,
+     1224
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v3.tv_presentation": {
+    "bbox_px": [
+     671,
+     1175,
+     796,
+     1224
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v1.tv_presentation": {
+    "bbox_px": [
+     796,
+     1175,
+     920,
+     1224
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v2.tv_presentation": {
+    "bbox_px": [
+     920,
+     1175,
+     1045,
+     1224
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v3.tv_presentation": {
+    "bbox_px": [
+     1045,
+     1175,
+     1169,
+     1224
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m7.tv_presentation": {
+    "bbox_px": [
+     1169,
+     1175,
+     1294,
+     1224
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m8.tv_presentation": {
+    "bbox_px": [
+     1294,
+     1175,
+     1418,
+     1224
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m9.tv_presentation": {
+    "bbox_px": [
+     1418,
+     1175,
+     1543,
+     1224
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v1.tv_bassin": {
+    "bbox_px": [
+     422,
+     1224,
+     547,
+     1272
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v2.tv_bassin": {
+    "bbox_px": [
+     547,
+     1224,
+     671,
+     1272
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v3.tv_bassin": {
+    "bbox_px": [
+     671,
+     1224,
+     796,
+     1272
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v1.tv_bassin": {
+    "bbox_px": [
+     796,
+     1224,
+     920,
+     1272
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v2.tv_bassin": {
+    "bbox_px": [
+     920,
+     1224,
+     1045,
+     1272
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v3.tv_bassin": {
+    "bbox_px": [
+     1045,
+     1224,
+     1169,
+     1272
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m7.tv_bassin": {
+    "bbox_px": [
+     1169,
+     1224,
+     1294,
+     1272
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m8.tv_bassin": {
+    "bbox_px": [
+     1294,
+     1224,
+     1418,
+     1272
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m9.tv_bassin": {
+    "bbox_px": [
+     1418,
+     1224,
+     1543,
+     1272
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v1.glucosurie": {
+    "bbox_px": [
+     422,
+     1325,
+     547,
+     1373
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v2.glucosurie": {
+    "bbox_px": [
+     547,
+     1325,
+     671,
+     1373
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v3.glucosurie": {
+    "bbox_px": [
+     671,
+     1325,
+     796,
+     1373
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v1.glucosurie": {
+    "bbox_px": [
+     796,
+     1325,
+     920,
+     1373
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v2.glucosurie": {
+    "bbox_px": [
+     920,
+     1325,
+     1045,
+     1373
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v3.glucosurie": {
+    "bbox_px": [
+     1045,
+     1325,
+     1169,
+     1373
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m7.glucosurie": {
+    "bbox_px": [
+     1169,
+     1325,
+     1294,
+     1373
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m8.glucosurie": {
+    "bbox_px": [
+     1294,
+     1325,
+     1418,
+     1373
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m9.glucosurie": {
+    "bbox_px": [
+     1418,
+     1325,
+     1543,
+     1373
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v1.albuminurie": {
+    "bbox_px": [
+     422,
+     1373,
+     547,
+     1422
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v2.albuminurie": {
+    "bbox_px": [
+     547,
+     1373,
+     671,
+     1422
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v3.albuminurie": {
+    "bbox_px": [
+     671,
+     1373,
+     796,
+     1422
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v1.albuminurie": {
+    "bbox_px": [
+     796,
+     1373,
+     920,
+     1422
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v2.albuminurie": {
+    "bbox_px": [
+     920,
+     1373,
+     1045,
+     1422
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v3.albuminurie": {
+    "bbox_px": [
+     1045,
+     1373,
+     1169,
+     1422
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m7.albuminurie": {
+    "bbox_px": [
+     1169,
+     1373,
+     1294,
+     1422
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m8.albuminurie": {
+    "bbox_px": [
+     1294,
+     1373,
+     1418,
+     1422
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m9.albuminurie": {
+    "bbox_px": [
+     1418,
+     1373,
+     1543,
+     1422
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v1.rubeole": {
+    "bbox_px": [
+     422,
+     1422,
+     547,
+     1472
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v2.rubeole": {
+    "bbox_px": [
+     547,
+     1422,
+     671,
+     1472
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v3.rubeole": {
+    "bbox_px": [
+     671,
+     1422,
+     796,
+     1472
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v1.rubeole": {
+    "bbox_px": [
+     796,
+     1422,
+     920,
+     1472
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v2.rubeole": {
+    "bbox_px": [
+     920,
+     1422,
+     1045,
+     1472
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v3.rubeole": {
+    "bbox_px": [
+     1045,
+     1422,
+     1169,
+     1472
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m7.rubeole": {
+    "bbox_px": [
+     1169,
+     1422,
+     1294,
+     1472
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m8.rubeole": {
+    "bbox_px": [
+     1294,
+     1422,
+     1418,
+     1472
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m9.rubeole": {
+    "bbox_px": [
+     1418,
+     1422,
+     1543,
+     1472
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v1.toxoplasmose": {
+    "bbox_px": [
+     422,
+     1472,
+     547,
+     1521
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v2.toxoplasmose": {
+    "bbox_px": [
+     547,
+     1472,
+     671,
+     1521
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v3.toxoplasmose": {
+    "bbox_px": [
+     671,
+     1472,
+     796,
+     1521
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v1.toxoplasmose": {
+    "bbox_px": [
+     796,
+     1472,
+     920,
+     1521
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v2.toxoplasmose": {
+    "bbox_px": [
+     920,
+     1472,
+     1045,
+     1521
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v3.toxoplasmose": {
+    "bbox_px": [
+     1045,
+     1472,
+     1169,
+     1521
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m7.toxoplasmose": {
+    "bbox_px": [
+     1169,
+     1472,
+     1294,
+     1521
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m8.toxoplasmose": {
+    "bbox_px": [
+     1294,
+     1472,
+     1418,
+     1521
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m9.toxoplasmose": {
+    "bbox_px": [
+     1418,
+     1472,
+     1543,
+     1521
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v1.syphilis": {
+    "bbox_px": [
+     422,
+     1521,
+     547,
+     1570
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v2.syphilis": {
+    "bbox_px": [
+     547,
+     1521,
+     671,
+     1570
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v3.syphilis": {
+    "bbox_px": [
+     671,
+     1521,
+     796,
+     1570
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v1.syphilis": {
+    "bbox_px": [
+     796,
+     1521,
+     920,
+     1570
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v2.syphilis": {
+    "bbox_px": [
+     920,
+     1521,
+     1045,
+     1570
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v3.syphilis": {
+    "bbox_px": [
+     1045,
+     1521,
+     1169,
+     1570
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m7.syphilis": {
+    "bbox_px": [
+     1169,
+     1521,
+     1294,
+     1570
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m8.syphilis": {
+    "bbox_px": [
+     1294,
+     1521,
+     1418,
+     1570
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m9.syphilis": {
+    "bbox_px": [
+     1418,
+     1521,
+     1543,
+     1570
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v1.ag_hbs": {
+    "bbox_px": [
+     422,
+     1570,
+     547,
+     1620
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v2.ag_hbs": {
+    "bbox_px": [
+     547,
+     1570,
+     671,
+     1620
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v3.ag_hbs": {
+    "bbox_px": [
+     671,
+     1570,
+     796,
+     1620
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v1.ag_hbs": {
+    "bbox_px": [
+     796,
+     1570,
+     920,
+     1620
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v2.ag_hbs": {
+    "bbox_px": [
+     920,
+     1570,
+     1045,
+     1620
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v3.ag_hbs": {
+    "bbox_px": [
+     1045,
+     1570,
+     1169,
+     1620
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m7.ag_hbs": {
+    "bbox_px": [
+     1169,
+     1570,
+     1294,
+     1620
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m8.ag_hbs": {
+    "bbox_px": [
+     1294,
+     1570,
+     1418,
+     1620
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m9.ag_hbs": {
+    "bbox_px": [
+     1418,
+     1570,
+     1543,
+     1620
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v1.vih": {
+    "bbox_px": [
+     422,
+     1620,
+     547,
+     1669
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v2.vih": {
+    "bbox_px": [
+     547,
+     1620,
+     671,
+     1669
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v3.vih": {
+    "bbox_px": [
+     671,
+     1620,
+     796,
+     1669
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v1.vih": {
+    "bbox_px": [
+     796,
+     1620,
+     920,
+     1669
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v2.vih": {
+    "bbox_px": [
+     920,
+     1620,
+     1045,
+     1669
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v3.vih": {
+    "bbox_px": [
+     1045,
+     1620,
+     1169,
+     1669
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m7.vih": {
+    "bbox_px": [
+     1169,
+     1620,
+     1294,
+     1669
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m8.vih": {
+    "bbox_px": [
+     1294,
+     1620,
+     1418,
+     1669
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m9.vih": {
+    "bbox_px": [
+     1418,
+     1620,
+     1543,
+     1669
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v1.hemoglobine": {
+    "bbox_px": [
+     422,
+     1669,
+     547,
+     1719
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v2.hemoglobine": {
+    "bbox_px": [
+     547,
+     1669,
+     671,
+     1719
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v3.hemoglobine": {
+    "bbox_px": [
+     671,
+     1669,
+     796,
+     1719
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v1.hemoglobine": {
+    "bbox_px": [
+     796,
+     1669,
+     920,
+     1719
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v2.hemoglobine": {
+    "bbox_px": [
+     920,
+     1669,
+     1045,
+     1719
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v3.hemoglobine": {
+    "bbox_px": [
+     1045,
+     1669,
+     1169,
+     1719
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m7.hemoglobine": {
+    "bbox_px": [
+     1169,
+     1669,
+     1294,
+     1719
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m8.hemoglobine": {
+    "bbox_px": [
+     1294,
+     1669,
+     1418,
+     1719
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m9.hemoglobine": {
+    "bbox_px": [
+     1418,
+     1669,
+     1543,
+     1719
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v1.plaquettes": {
+    "bbox_px": [
+     422,
+     1719,
+     547,
+     1768
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v2.plaquettes": {
+    "bbox_px": [
+     547,
+     1719,
+     671,
+     1768
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v3.plaquettes": {
+    "bbox_px": [
+     671,
+     1719,
+     796,
+     1768
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v1.plaquettes": {
+    "bbox_px": [
+     796,
+     1719,
+     920,
+     1768
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v2.plaquettes": {
+    "bbox_px": [
+     920,
+     1719,
+     1045,
+     1768
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v3.plaquettes": {
+    "bbox_px": [
+     1045,
+     1719,
+     1169,
+     1768
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m7.plaquettes": {
+    "bbox_px": [
+     1169,
+     1719,
+     1294,
+     1768
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m8.plaquettes": {
+    "bbox_px": [
+     1294,
+     1719,
+     1418,
+     1768
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m9.plaquettes": {
+    "bbox_px": [
+     1418,
+     1719,
+     1543,
+     1768
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v1.glycemie": {
+    "bbox_px": [
+     422,
+     1768,
+     547,
+     1818
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v2.glycemie": {
+    "bbox_px": [
+     547,
+     1768,
+     671,
+     1818
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v3.glycemie": {
+    "bbox_px": [
+     671,
+     1768,
+     796,
+     1818
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v1.glycemie": {
+    "bbox_px": [
+     796,
+     1768,
+     920,
+     1818
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v2.glycemie": {
+    "bbox_px": [
+     920,
+     1768,
+     1045,
+     1818
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v3.glycemie": {
+    "bbox_px": [
+     1045,
+     1768,
+     1169,
+     1818
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m7.glycemie": {
+    "bbox_px": [
+     1169,
+     1768,
+     1294,
+     1818
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m8.glycemie": {
+    "bbox_px": [
+     1294,
+     1768,
+     1418,
+     1818
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m9.glycemie": {
+    "bbox_px": [
+     1418,
+     1768,
+     1543,
+     1818
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v1.rai": {
+    "bbox_px": [
+     422,
+     1818,
+     547,
+     1866
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v2.rai": {
+    "bbox_px": [
+     547,
+     1818,
+     671,
+     1866
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v3.rai": {
+    "bbox_px": [
+     671,
+     1818,
+     796,
+     1866
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v1.rai": {
+    "bbox_px": [
+     796,
+     1818,
+     920,
+     1866
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v2.rai": {
+    "bbox_px": [
+     920,
+     1818,
+     1045,
+     1866
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v3.rai": {
+    "bbox_px": [
+     1045,
+     1818,
+     1169,
+     1866
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m7.rai": {
+    "bbox_px": [
+     1169,
+     1818,
+     1294,
+     1866
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m8.rai": {
+    "bbox_px": [
+     1294,
+     1818,
+     1418,
+     1866
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m9.rai": {
+    "bbox_px": [
+     1418,
+     1818,
+     1543,
+     1866
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v1.fer": {
+    "bbox_px": [
+     422,
+     1918,
+     547,
+     1964
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v2.fer": {
+    "bbox_px": [
+     547,
+     1918,
+     671,
+     1964
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v3.fer": {
+    "bbox_px": [
+     671,
+     1918,
+     796,
+     1964
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v1.fer": {
+    "bbox_px": [
+     796,
+     1918,
+     920,
+     1964
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v2.fer": {
+    "bbox_px": [
+     920,
+     1918,
+     1045,
+     1964
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v3.fer": {
+    "bbox_px": [
+     1045,
+     1918,
+     1169,
+     1964
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m7.fer": {
+    "bbox_px": [
+     1169,
+     1918,
+     1294,
+     1964
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m8.fer": {
+    "bbox_px": [
+     1294,
+     1918,
+     1418,
+     1964
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m9.fer": {
+    "bbox_px": [
+     1418,
+     1918,
+     1543,
+     1964
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v1.examinateur": {
+    "bbox_px": [
+     422,
+     2017,
+     547,
+     2068
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v2.examinateur": {
+    "bbox_px": [
+     547,
+     2017,
+     671,
+     2068
+    ],
+    "kind": "cell"
+   },
+   "visites.t1_v3.examinateur": {
+    "bbox_px": [
+     671,
+     2017,
+     796,
+     2068
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v1.examinateur": {
+    "bbox_px": [
+     796,
+     2017,
+     920,
+     2068
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v2.examinateur": {
+    "bbox_px": [
+     920,
+     2017,
+     1045,
+     2068
+    ],
+    "kind": "cell"
+   },
+   "visites.t2_v3.examinateur": {
+    "bbox_px": [
+     1045,
+     2017,
+     1169,
+     2068
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m7.examinateur": {
+    "bbox_px": [
+     1169,
+     2017,
+     1294,
+     2068
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m8.examinateur": {
+    "bbox_px": [
+     1294,
+     2017,
+     1418,
+     2068
+    ],
+    "kind": "cell"
+   },
+   "visites.t3_m9.examinateur": {
+    "bbox_px": [
+     1418,
+     2017,
+     1543,
+     2068
+    ],
+    "kind": "cell"
+   },
+   "ddr": {
+    "bbox_px": [
+     183,
+     184,
+     383,
+     229
+    ],
+    "kind": "underline"
+   },
+   "taille_cm": {
+    "bbox_px": [
+     605,
+     184,
+     749,
+     229
+    ],
+    "kind": "underline"
+   },
+   "dpa": {
+    "bbox_px": [
+     508,
+     231,
+     708,
+     275
+    ],
+    "kind": "underline"
+   },
+   "date_depassement_terme": {
+    "bbox_px": [
+     1166,
+     232,
+     1366,
+     276
+    ],
+    "kind": "underline"
+   }
+  },
+  "checkboxes": {
+   "groupage.A": [
+    1042,
+    197,
+    1064,
+    220
+   ],
+   "groupage.B": [
+    1131,
+    197,
+    1153,
+    220
+   ],
+   "groupage.O": [
+    1220,
+    197,
+    1242,
+    219
+   ],
+   "groupage.AB": [
+    1308,
+    197,
+    1331,
+    219
+   ],
+   "rhesus.negatif": [
+    1403,
+    197,
+    1425,
+    219
+   ],
+   "rhesus.positif": [
+    1403,
+    236,
+    1425,
+    258
+   ]
+  },
+  "anchors": {
+   "Taille": [
+    528,
+    199,
+    581,
+    221
+   ],
+   "Groupage": [
+    889,
+    199,
+    988,
+    221
+   ],
+   "PRÉVUE": [
+    176,
+    247,
+    268,
+    269
+   ],
+   "D'ACCOUCHEMENT": [
+    274,
+    246,
+    484,
+    269
+   ],
+   "DÉPASSEMENT": [
+    852,
+    246,
+    1020,
+    269
+   ],
+   "TERME": [
+    1064,
+    246,
+    1141,
+    268
+   ],
+   "2ème": [
+    857,
+    312,
+    906,
+    332
+   ],
+   "3ème": [
+    1230,
+    312,
+    1280,
+    332
+   ],
+   "Prestations": [
+    122,
+    352,
+    228,
+    371
+   ],
+   "7ème": [
+    1175,
+    356,
+    1216,
+    373
+   ],
+   "8ème": [
+    1299,
+    356,
+    1341,
+    373
+   ],
+   "9ème": [
+    1424,
+    356,
+    1465,
+    373
+   ],
+   "Rendez-vous": [
+    122,
+    402,
+    233,
+    421
+   ],
+   "Venue": [
+    122,
+    451,
+    177,
+    470
+   ],
+   "relance": [
+    209,
+    501,
+    271,
+    520
+   ],
+   "probable": [
+    161,
+    550,
+    234,
+    569
+   ],
+   "CLINIQUE": [
+    204,
+    600,
+    291,
+    619
+   ],
+   "Poids": [
+    122,
+    649,
+    169,
+    668
+   ],
+   "(kg)": [
+    175,
+    649,
+    207,
+    668
+   ],
+   "Anomalies": [
+    122,
+    748,
+    210,
+    767
+   ],
+   "squelette": [
+    216,
+    748,
+    292,
+    767
+   ],
+   "État": [
+    122,
+    798,
+    156,
+    817
+   ],
+   "conjonctives": [
+    197,
+    798,
+    301,
+    817
+   ],
+   "seins": [
+    232,
+    847,
+    277,
+    866
+   ],
+   "Œdèmes": [
+    122,
+    897,
+    198,
+    916
+   ],
+   "Mouvements": [
+    122,
+    946,
+    230,
+    965
+   ],
+   "actifs": [
+    236,
+    946,
+    280,
+    965
+   ],
+   "(cm)": [
+    155,
+    996,
+    193,
+    1014
+   ],
+   "spéculum": [
+    223,
+    1094,
+    304,
+    1113
+   ],
+   "état": [
+    162,
+    1144,
+    194,
+    1163
+   ],
+   "présentation": [
+    162,
+    1193,
+    266,
+    1212
+   ],
+   "bassin": [
+    162,
+    1243,
+    217,
+    1262
+   ],
+   "BIOLOGIQUE": [
+    205,
+    1293,
+    320,
+    1311
+   ],
+   "Glucosurie": [
+    122,
+    1342,
+    213,
+    1361
+   ],
+   "Albuminurie": [
+    122,
+    1391,
+    222,
+    1410
+   ],
+   "Rubéole": [
+    122,
+    1441,
+    193,
+    1460
+   ],
+   "Toxoplasmose": [
+    122,
+    1490,
+    245,
+    1509
+   ],
+   "Syphilis": [
+    122,
+    1540,
+    187,
+    1558
+   ],
+   "(TPHA/VDRL)": [
+    193,
+    1540,
+    311,
+    1558
+   ],
+   "Sérologie": [
+    122,
+    1638,
+    202,
+    1657
+   ],
+   "Hémoglobine": [
+    122,
+    1688,
+    234,
+    1707
+   ],
+   "Plaquettes": [
+    122,
+    1737,
+    212,
+    1756
+   ],
+   "Bilan": [
+    122,
+    1787,
+    164,
+    1806
+   ],
+   "glycémique": [
+    170,
+    1787,
+    265,
+    1806
+   ],
+   "négatif)": [
+    214,
+    1836,
+    277,
+    1855
+   ],
+   "TRAITEMENT": [
+    123,
+    1886,
+    239,
+    1905
+   ],
+   "FAIT": [
+    205,
+    1985,
+    245,
+    2003
+   ],
+   "fait": [
+    197,
+    2034,
+    222,
+    2053
+   ],
+   "Document": [
+    112,
+    2282,
+    188,
+    2299
+   ],
+   "synthétique": [
+    192,
+    2282,
+    277,
+    2299
+   ],
+   "généré": [
+    282,
+    2282,
+    334,
+    2299
+   ],
+   "pour": [
+    339,
+    2282,
+    372,
+    2299
+   ],
+   "l'entraînement": [
+    377,
+    2282,
+    482,
+    2299
+   ],
+   "modèles": [
+    509,
+    2282,
+    572,
+    2299
+   ],
+   "aucune": [
+    598,
+    2282,
+    653,
+    2299
+   ],
+   "donnée": [
+    658,
+    2282,
+    713,
+    2299
+   ],
+   "réelle": [
+    718,
+    2282,
+    759,
+    2299
+   ],
+   "utiliser": [
+    839,
+    2282,
+    888,
+    2299
+   ],
+   "comme": [
+    892,
+    2282,
+    947,
+    2299
+   ],
+   "dossier": [
+    951,
+    2282,
+    1005,
+    2298
+   ],
+   "médical.": [
+    1010,
+    2282,
+    1072,
+    2298
+   ]
+  },
+  "zones": [
+   {
+    "id": "entete",
+    "bbox_px": [
+     0,
+     140,
+     1654,
+     290
+    ],
+    "fields": [
+     "ddr",
+     "taille_cm",
+     "dpa",
+     "date_depassement_terme"
+    ],
+    "kind": "form"
+   },
+   {
+    "id": "ligne_rendez_vous",
+    "bbox_px": [
+     100,
+     379,
+     1654,
+     437
+    ],
+    "fields": [
+     "visites.t1_v1.rendez_vous",
+     "visites.t1_v2.rendez_vous",
+     "visites.t1_v3.rendez_vous",
+     "visites.t2_v1.rendez_vous",
+     "visites.t2_v2.rendez_vous",
+     "visites.t2_v3.rendez_vous",
+     "visites.t3_m7.rendez_vous",
+     "visites.t3_m8.rendez_vous",
+     "visites.t3_m9.rendez_vous"
+    ],
+    "kind": "table_row",
+    "row_label_bbox_px": [
+     100,
+     379,
+     420,
+     437
+    ]
+   },
+   {
+    "id": "ligne_venue_le",
+    "bbox_px": [
+     100,
+     429,
+     1654,
+     486
+    ],
+    "fields": [
+     "visites.t1_v1.venue_le",
+     "visites.t1_v2.venue_le",
+     "visites.t1_v3.venue_le",
+     "visites.t2_v1.venue_le",
+     "visites.t2_v2.venue_le",
+     "visites.t2_v3.venue_le",
+     "visites.t3_m7.venue_le",
+     "visites.t3_m8.venue_le",
+     "visites.t3_m9.venue_le"
+    ],
+    "kind": "table_row",
+    "row_label_bbox_px": [
+     100,
+     429,
+     420,
+     486
+    ]
+   },
+   {
+    "id": "ligne_visite_relance",
+    "bbox_px": [
+     100,
+     478,
+     1654,
+     536
+    ],
+    "fields": [
+     "visites.t1_v1.visite_relance",
+     "visites.t1_v2.visite_relance",
+     "visites.t1_v3.visite_relance",
+     "visites.t2_v1.visite_relance",
+     "visites.t2_v2.visite_relance",
+     "visites.t2_v3.visite_relance",
+     "visites.t3_m7.visite_relance",
+     "visites.t3_m8.visite_relance",
+     "visites.t3_m9.visite_relance"
+    ],
+    "kind": "table_row",
+    "row_label_bbox_px": [
+     100,
+     478,
+     420,
+     536
+    ]
+   },
+   {
+    "id": "ligne_age_gestationnel",
+    "bbox_px": [
+     100,
+     528,
+     1654,
+     584
+    ],
+    "fields": [
+     "visites.t1_v1.age_gestationnel",
+     "visites.t1_v2.age_gestationnel",
+     "visites.t1_v3.age_gestationnel",
+     "visites.t2_v1.age_gestationnel",
+     "visites.t2_v2.age_gestationnel",
+     "visites.t2_v3.age_gestationnel",
+     "visites.t3_m7.age_gestationnel",
+     "visites.t3_m8.age_gestationnel",
+     "visites.t3_m9.age_gestationnel"
+    ],
+    "kind": "table_row",
+    "row_label_bbox_px": [
+     100,
+     528,
+     420,
+     584
+    ]
+   },
+   {
+    "id": "ligne_poids_kg",
+    "bbox_px": [
+     100,
+     628,
+     1654,
+     684
+    ],
+    "fields": [
+     "visites.t1_v1.poids_kg",
+     "visites.t1_v2.poids_kg",
+     "visites.t1_v3.poids_kg",
+     "visites.t2_v1.poids_kg",
+     "visites.t2_v2.poids_kg",
+     "visites.t2_v3.poids_kg",
+     "visites.t3_m7.poids_kg",
+     "visites.t3_m8.poids_kg",
+     "visites.t3_m9.poids_kg"
+    ],
+    "kind": "table_row",
+    "row_label_bbox_px": [
+     100,
+     628,
+     420,
+     684
+    ]
+   },
+   {
+    "id": "ligne_ta",
+    "bbox_px": [
+     100,
+     676,
+     1654,
+     734
+    ],
+    "fields": [
+     "visites.t1_v1.ta",
+     "visites.t1_v2.ta",
+     "visites.t1_v3.ta",
+     "visites.t2_v1.ta",
+     "visites.t2_v2.ta",
+     "visites.t2_v3.ta",
+     "visites.t3_m7.ta",
+     "visites.t3_m8.ta",
+     "visites.t3_m9.ta"
+    ],
+    "kind": "table_row",
+    "row_label_bbox_px": [
+     100,
+     676,
+     420,
+     734
+    ]
+   },
+   {
+    "id": "ligne_anomalies_squelette",
+    "bbox_px": [
+     100,
+     726,
+     1654,
+     783
+    ],
+    "fields": [
+     "visites.t1_v1.anomalies_squelette",
+     "visites.t1_v2.anomalies_squelette",
+     "visites.t1_v3.anomalies_squelette",
+     "visites.t2_v1.anomalies_squelette",
+     "visites.t2_v2.anomalies_squelette",
+     "visites.t2_v3.anomalies_squelette",
+     "visites.t3_m7.anomalies_squelette",
+     "visites.t3_m8.anomalies_squelette",
+     "visites.t3_m9.anomalies_squelette"
+    ],
+    "kind": "table_row",
+    "row_label_bbox_px": [
+     100,
+     726,
+     420,
+     783
+    ]
+   },
+   {
+    "id": "ligne_conjonctives",
+    "bbox_px": [
+     100,
+     775,
+     1654,
+     833
+    ],
+    "fields": [
+     "visites.t1_v1.conjonctives",
+     "visites.t1_v2.conjonctives",
+     "visites.t1_v3.conjonctives",
+     "visites.t2_v1.conjonctives",
+     "visites.t2_v2.conjonctives",
+     "visites.t2_v3.conjonctives",
+     "visites.t3_m7.conjonctives",
+     "visites.t3_m8.conjonctives",
+     "visites.t3_m9.conjonctives"
+    ],
+    "kind": "table_row",
+    "row_label_bbox_px": [
+     100,
+     775,
+     420,
+     833
+    ]
+   },
+   {
+    "id": "ligne_seins",
+    "bbox_px": [
+     100,
+     825,
+     1654,
+     882
+    ],
+    "fields": [
+     "visites.t1_v1.seins",
+     "visites.t1_v2.seins",
+     "visites.t1_v3.seins",
+     "visites.t2_v1.seins",
+     "visites.t2_v2.seins",
+     "visites.t2_v3.seins",
+     "visites.t3_m7.seins",
+     "visites.t3_m8.seins",
+     "visites.t3_m9.seins"
+    ],
+    "kind": "table_row",
+    "row_label_bbox_px": [
+     100,
+     825,
+     420,
+     882
+    ]
+   },
+   {
+    "id": "ligne_oedemes",
+    "bbox_px": [
+     100,
+     874,
+     1654,
+     931
+    ],
+    "fields": [
+     "visites.t1_v1.oedemes",
+     "visites.t1_v2.oedemes",
+     "visites.t1_v3.oedemes",
+     "visites.t2_v1.oedemes",
+     "visites.t2_v2.oedemes",
+     "visites.t2_v3.oedemes",
+     "visites.t3_m7.oedemes",
+     "visites.t3_m8.oedemes",
+     "visites.t3_m9.oedemes"
+    ],
+    "kind": "table_row",
+    "row_label_bbox_px": [
+     100,
+     874,
+     420,
+     931
+    ]
+   },
+   {
+    "id": "ligne_mouvements_actifs",
+    "bbox_px": [
+     100,
+     923,
+     1654,
+     981
+    ],
+    "fields": [
+     "visites.t1_v1.mouvements_actifs",
+     "visites.t1_v2.mouvements_actifs",
+     "visites.t1_v3.mouvements_actifs",
+     "visites.t2_v1.mouvements_actifs",
+     "visites.t2_v2.mouvements_actifs",
+     "visites.t2_v3.mouvements_actifs",
+     "visites.t3_m7.mouvements_actifs",
+     "visites.t3_m8.mouvements_actifs",
+     "visites.t3_m9.mouvements_actifs"
+    ],
+    "kind": "table_row",
+    "row_label_bbox_px": [
+     100,
+     923,
+     420,
+     981
+    ]
+   },
+   {
+    "id": "ligne_hu_cm",
+    "bbox_px": [
+     100,
+     973,
+     1654,
+     1030
+    ],
+    "fields": [
+     "visites.t1_v1.hu_cm",
+     "visites.t1_v2.hu_cm",
+     "visites.t1_v3.hu_cm",
+     "visites.t2_v1.hu_cm",
+     "visites.t2_v2.hu_cm",
+     "visites.t2_v3.hu_cm",
+     "visites.t3_m7.hu_cm",
+     "visites.t3_m8.hu_cm",
+     "visites.t3_m9.hu_cm"
+    ],
+    "kind": "table_row",
+    "row_label_bbox_px": [
+     100,
+     973,
+     420,
+     1030
+    ]
+   },
+   {
+    "id": "ligne_bcf",
+    "bbox_px": [
+     100,
+     1022,
+     1654,
+     1080
+    ],
+    "fields": [
+     "visites.t1_v1.bcf",
+     "visites.t1_v2.bcf",
+     "visites.t1_v3.bcf",
+     "visites.t2_v1.bcf",
+     "visites.t2_v2.bcf",
+     "visites.t2_v3.bcf",
+     "visites.t3_m7.bcf",
+     "visites.t3_m8.bcf",
+     "visites.t3_m9.bcf"
+    ],
+    "kind": "table_row",
+    "row_label_bbox_px": [
+     100,
+     1022,
+     420,
+     1080
+    ]
+   },
+   {
+    "id": "ligne_speculum",
+    "bbox_px": [
+     100,
+     1072,
+     1654,
+     1129
+    ],
+    "fields": [
+     "visites.t1_v1.speculum",
+     "visites.t1_v2.speculum",
+     "visites.t1_v3.speculum",
+     "visites.t2_v1.speculum",
+     "visites.t2_v2.speculum",
+     "visites.t2_v3.speculum",
+     "visites.t3_m7.speculum",
+     "visites.t3_m8.speculum",
+     "visites.t3_m9.speculum"
+    ],
+    "kind": "table_row",
+    "row_label_bbox_px": [
+     100,
+     1072,
+     420,
+     1129
+    ]
+   },
+   {
+    "id": "ligne_tv_col",
+    "bbox_px": [
+     100,
+     1121,
+     1654,
+     1179
+    ],
+    "fields": [
+     "visites.t1_v1.tv_col",
+     "visites.t1_v2.tv_col",
+     "visites.t1_v3.tv_col",
+     "visites.t2_v1.tv_col",
+     "visites.t2_v2.tv_col",
+     "visites.t2_v3.tv_col",
+     "visites.t3_m7.tv_col",
+     "visites.t3_m8.tv_col",
+     "visites.t3_m9.tv_col"
+    ],
+    "kind": "table_row",
+    "row_label_bbox_px": [
+     100,
+     1121,
+     420,
+     1179
+    ]
+   },
+   {
+    "id": "ligne_tv_presentation",
+    "bbox_px": [
+     100,
+     1171,
+     1654,
+     1228
+    ],
+    "fields": [
+     "visites.t1_v1.tv_presentation",
+     "visites.t1_v2.tv_presentation",
+     "visites.t1_v3.tv_presentation",
+     "visites.t2_v1.tv_presentation",
+     "visites.t2_v2.tv_presentation",
+     "visites.t2_v3.tv_presentation",
+     "visites.t3_m7.tv_presentation",
+     "visites.t3_m8.tv_presentation",
+     "visites.t3_m9.tv_presentation"
+    ],
+    "kind": "table_row",
+    "row_label_bbox_px": [
+     100,
+     1171,
+     420,
+     1228
+    ]
+   },
+   {
+    "id": "ligne_tv_bassin",
+    "bbox_px": [
+     100,
+     1220,
+     1654,
+     1276
+    ],
+    "fields": [
+     "visites.t1_v1.tv_bassin",
+     "visites.t1_v2.tv_bassin",
+     "visites.t1_v3.tv_bassin",
+     "visites.t2_v1.tv_bassin",
+     "visites.t2_v2.tv_bassin",
+     "visites.t2_v3.tv_bassin",
+     "visites.t3_m7.tv_bassin",
+     "visites.t3_m8.tv_bassin",
+     "visites.t3_m9.tv_bassin"
+    ],
+    "kind": "table_row",
+    "row_label_bbox_px": [
+     100,
+     1220,
+     420,
+     1276
+    ]
+   },
+   {
+    "id": "ligne_glucosurie",
+    "bbox_px": [
+     100,
+     1321,
+     1654,
+     1377
+    ],
+    "fields": [
+     "visites.t1_v1.glucosurie",
+     "visites.t1_v2.glucosurie",
+     "visites.t1_v3.glucosurie",
+     "visites.t2_v1.glucosurie",
+     "visites.t2_v2.glucosurie",
+     "visites.t2_v3.glucosurie",
+     "visites.t3_m7.glucosurie",
+     "visites.t3_m8.glucosurie",
+     "visites.t3_m9.glucosurie"
+    ],
+    "kind": "table_row",
+    "row_label_bbox_px": [
+     100,
+     1321,
+     420,
+     1377
+    ]
+   },
+   {
+    "id": "ligne_albuminurie",
+    "bbox_px": [
+     100,
+     1369,
+     1654,
+     1426
+    ],
+    "fields": [
+     "visites.t1_v1.albuminurie",
+     "visites.t1_v2.albuminurie",
+     "visites.t1_v3.albuminurie",
+     "visites.t2_v1.albuminurie",
+     "visites.t2_v2.albuminurie",
+     "visites.t2_v3.albuminurie",
+     "visites.t3_m7.albuminurie",
+     "visites.t3_m8.albuminurie",
+     "visites.t3_m9.albuminurie"
+    ],
+    "kind": "table_row",
+    "row_label_bbox_px": [
+     100,
+     1369,
+     420,
+     1426
+    ]
+   },
+   {
+    "id": "ligne_rubeole",
+    "bbox_px": [
+     100,
+     1418,
+     1654,
+     1476
+    ],
+    "fields": [
+     "visites.t1_v1.rubeole",
+     "visites.t1_v2.rubeole",
+     "visites.t1_v3.rubeole",
+     "visites.t2_v1.rubeole",
+     "visites.t2_v2.rubeole",
+     "visites.t2_v3.rubeole",
+     "visites.t3_m7.rubeole",
+     "visites.t3_m8.rubeole",
+     "visites.t3_m9.rubeole"
+    ],
+    "kind": "table_row",
+    "row_label_bbox_px": [
+     100,
+     1418,
+     420,
+     1476
+    ]
+   },
+   {
+    "id": "ligne_toxoplasmose",
+    "bbox_px": [
+     100,
+     1468,
+     1654,
+     1525
+    ],
+    "fields": [
+     "visites.t1_v1.toxoplasmose",
+     "visites.t1_v2.toxoplasmose",
+     "visites.t1_v3.toxoplasmose",
+     "visites.t2_v1.toxoplasmose",
+     "visites.t2_v2.toxoplasmose",
+     "visites.t2_v3.toxoplasmose",
+     "visites.t3_m7.toxoplasmose",
+     "visites.t3_m8.toxoplasmose",
+     "visites.t3_m9.toxoplasmose"
+    ],
+    "kind": "table_row",
+    "row_label_bbox_px": [
+     100,
+     1468,
+     420,
+     1525
+    ]
+   },
+   {
+    "id": "ligne_syphilis",
+    "bbox_px": [
+     100,
+     1517,
+     1654,
+     1574
+    ],
+    "fields": [
+     "visites.t1_v1.syphilis",
+     "visites.t1_v2.syphilis",
+     "visites.t1_v3.syphilis",
+     "visites.t2_v1.syphilis",
+     "visites.t2_v2.syphilis",
+     "visites.t2_v3.syphilis",
+     "visites.t3_m7.syphilis",
+     "visites.t3_m8.syphilis",
+     "visites.t3_m9.syphilis"
+    ],
+    "kind": "table_row",
+    "row_label_bbox_px": [
+     100,
+     1517,
+     420,
+     1574
+    ]
+   },
+   {
+    "id": "ligne_ag_hbs",
+    "bbox_px": [
+     100,
+     1566,
+     1654,
+     1624
+    ],
+    "fields": [
+     "visites.t1_v1.ag_hbs",
+     "visites.t1_v2.ag_hbs",
+     "visites.t1_v3.ag_hbs",
+     "visites.t2_v1.ag_hbs",
+     "visites.t2_v2.ag_hbs",
+     "visites.t2_v3.ag_hbs",
+     "visites.t3_m7.ag_hbs",
+     "visites.t3_m8.ag_hbs",
+     "visites.t3_m9.ag_hbs"
+    ],
+    "kind": "table_row",
+    "row_label_bbox_px": [
+     100,
+     1566,
+     420,
+     1624
+    ]
+   },
+   {
+    "id": "ligne_vih",
+    "bbox_px": [
+     100,
+     1616,
+     1654,
+     1673
+    ],
+    "fields": [
+     "visites.t1_v1.vih",
+     "visites.t1_v2.vih",
+     "visites.t1_v3.vih",
+     "visites.t2_v1.vih",
+     "visites.t2_v2.vih",
+     "visites.t2_v3.vih",
+     "visites.t3_m7.vih",
+     "visites.t3_m8.vih",
+     "visites.t3_m9.vih"
+    ],
+    "kind": "table_row",
+    "row_label_bbox_px": [
+     100,
+     1616,
+     420,
+     1673
+    ]
+   },
+   {
+    "id": "ligne_hemoglobine",
+    "bbox_px": [
+     100,
+     1665,
+     1654,
+     1723
+    ],
+    "fields": [
+     "visites.t1_v1.hemoglobine",
+     "visites.t1_v2.hemoglobine",
+     "visites.t1_v3.hemoglobine",
+     "visites.t2_v1.hemoglobine",
+     "visites.t2_v2.hemoglobine",
+     "visites.t2_v3.hemoglobine",
+     "visites.t3_m7.hemoglobine",
+     "visites.t3_m8.hemoglobine",
+     "visites.t3_m9.hemoglobine"
+    ],
+    "kind": "table_row",
+    "row_label_bbox_px": [
+     100,
+     1665,
+     420,
+     1723
+    ]
+   },
+   {
+    "id": "ligne_plaquettes",
+    "bbox_px": [
+     100,
+     1715,
+     1654,
+     1772
+    ],
+    "fields": [
+     "visites.t1_v1.plaquettes",
+     "visites.t1_v2.plaquettes",
+     "visites.t1_v3.plaquettes",
+     "visites.t2_v1.plaquettes",
+     "visites.t2_v2.plaquettes",
+     "visites.t2_v3.plaquettes",
+     "visites.t3_m7.plaquettes",
+     "visites.t3_m8.plaquettes",
+     "visites.t3_m9.plaquettes"
+    ],
+    "kind": "table_row",
+    "row_label_bbox_px": [
+     100,
+     1715,
+     420,
+     1772
+    ]
+   },
+   {
+    "id": "ligne_glycemie",
+    "bbox_px": [
+     100,
+     1764,
+     1654,
+     1822
+    ],
+    "fields": [
+     "visites.t1_v1.glycemie",
+     "visites.t1_v2.glycemie",
+     "visites.t1_v3.glycemie",
+     "visites.t2_v1.glycemie",
+     "visites.t2_v2.glycemie",
+     "visites.t2_v3.glycemie",
+     "visites.t3_m7.glycemie",
+     "visites.t3_m8.glycemie",
+     "visites.t3_m9.glycemie"
+    ],
+    "kind": "table_row",
+    "row_label_bbox_px": [
+     100,
+     1764,
+     420,
+     1822
+    ]
+   },
+   {
+    "id": "ligne_rai",
+    "bbox_px": [
+     100,
+     1814,
+     1654,
+     1870
+    ],
+    "fields": [
+     "visites.t1_v1.rai",
+     "visites.t1_v2.rai",
+     "visites.t1_v3.rai",
+     "visites.t2_v1.rai",
+     "visites.t2_v2.rai",
+     "visites.t2_v3.rai",
+     "visites.t3_m7.rai",
+     "visites.t3_m8.rai",
+     "visites.t3_m9.rai"
+    ],
+    "kind": "table_row",
+    "row_label_bbox_px": [
+     100,
+     1814,
+     420,
+     1870
+    ]
+   },
+   {
+    "id": "ligne_fer",
+    "bbox_px": [
+     100,
+     1914,
+     1654,
+     1968
+    ],
+    "fields": [
+     "visites.t1_v1.fer",
+     "visites.t1_v2.fer",
+     "visites.t1_v3.fer",
+     "visites.t2_v1.fer",
+     "visites.t2_v2.fer",
+     "visites.t2_v3.fer",
+     "visites.t3_m7.fer",
+     "visites.t3_m8.fer",
+     "visites.t3_m9.fer"
+    ],
+    "kind": "table_row",
+    "row_label_bbox_px": [
+     100,
+     1914,
+     420,
+     1968
+    ]
+   },
+   {
+    "id": "ligne_examinateur",
+    "bbox_px": [
+     100,
+     2013,
+     1654,
+     2072
+    ],
+    "fields": [
+     "visites.t1_v1.examinateur",
+     "visites.t1_v2.examinateur",
+     "visites.t1_v3.examinateur",
+     "visites.t2_v1.examinateur",
+     "visites.t2_v2.examinateur",
+     "visites.t2_v3.examinateur",
+     "visites.t3_m7.examinateur",
+     "visites.t3_m8.examinateur",
+     "visites.t3_m9.examinateur"
+    ],
+    "kind": "table_row",
+    "row_label_bbox_px": [
+     100,
+     2013,
+     420,
+     2072
+    ]
+   }
+  ]
+ },
+ "ACCOUCHEMENT": {
+  "size_px": [
+   1654,
+   2339
+  ],
+  "title": "DÉROULEMENT DE L'ACCOUCHEMENT",
+  "lines": {
+   "h": [
+    76,
+    149,
+    242,
+    331,
+    572,
+    595,
+    752,
+    854,
+    915,
+    1308,
+    1360,
+    1808,
+    1846,
+    1978,
+    2034,
+    2089,
+    2150,
+    2206,
+    2239
+   ],
+   "v": [
+    555,
+    1501
+   ]
+  },
+  "fields": {
+   "patiente_nom": {
+    "bbox_px": [
+     215,
+     203,
+     776,
+     248
+    ],
+    "kind": "underline"
+   },
+   "date_accouchement": {
+    "bbox_px": [
+     372,
+     814,
+     628,
+     859
+    ],
+    "kind": "underline"
+   },
+   "sexe": {
+    "bbox_px": [
+     674,
+     1940,
+     790,
+     1984
+    ],
+    "kind": "underline"
+   },
+   "poids_naissance_g": {
+    "bbox_px": [
+     827,
+     1996,
+     1027,
+     2040
+    ],
+    "kind": "underline"
+   },
+   "perimetre_cranien_cm": {
+    "bbox_px": [
+     947,
+     2052,
+     1119,
+     2096
+    ],
+    "kind": "underline"
+   },
+   "anomalie": {
+    "bbox_px": [
+     820,
+     2113,
+     1326,
+     2157
+    ],
+    "kind": "underline"
+   },
+   "age_gestationnel_sa": {
+    "bbox_px": [
+     789,
+     2169,
+     934,
+     2213
+    ],
+    "kind": "underline"
+   },
+   "indication_cesarienne": {
+    "bbox_px": [
+     880,
+     1237,
+     1222,
+     1285
+    ],
+    "kind": "value_box"
+   }
+  },
+  "checkboxes": {
+   "lieu_detail.maison_accouchement": [
+    596,
+    370,
+    618,
+    392
+   ],
+   "lieu.milieu_surveille": [
+    109,
+    385,
+    132,
+    407
+   ],
+   "lieu_detail.maternite": [
+    596,
+    414,
+    618,
+    437
+   ],
+   "lieu_detail.clinique_privee": [
+    596,
+    459,
+    618,
+    481
+   ],
+   "lieu.domicile": [
+    110,
+    635,
+    132,
+    657
+   ],
+   "lieu_detail.domicile_assiste_qualifie": [
+    596,
+    634,
+    619,
+    656
+   ],
+   "mode.voie_basse_non_instrumentale": [
+    597,
+    953,
+    619,
+    976
+   ],
+   "mode.voie_basse_instrumentale": [
+    597,
+    1003,
+    619,
+    1026
+   ],
+   "mode_instrument.forceps": [
+    694,
+    1048,
+    717,
+    1070
+   ],
+   "mode_instrument.ventouse": [
+    694,
+    1092,
+    717,
+    1114
+   ],
+   "mode_instrument.episiotomie": [
+    695,
+    1137,
+    717,
+    1159
+   ],
+   "mode.cesarienne_programmee": [
+    597,
+    1192,
+    620,
+    1215
+   ],
+   "mode.cesarienne_urgence": [
+    1084,
+    1191,
+    1106,
+    1214
+   ],
+   "complications.presence": [
+    528,
+    1384,
+    551,
+    1406
+   ],
+   "complications_moment.accouchement": [
+    598,
+    1392,
+    620,
+    1415
+   ],
+   "complications_moment.suites_de_couches": [
+    598,
+    1437,
+    620,
+    1459
+   ],
+   "complications_type.pre_eclampsie": [
+    695,
+    1537,
+    718,
+    1559
+   ],
+   "complications_type.eclampsie": [
+    695,
+    1578,
+    718,
+    1601
+   ],
+   "complications_type.hemorragie": [
+    696,
+    1620,
+    718,
+    1642
+   ],
+   "complications_type.infection": [
+    696,
+    1662,
+    718,
+    1684
+   ],
+   "complications_type.autres": [
+    696,
+    1703,
+    718,
+    1726
+   ],
+   "etat_nouveau_ne.vivant": [
+    599,
+    1884,
+    621,
+    1906
+   ],
+   "etat_nouveau_ne.mort_ne": [
+    793,
+    1884,
+    816,
+    1906
+   ],
+   "etat_nouveau_ne.deces_moins_24h": [
+    1016,
+    1883,
+    1038,
+    1906
+   ]
+  },
+  "anchors": {
+   "Patiente": [
+    109,
+    220,
+    191,
+    242
+   ],
+   "Lieu": [
+    109,
+    329,
+    161,
+    354
+   ],
+   "Maison": [
+    629,
+    372,
+    701,
+    394
+   ],
+   "d'accouchement": [
+    707,
+    371,
+    868,
+    394
+   ],
+   "milieu": [
+    176,
+    386,
+    234,
+    409
+   ],
+   "surveillé": [
+    240,
+    386,
+    322,
+    409
+   ],
+   "Maternité": [
+    629,
+    416,
+    722,
+    438
+   ],
+   "Clinique": [
+    629,
+    461,
+    710,
+    483
+   ],
+   "privée": [
+    716,
+    460,
+    776,
+    483
+   ],
+   "domicile": [
+    164,
+    637,
+    246,
+    659
+   ],
+   "Assisté": [
+    630,
+    636,
+    701,
+    658
+   ],
+   "personnel": [
+    777,
+    635,
+    874,
+    658
+   ],
+   "qualifié": [
+    880,
+    635,
+    951,
+    657
+   ],
+   "Date": [
+    110,
+    831,
+    157,
+    854
+   ],
+   "Mode": [
+    111,
+    940,
+    176,
+    965
+   ],
+   "Forceps": [
+    728,
+    1049,
+    808,
+    1072
+   ],
+   "Ventouse": [
+    728,
+    1094,
+    822,
+    1116
+   ],
+   "Avec": [
+    728,
+    1138,
+    777,
+    1161
+   ],
+   "épisiotomie": [
+    784,
+    1138,
+    896,
+    1161
+   ],
+   "Césarienne": [
+    631,
+    1194,
+    744,
+    1216
+   ],
+   "Programmée": [
+    763,
+    1193,
+    891,
+    1216
+   ],
+   "Urgence": [
+    1117,
+    1193,
+    1201,
+    1215
+   ],
+   "Préciser": [
+    598,
+    1250,
+    679,
+    1272
+   ],
+   "l'indication": [
+    685,
+    1249,
+    788,
+    1272
+   ],
+   "Présence": [
+    112,
+    1385,
+    223,
+    1410
+   ],
+   "moment": [
+    665,
+    1394,
+    745,
+    1416
+   ],
+   "Suites": [
+    631,
+    1439,
+    693,
+    1461
+   ],
+   "couches": [
+    730,
+    1438,
+    813,
+    1461
+   ],
+   "Type": [
+    598,
+    1489,
+    647,
+    1511
+   ],
+   "Pré-éclampsie": [
+    729,
+    1538,
+    871,
+    1561
+   ],
+   "Eclampsie": [
+    729,
+    1580,
+    831,
+    1602
+   ],
+   "Hémorragie": [
+    729,
+    1622,
+    845,
+    1644
+   ],
+   "Infection": [
+    729,
+    1663,
+    813,
+    1686
+   ],
+   "autres": [
+    722,
+    1761,
+    784,
+    1783
+   ],
+   "...............................": [
+    906,
+    1760,
+    1097,
+    1783
+   ],
+   "Etat": [
+    113,
+    1885,
+    160,
+    1910
+   ],
+   "nouveau-né": [
+    204,
+    1884,
+    345,
+    1910
+   ],
+   "Vivant": [
+    632,
+    1886,
+    694,
+    1908
+   ],
+   "Mort-né": [
+    827,
+    1886,
+    903,
+    1908
+   ],
+   "Décès": [
+    1049,
+    1885,
+    1112,
+    1907
+   ],
+   "heures": [
+    1168,
+    1885,
+    1236,
+    1907
+   ],
+   "Sexe": [
+    599,
+    1955,
+    650,
+    1978
+   ],
+   "Poids": [
+    599,
+    2011,
+    655,
+    2033
+   ],
+   "Périmètre": [
+    599,
+    2067,
+    696,
+    2089
+   ],
+   "crânien": [
+    702,
+    2066,
+    775,
+    2089
+   ],
+   "Anomalie": [
+    599,
+    2128,
+    692,
+    2150
+   ],
+   "gestationnel": [
+    645,
+    2183,
+    765,
+    2206
+   ],
+   "Document": [
+    113,
+    2283,
+    189,
+    2300
+   ],
+   "synthétique": [
+    194,
+    2283,
+    279,
+    2300
+   ],
+   "généré": [
+    284,
+    2283,
+    336,
+    2300
+   ],
+   "pour": [
+    340,
+    2283,
+    374,
+    2300
+   ],
+   "l'entraînement": [
+    378,
+    2283,
+    484,
+    2299
+   ],
+   "modèles": [
+    511,
+    2282,
+    574,
+    2299
+   ],
+   "aucune": [
+    600,
+    2282,
+    655,
+    2299
+   ],
+   "donnée": [
+    660,
+    2282,
+    715,
+    2299
+   ],
+   "réelle": [
+    720,
+    2282,
+    761,
+    2299
+   ],
+   "utiliser": [
+    841,
+    2282,
+    889,
+    2299
+   ],
+   "comme": [
+    894,
+    2282,
+    949,
+    2298
+   ],
+   "dossier": [
+    953,
+    2281,
+    1007,
+    2298
+   ],
+   "médical.": [
+    1012,
+    2281,
+    1074,
+    2298
+   ]
+  },
+  "zones": [
+   {
+    "id": "page",
+    "bbox_px": [
+     0,
+     0,
+     1654,
+     2339
+    ],
+    "fields": [
+     "age_gestationnel_sa",
+     "anomalie",
+     "date_accouchement",
+     "indication_cesarienne",
+     "patiente_nom",
+     "perimetre_cranien_cm",
+     "poids_naissance_g",
+     "sexe"
+    ],
+    "kind": "form"
+   }
+  ]
+ },
+ "PP_PRECOCE_MERE": {
+  "size_px": [
+   1654,
+   2339
+  ],
+  "title": "CONSULTATION DU POST-PARTUM PRÉCOCE MÈRE — Tazi Meryem",
+  "lines": {
+   "h": [
+    74,
+    149,
+    226,
+    296,
+    400,
+    1606,
+    1663,
+    2032
+   ],
+   "v": [
+    109,
+    1545
+   ]
+  },
+  "fields": {
+   "date_consultation": {
+    "bbox_px": [
+     1163,
+     189,
+     1390,
+     234
+    ],
+    "kind": "underline"
+   },
+   "temperature": {
+    "bbox_px": [
+     158,
+     364,
+     261,
+     408
+    ],
+    "kind": "underline"
+   },
+   "ta": {
+    "bbox_px": [
+     453,
+     362,
+     612,
+     407
+    ],
+    "kind": "underline"
+   },
+   "pouls": {
+    "bbox_px": [
+     786,
+     362,
+     889,
+     407
+    ],
+    "kind": "underline"
+   },
+   "poids_kg": {
+    "bbox_px": [
+     1064,
+     361,
+     1194,
+     405
+    ],
+    "kind": "underline"
+   },
+   "prochain_rdv": {
+    "bbox_px": [
+     381,
+     1563,
+     609,
+     1607
+    ],
+    "kind": "underline"
+   },
+   "cicatrice_cesarienne": {
+    "bbox_px": [
+     768,
+     870,
+     1110,
+     919
+    ],
+    "kind": "value_box"
+   },
+   "medicaments": {
+    "bbox_px": [
+     825,
+     1320,
+     1167,
+     1373
+    ],
+    "kind": "value_box"
+   },
+   "pf_refus_raison": {
+    "bbox_px": [
+     125,
+     1972,
+     618,
+     2025
+    ],
+    "kind": "value_box"
+   }
+  },
+  "checkboxes": {
+   "periode.dans_fenetre": [
+    690,
+    209,
+    712,
+    231
+   ],
+   "periode.apres_fenetre": [
+    690,
+    248,
+    712,
+    270
+   ],
+   "conjonctives.normales": [
+    441,
+    432,
+    463,
+    455
+   ],
+   "conjonctives.decolorees": [
+    691,
+    431,
+    713,
+    454
+   ],
+   "globe_uterin.present": [
+    124,
+    484,
+    147,
+    506
+   ],
+   "lochies_odeur.fade": [
+    442,
+    532,
+    464,
+    555
+   ],
+   "lochies_odeur.fetide": [
+    636,
+    531,
+    658,
+    554
+   ],
+   "lochies_aspect.claires": [
+    442,
+    577,
+    464,
+    599
+   ],
+   "lochies_aspect.sanglantes": [
+    636,
+    576,
+    659,
+    598
+   ],
+   "lochies_aspect.jaunatres": [
+    859,
+    575,
+    881,
+    597
+   ],
+   "perinee.normal": [
+    164,
+    678,
+    187,
+    701
+   ],
+   "perinee.episiotomie": [
+    165,
+    723,
+    187,
+    745
+   ],
+   "perinee.episiotomie_reparee": [
+    554,
+    721,
+    576,
+    743
+   ],
+   "perinee.dechirure": [
+    165,
+    767,
+    187,
+    790
+   ],
+   "sphincters.normal": [
+    637,
+    826,
+    660,
+    848
+   ],
+   "sphincters.anormal": [
+    832,
+    825,
+    854,
+    847
+   ],
+   "cesarienne.oui": [
+    126,
+    884,
+    149,
+    906
+   ],
+   "seins.normal": [
+    360,
+    938,
+    382,
+    961
+   ],
+   "seins.lymphangite": [
+    555,
+    937,
+    577,
+    960
+   ],
+   "seins.mastite_abces": [
+    805,
+    936,
+    827,
+    959
+   ],
+   "mollets.normal": [
+    166,
+    1039,
+    188,
+    1062
+   ],
+   "mollets.rouges": [
+    361,
+    1038,
+    383,
+    1061
+   ],
+   "mollets.chauds": [
+    555,
+    1038,
+    577,
+    1060
+   ],
+   "mollets.douloureux_dorsiflexion": [
+    750,
+    1037,
+    772,
+    1059
+   ],
+   "complication.presence": [
+    528,
+    1104,
+    550,
+    1127
+   ],
+   "complication_type.hemorragie": [
+    167,
+    1156,
+    189,
+    1179
+   ],
+   "complication_type.mammaires": [
+    611,
+    1154,
+    634,
+    1176
+   ],
+   "complication_type.infection": [
+    167,
+    1198,
+    189,
+    1220
+   ],
+   "complication_type.anemie": [
+    611,
+    1196,
+    634,
+    1218
+   ],
+   "complication_type.eclampsie": [
+    167,
+    1240,
+    189,
+    1262
+   ],
+   "complication_type.autres": [
+    612,
+    1237,
+    634,
+    1260
+   ],
+   "complication_type.phlebite": [
+    167,
+    1281,
+    190,
+    1304
+   ],
+   "medicaments.prise": [
+    529,
+    1338,
+    551,
+    1360
+   ],
+   "traitement.fer": [
+    168,
+    1484,
+    191,
+    1506
+   ],
+   "traitement.vitamine_a": [
+    390,
+    1483,
+    413,
+    1505
+   ],
+   "pf.desire_methode": [
+    131,
+    1740,
+    153,
+    1762
+   ],
+   "pf_methode.pilule": [
+    392,
+    1789,
+    414,
+    1811
+   ],
+   "pf_methode.diu": [
+    587,
+    1788,
+    609,
+    1810
+   ],
+   "pf.prescription_faite": [
+    131,
+    1840,
+    153,
+    1862
+   ],
+   "pf.referee": [
+    131,
+    1884,
+    154,
+    1907
+   ]
+  },
+  "anchors": {
+   "Date": [
+    912,
+    204,
+    959,
+    226
+   ],
+   "consultation": [
+    1020,
+    203,
+    1138,
+    226
+   ],
+   "Entre": [
+    107,
+    213,
+    160,
+    236
+   ],
+   "7ème": [
+    189,
+    213,
+    245,
+    236
+   ],
+   "après": [
+    381,
+    212,
+    436,
+    235
+   ],
+   "Après": [
+    107,
+    252,
+    165,
+    275
+   ],
+   "général": [
+    172,
+    330,
+    251,
+    352
+   ],
+   "Pouls": [
+    719,
+    377,
+    774,
+    400
+   ],
+   "Poids": [
+    996,
+    376,
+    1052,
+    398
+   ],
+   "conjonctives": [
+    212,
+    435,
+    334,
+    458
+   ],
+   "Normales": [
+    474,
+    434,
+    570,
+    456
+   ],
+   "Décolorées": [
+    724,
+    432,
+    837,
+    455
+   ],
+   "globe": [
+    289,
+    485,
+    343,
+    507
+   ],
+   "utérin": [
+    349,
+    485,
+    405,
+    507
+   ],
+   "lochies": [
+    217,
+    535,
+    294,
+    558
+   ],
+   "Fade": [
+    475,
+    534,
+    526,
+    556
+   ],
+   "fétide": [
+    669,
+    533,
+    724,
+    556
+   ],
+   "claires": [
+    475,
+    578,
+    539,
+    601
+   ],
+   "sanglantes": [
+    670,
+    577,
+    777,
+    600
+   ],
+   "Jaunâtres": [
+    892,
+    576,
+    990,
+    599
+   ],
+   "périnée": [
+    207,
+    635,
+    286,
+    658
+   ],
+   "Épisiotomie": [
+    198,
+    724,
+    313,
+    747
+   ],
+   "Réparée": [
+    587,
+    722,
+    672,
+    745
+   ],
+   "Déchirure": [
+    198,
+    768,
+    295,
+    791
+   ],
+   "sphincters": [
+    214,
+    830,
+    315,
+    852
+   ],
+   "(anal": [
+    321,
+    829,
+    371,
+    852
+   ],
+   "urétral)": [
+    402,
+    829,
+    472,
+    851
+   ],
+   "Anormal": [
+    865,
+    826,
+    948,
+    849
+   ],
+   "Césarienne": [
+    160,
+    885,
+    274,
+    908
+   ],
+   "cicatrice": [
+    599,
+    883,
+    680,
+    906
+   ],
+   "seins": [
+    214,
+    941,
+    266,
+    963
+   ],
+   "lymphangite": [
+    588,
+    939,
+    708,
+    962
+   ],
+   "mastite": [
+    838,
+    938,
+    910,
+    960
+   ],
+   "abcès": [
+    941,
+    937,
+    1000,
+    960
+   ],
+   "mollets": [
+    215,
+    996,
+    285,
+    1019
+   ],
+   "Rouges": [
+    394,
+    1040,
+    471,
+    1063
+   ],
+   "Chauds": [
+    588,
+    1039,
+    665,
+    1062
+   ],
+   "Douloureux": [
+    783,
+    1038,
+    897,
+    1061
+   ],
+   "dorsiflexion": [
+    945,
+    1037,
+    1057,
+    1060
+   ],
+   "complication": [
+    265,
+    1107,
+    402,
+    1130
+   ],
+   "Hémorragie": [
+    200,
+    1157,
+    316,
+    1180
+   ],
+   "Complications": [
+    645,
+    1155,
+    784,
+    1178
+   ],
+   "mammaires": [
+    790,
+    1155,
+    906,
+    1177
+   ],
+   "Infection": [
+    200,
+    1199,
+    284,
+    1222
+   ],
+   "Anémie": [
+    645,
+    1197,
+    720,
+    1220
+   ],
+   "Eclampsie": [
+    200,
+    1241,
+    303,
+    1264
+   ],
+   "Phlébite": [
+    201,
+    1283,
+    281,
+    1305
+   ],
+   "Notion": [
+    129,
+    1341,
+    193,
+    1364
+   ],
+   "prise": [
+    230,
+    1341,
+    278,
+    1363
+   ],
+   "médicaments": [
+    315,
+    1340,
+    447,
+    1363
+   ],
+   "CONDUITE": [
+    129,
+    1397,
+    245,
+    1419
+   ],
+   "TENIR": [
+    273,
+    1396,
+    340,
+    1419
+   ],
+   "Traitement": [
+    129,
+    1441,
+    235,
+    1464
+   ],
+   "prescrit": [
+    242,
+    1441,
+    314,
+    1463
+   ],
+   "Vitamine": [
+    424,
+    1484,
+    510,
+    1507
+   ],
+   "..........................................": [
+    316,
+    1540,
+    576,
+    1563
+   ],
+   "Prochain": [
+    130,
+    1580,
+    218,
+    1603
+   ],
+   "rendez-vous": [
+    224,
+    1580,
+    346,
+    1602
+   ],
+   "PLANIFICATION": [
+    130,
+    1691,
+    302,
+    1714
+   ],
+   "FAMILIALE": [
+    308,
+    1690,
+    427,
+    1713
+   ],
+   "Désire": [
+    164,
+    1741,
+    228,
+    1764
+   ],
+   "oui,": [
+    157,
+    1791,
+    193,
+    1814
+   ],
+   "laquelle": [
+    199,
+    1791,
+    275,
+    1814
+   ],
+   "pilule": [
+    425,
+    1790,
+    477,
+    1813
+   ],
+   "Autre": [
+    781,
+    1788,
+    834,
+    1811
+   ],
+   "..........................": [
+    956,
+    1787,
+    1117,
+    1810
+   ],
+   "Prescription": [
+    164,
+    1841,
+    282,
+    1864
+   ],
+   "faite": [
+    288,
+    1841,
+    330,
+    1863
+   ],
+   "Référée": [
+    165,
+    1886,
+    244,
+    1908
+   ],
+   "mère": [
+    181,
+    1936,
+    232,
+    1958
+   ],
+   "désire": [
+    269,
+    1935,
+    329,
+    1958
+   ],
+   "contraceptive": [
+    513,
+    1934,
+    646,
+    1957
+   ],
+   "Pourquoi": [
+    664,
+    1933,
+    753,
+    1956
+   ],
+   "Document": [
+    117,
+    2285,
+    193,
+    2302
+   ],
+   "synthétique": [
+    197,
+    2284,
+    282,
+    2302
+   ],
+   "généré": [
+    287,
+    2284,
+    339,
+    2301
+   ],
+   "pour": [
+    344,
+    2284,
+    377,
+    2301
+   ],
+   "l'entraînement": [
+    382,
+    2284,
+    487,
+    2301
+   ],
+   "modèles": [
+    514,
+    2283,
+    578,
+    2300
+   ],
+   "aucune": [
+    603,
+    2283,
+    658,
+    2300
+   ],
+   "donnée": [
+    663,
+    2282,
+    718,
+    2299
+   ],
+   "réelle": [
+    723,
+    2282,
+    764,
+    2299
+   ],
+   "comme": [
+    897,
+    2281,
+    952,
+    2298
+   ],
+   "dossier": [
+    956,
+    2281,
+    1010,
+    2298
+   ],
+   "médical.": [
+    1015,
+    2281,
+    1077,
+    2298
+   ]
+  },
+  "zones": [
+   {
+    "id": "page",
+    "bbox_px": [
+     0,
+     0,
+     1654,
+     2339
+    ],
+    "fields": [
+     "cicatrice_cesarienne",
+     "date_consultation",
+     "medicaments",
+     "pf_refus_raison",
+     "poids_kg",
+     "pouls",
+     "prochain_rdv",
+     "ta",
+     "temperature"
+    ],
+    "kind": "form"
+   }
+  ]
+ },
+ "PP_PRECOCE_NOUVEAU_NE": {
+  "size_px": [
+   1654,
+   2339
+  ],
+  "title": "CONSULTATION DU POST-PARTUM PRÉCOCE NOUVEAU-NÉ",
+  "lines": {
+   "h": [
+    78,
+    150,
+    228,
+    265,
+    328,
+    389,
+    797,
+    1084,
+    1645,
+    1728,
+    1812,
+    1909,
+    1971,
+    2080,
+    2145,
+    2214
+   ],
+   "v": [
+    109,
+    127,
+    1525,
+    1545
+   ]
+  },
+  "fields": {
+   "date_consultation": {
+    "bbox_px": [
+     1168,
+     191,
+     1396,
+     235
+    ],
+    "kind": "underline"
+   },
+   "age_jours": {
+    "bbox_px": [
+     180,
+     287,
+     310,
+     332
+    ],
+    "kind": "underline"
+   },
+   "temperature": {
+    "bbox_px": [
+     667,
+     289,
+     798,
+     333
+    ],
+    "kind": "underline"
+   },
+   "poids_g": {
+    "bbox_px": [
+     1124,
+     291,
+     1282,
+     335
+    ],
+    "kind": "underline"
+   },
+   "taille_cm": {
+    "bbox_px": [
+     193,
+     349,
+     324,
+     393
+    ],
+    "kind": "underline"
+   },
+   "perimetre_cranien_cm": {
+    "bbox_px": [
+     716,
+     350,
+     846,
+     394
+    ],
+    "kind": "underline"
+   },
+   "signes_graves_autres": {
+    "bbox_px": [
+     320,
+     758,
+     881,
+     803
+    ],
+    "kind": "underline"
+   },
+   "lesions_autres": {
+    "bbox_px": [
+     359,
+     1044,
+     920,
+     1088
+    ],
+    "kind": "underline"
+   },
+   "vu_par": {
+    "bbox_px": [
+     217,
+     1604,
+     917,
+     1649
+    ],
+    "kind": "underline"
+   },
+   "decision": {
+    "bbox_px": [
+     291,
+     1688,
+     1353,
+     1733
+    ],
+    "kind": "underline"
+   },
+   "traitement": {
+    "bbox_px": [
+     337,
+     1771,
+     1315,
+     1816
+    ],
+    "kind": "underline"
+   },
+   "prochain_rdv": {
+    "bbox_px": [
+     585,
+     2105,
+     813,
+     2150
+    ],
+    "kind": "underline"
+   }
+  },
+  "checkboxes": {
+   "etat.premature": [
+    128,
+    425,
+    150,
+    447
+   ],
+   "etat.hypotrophe": [
+    528,
+    425,
+    551,
+    447
+   ],
+   "allaitement.exclusif_sein": [
+    306,
+    486,
+    328,
+    508
+   ],
+   "allaitement.artificiel": [
+    695,
+    486,
+    717,
+    508
+   ],
+   "allaitement.mixte": [
+    917,
+    486,
+    940,
+    508
+   ],
+   "signes_graves.convulsions": [
+    139,
+    603,
+    161,
+    625
+   ],
+   "signes_graves.refus_teter": [
+    487,
+    603,
+    509,
+    625
+   ],
+   "signes_graves.hematemeses": [
+    834,
+    603,
+    856,
+    625
+   ],
+   "signes_graves.melaenas": [
+    1181,
+    603,
+    1203,
+    625
+   ],
+   "signes_graves.diarrhee": [
+    139,
+    653,
+    161,
+    675
+   ],
+   "signes_graves.ictere": [
+    487,
+    653,
+    509,
+    675
+   ],
+   "signes_graves.tirage_sous_costal": [
+    834,
+    653,
+    856,
+    675
+   ],
+   "signes_graves.toux": [
+    1181,
+    653,
+    1203,
+    675
+   ],
+   "signes_graves.rythme_respiratoire_anormal": [
+    139,
+    703,
+    161,
+    725
+   ],
+   "signes_graves.fievre": [
+    487,
+    703,
+    509,
+    725
+   ],
+   "signes_graves.hypothermie": [
+    834,
+    703,
+    856,
+    725
+   ],
+   "lesions.bosse_serosanguine_cephalohematome": [
+    167,
+    903,
+    189,
+    925
+   ],
+   "lesions.luxation_hanche": [
+    167,
+    947,
+    189,
+    969
+   ],
+   "lesions.mobilite_membre_diminuee": [
+    167,
+    992,
+    189,
+    1014
+   ],
+   "evaluation_allaitement.normal": [
+    695,
+    1125,
+    717,
+    1148
+   ],
+   "evaluation_allaitement.a_problemes": [
+    889,
+    1125,
+    911,
+    1148
+   ],
+   "vaccins.bcg": [
+    528,
+    1231,
+    550,
+    1253
+   ],
+   "vaccins.hb": [
+    695,
+    1231,
+    717,
+    1253
+   ],
+   "vitamine_d.oui": [
+    128,
+    1286,
+    150,
+    1308
+   ],
+   "complications.ictere": [
+    167,
+    1408,
+    189,
+    1431
+   ],
+   "complications.infection": [
+    389,
+    1408,
+    411,
+    1431
+   ],
+   "complications.conjonctivite": [
+    611,
+    1409,
+    633,
+    1431
+   ],
+   "complications.traumatisme": [
+    166,
+    1458,
+    189,
+    1481
+   ],
+   "complications.malformation": [
+    389,
+    1458,
+    411,
+    1481
+   ],
+   "complications.autres": [
+    166,
+    1508,
+    189,
+    1531
+   ],
+   "transfert.oui": [
+    127,
+    1883,
+    150,
+    1906
+   ]
+  },
+  "anchors": {
+   "Date": [
+    917,
+    205,
+    964,
+    227
+   ],
+   "consultation": [
+    1025,
+    205,
+    1144,
+    227
+   ],
+   "Température": [
+    528,
+    305,
+    656,
+    327
+   ],
+   "Poids": [
+    1056,
+    305,
+    1112,
+    327
+   ],
+   "Taille": [
+    128,
+    365,
+    181,
+    388
+   ],
+   "Périmètre": [
+    528,
+    366,
+    625,
+    388
+   ],
+   "crânien": [
+    631,
+    366,
+    704,
+    388
+   ],
+   "prématuré": [
+    289,
+    427,
+    390,
+    449
+   ],
+   "hypotrophe": [
+    689,
+    427,
+    800,
+    449
+   ],
+   "exclusivement": [
+    339,
+    488,
+    480,
+    510
+   ],
+   "sein": [
+    517,
+    488,
+    558,
+    510
+   ],
+   "Artificiel": [
+    728,
+    488,
+    806,
+    510
+   ],
+   "mixte": [
+    951,
+    488,
+    1004,
+    510
+   ],
+   "Signes": [
+    128,
+    549,
+    201,
+    571
+   ],
+   "d'une": [
+    207,
+    549,
+    266,
+    571
+   ],
+   "affection": [
+    272,
+    549,
+    364,
+    571
+   ],
+   "grave": [
+    371,
+    549,
+    430,
+    571
+   ],
+   "Convulsions": [
+    173,
+    605,
+    286,
+    626
+   ],
+   "Refus": [
+    520,
+    606,
+    574,
+    627
+   ],
+   "téter": [
+    609,
+    606,
+    651,
+    627
+   ],
+   "Hématémèses": [
+    867,
+    606,
+    1002,
+    627
+   ],
+   "Mélaenas": [
+    1215,
+    606,
+    1305,
+    627
+   ],
+   "Diarrhée": [
+    173,
+    655,
+    252,
+    676
+   ],
+   "Tirage": [
+    867,
+    656,
+    926,
+    677
+   ],
+   "sous": [
+    932,
+    656,
+    976,
+    677
+   ],
+   "costal": [
+    982,
+    656,
+    1036,
+    677
+   ],
+   "Toux": [
+    1215,
+    656,
+    1261,
+    677
+   ],
+   "Rythme": [
+    173,
+    705,
+    244,
+    726
+   ],
+   "respiratoire": [
+    250,
+    706,
+    354,
+    726
+   ],
+   "anormal": [
+    360,
+    706,
+    435,
+    726
+   ],
+   "Fièvre": [
+    520,
+    706,
+    578,
+    727
+   ],
+   "Hypothermie": [
+    867,
+    706,
+    985,
+    727
+   ],
+   "Contusions,": [
+    128,
+    849,
+    256,
+    871
+   ],
+   "lésions": [
+    263,
+    849,
+    339,
+    871
+   ],
+   "traumatiques": [
+    345,
+    849,
+    485,
+    871
+   ],
+   "malformations": [
+    517,
+    849,
+    670,
+    871
+   ],
+   "Bosse": [
+    200,
+    904,
+    262,
+    927
+   ],
+   "sérosanguine": [
+    268,
+    905,
+    402,
+    927
+   ],
+   "céphalohématome": [
+    439,
+    905,
+    622,
+    927
+   ],
+   "Luxation": [
+    200,
+    949,
+    284,
+    971
+   ],
+   "congénitale": [
+    290,
+    949,
+    404,
+    971
+   ],
+   "hanche": [
+    465,
+    949,
+    538,
+    971
+   ],
+   "Diminution": [
+    200,
+    993,
+    305,
+    1016
+   ],
+   "absence": [
+    342,
+    993,
+    426,
+    1016
+   ],
+   "mobilité": [
+    487,
+    994,
+    563,
+    1016
+   ],
+   "d'un": [
+    570,
+    994,
+    611,
+    1016
+   ],
+   "membre": [
+    617,
+    994,
+    699,
+    1016
+   ],
+   "Evaluation": [
+    128,
+    1127,
+    240,
+    1149
+   ],
+   "l'allaitement": [
+    279,
+    1127,
+    406,
+    1149
+   ],
+   "Normal": [
+    728,
+    1127,
+    800,
+    1149
+   ],
+   "problèmes": [
+    943,
+    1127,
+    1047,
+    1149
+   ],
+   "Etat": [
+    128,
+    1182,
+    170,
+    1205
+   ],
+   "vaccinal": [
+    176,
+    1182,
+    264,
+    1205
+   ],
+   "Vaccins": [
+    167,
+    1232,
+    244,
+    1255
+   ],
+   "administrés": [
+    251,
+    1232,
+    364,
+    1255
+   ],
+   "jour": [
+    400,
+    1232,
+    437,
+    1255
+   ],
+   "Supplémentation": [
+    161,
+    1288,
+    328,
+    1310
+   ],
+   "vitamine": [
+    365,
+    1288,
+    448,
+    1310
+   ],
+   "Présence": [
+    128,
+    1355,
+    227,
+    1377
+   ],
+   "complications": [
+    265,
+    1355,
+    414,
+    1377
+   ],
+   "malformation": [
+    479,
+    1355,
+    619,
+    1377
+   ],
+   "Infection": [
+    422,
+    1410,
+    506,
+    1433
+   ],
+   "Conjonctivite": [
+    644,
+    1410,
+    772,
+    1433
+   ],
+   "Traumatisme": [
+    200,
+    1460,
+    330,
+    1482
+   ],
+   "Malformation": [
+    422,
+    1460,
+    551,
+    1483
+   ],
+   "Décision": [
+    127,
+    1705,
+    213,
+    1727
+   ],
+   "Traitement": [
+    127,
+    1788,
+    234,
+    1810
+   ],
+   "prescrit": [
+    240,
+    1788,
+    313,
+    1810
+   ],
+   "Transfert": [
+    161,
+    1885,
+    250,
+    1908
+   ],
+   "Préciser": [
+    333,
+    1885,
+    415,
+    1908
+   ],
+   "l'établissement": [
+    421,
+    1885,
+    567,
+    1908
+   ],
+   "référence": [
+    604,
+    1886,
+    698,
+    1908
+   ],
+   "trois": [
+    188,
+    1994,
+    237,
+    2016
+   ],
+   "règles": [
+    243,
+    1994,
+    308,
+    2016
+   ],
+   "charge": [
+    463,
+    1994,
+    536,
+    2016
+   ],
+   "nouveau-né": [
+    575,
+    1994,
+    700,
+    2016
+   ],
+   "domicile": [
+    725,
+    1994,
+    815,
+    2016
+   ],
+   "exclusif": [
+    377,
+    2033,
+    452,
+    2055
+   ],
+   "Maintien": [
+    495,
+    2033,
+    579,
+    2055
+   ],
+   "chaud": [
+    616,
+    2033,
+    676,
+    2055
+   ],
+   "Quand": [
+    720,
+    2033,
+    786,
+    2055
+   ],
+   "revenir": [
+    793,
+    2033,
+    861,
+    2055
+   ],
+   "immédiatement": [
+    867,
+    2033,
+    1019,
+    2055
+   ],
+   "Revenir": [
+    127,
+    2121,
+    204,
+    2144
+   ],
+   "visite": [
+    304,
+    2122,
+    355,
+    2144
+   ],
+   "suivi": [
+    392,
+    2122,
+    436,
+    2144
+   ],
+   "nécessaire": [
+    442,
+    2122,
+    550,
+    2144
+   ],
+   "Document": [
+    110,
+    2281,
+    186,
+    2298
+   ],
+   "synthétique": [
+    191,
+    2281,
+    276,
+    2298
+   ],
+   "généré": [
+    281,
+    2282,
+    333,
+    2298
+   ],
+   "l'entraînement": [
+    375,
+    2282,
+    481,
+    2298
+   ],
+   "modèles": [
+    508,
+    2282,
+    571,
+    2298
+   ],
+   "aucune": [
+    597,
+    2282,
+    652,
+    2298
+   ],
+   "donnée": [
+    657,
+    2282,
+    712,
+    2298
+   ],
+   "réelle": [
+    717,
+    2282,
+    758,
+    2298
+   ],
+   "utiliser": [
+    838,
+    2282,
+    886,
+    2299
+   ],
+   "comme": [
+    891,
+    2282,
+    946,
+    2299
+   ],
+   "dossier": [
+    950,
+    2282,
+    1004,
+    2299
+   ],
+   "médical.": [
+    1009,
+    2282,
+    1071,
+    2299
+   ]
+  },
+  "zones": [
+   {
+    "id": "page",
+    "bbox_px": [
+     0,
+     0,
+     1654,
+     2339
+    ],
+    "fields": [
+     "age_jours",
+     "date_consultation",
+     "decision",
+     "lesions_autres",
+     "perimetre_cranien_cm",
+     "poids_g",
+     "prochain_rdv",
+     "signes_graves_autres",
+     "taille_cm",
+     "temperature",
+     "traitement",
+     "vu_par"
+    ],
+    "kind": "form"
+   }
+  ]
+ },
+ "PP_TARDIF_MERE": {
+  "size_px": [
+   1654,
+   2339
+  ],
+  "title": "CONSULTATION DU POST-PARTUM TARDIF MÈRE — Tazi Meryem",
+  "lines": {
+   "h": [
+    77,
+    150,
+    227,
+    296,
+    400,
+    1605,
+    1663,
+    2033
+   ],
+   "v": [
+    108,
+    1545
+   ]
+  },
+  "fields": {
+   "date_consultation": {
+    "bbox_px": [
+     1166,
+     190,
+     1394,
+     235
+    ],
+    "kind": "underline"
+   },
+   "temperature": {
+    "bbox_px": [
+     161,
+     363,
+     264,
+     407
+    ],
+    "kind": "underline"
+   },
+   "ta": {
+    "bbox_px": [
+     456,
+     362,
+     615,
+     407
+    ],
+    "kind": "underline"
+   },
+   "pouls": {
+    "bbox_px": [
+     789,
+     362,
+     892,
+     406
+    ],
+    "kind": "underline"
+   },
+   "poids_kg": {
+    "bbox_px": [
+     1067,
+     361,
+     1198,
+     406
+    ],
+    "kind": "underline"
+   },
+   "cicatrice_cesarienne": {
+    "bbox_px": [
+     769,
+     869,
+     1110,
+     919
+    ],
+    "kind": "value_box"
+   },
+   "medicaments": {
+    "bbox_px": [
+     823,
+     1321,
+     1165,
+     1374
+    ],
+    "kind": "value_box"
+   },
+   "pf_refus_raison": {
+    "bbox_px": [
+     119,
+     1969,
+     612,
+     2021
+    ],
+    "kind": "value_box"
+   }
+  },
+  "checkboxes": {
+   "periode.dans_fenetre": [
+    749,
+    209,
+    772,
+    231
+   ],
+   "periode.apres_fenetre": [
+    694,
+    247,
+    716,
+    270
+   ],
+   "conjonctives.normales": [
+    444,
+    431,
+    466,
+    453
+   ],
+   "conjonctives.decolorees": [
+    694,
+    431,
+    716,
+    453
+   ],
+   "globe_uterin.present": [
+    127,
+    481,
+    149,
+    504
+   ],
+   "lochies_odeur.fade": [
+    444,
+    531,
+    466,
+    553
+   ],
+   "lochies_odeur.fetide": [
+    639,
+    531,
+    661,
+    553
+   ],
+   "lochies_aspect.claires": [
+    444,
+    575,
+    466,
+    598
+   ],
+   "lochies_aspect.sanglantes": [
+    639,
+    575,
+    661,
+    598
+   ],
+   "lochies_aspect.jaunatres": [
+    861,
+    575,
+    883,
+    597
+   ],
+   "perinee.normal": [
+    166,
+    676,
+    189,
+    698
+   ],
+   "perinee.episiotomie": [
+    166,
+    720,
+    189,
+    742
+   ],
+   "perinee.episiotomie_reparee": [
+    555,
+    720,
+    578,
+    742
+   ],
+   "perinee.dechirure": [
+    166,
+    765,
+    189,
+    787
+   ],
+   "sphincters.normal": [
+    639,
+    825,
+    661,
+    848
+   ],
+   "sphincters.anormal": [
+    833,
+    825,
+    856,
+    847
+   ],
+   "cesarienne.oui": [
+    128,
+    881,
+    150,
+    904
+   ],
+   "seins.normal": [
+    361,
+    937,
+    383,
+    959
+   ],
+   "seins.lymphangite": [
+    555,
+    937,
+    578,
+    959
+   ],
+   "seins.mastite_abces": [
+    805,
+    936,
+    828,
+    959
+   ],
+   "mollets.normal": [
+    167,
+    1037,
+    189,
+    1059
+   ],
+   "mollets.rouges": [
+    361,
+    1037,
+    383,
+    1059
+   ],
+   "mollets.chauds": [
+    556,
+    1037,
+    578,
+    1059
+   ],
+   "mollets.douloureux_dorsiflexion": [
+    750,
+    1036,
+    772,
+    1059
+   ],
+   "complication.presence": [
+    528,
+    1103,
+    550,
+    1126
+   ],
+   "complication_type.hemorragie": [
+    167,
+    1154,
+    189,
+    1176
+   ],
+   "complication_type.mammaires": [
+    611,
+    1153,
+    634,
+    1176
+   ],
+   "complication_type.infection": [
+    167,
+    1195,
+    189,
+    1218
+   ],
+   "complication_type.anemie": [
+    611,
+    1195,
+    634,
+    1217
+   ],
+   "complication_type.eclampsie": [
+    167,
+    1237,
+    189,
+    1259
+   ],
+   "complication_type.autres": [
+    611,
+    1237,
+    634,
+    1259
+   ],
+   "complication_type.phlebite": [
+    167,
+    1279,
+    189,
+    1301
+   ],
+   "medicaments.prise": [
+    528,
+    1337,
+    550,
+    1359
+   ],
+   "traitement.fer": [
+    167,
+    1482,
+    189,
+    1504
+   ],
+   "traitement.vitamine_a": [
+    389,
+    1481,
+    412,
+    1504
+   ],
+   "pf.desire_methode": [
+    128,
+    1737,
+    151,
+    1760
+   ],
+   "pf_methode.pilule": [
+    390,
+    1787,
+    412,
+    1809
+   ],
+   "pf_methode.diu": [
+    584,
+    1787,
+    606,
+    1809
+   ],
+   "pf.prescription_faite": [
+    128,
+    1837,
+    151,
+    1860
+   ],
+   "pf.referee": [
+    128,
+    1882,
+    151,
+    1904
+   ]
+  },
+  "anchors": {
+   "Date": [
+    916,
+    204,
+    963,
+    227
+   ],
+   "consultation": [
+    1024,
+    204,
+    1142,
+    227
+   ],
+   "Entre": [
+    110,
+    211,
+    163,
+    233
+   ],
+   "40ème": [
+    193,
+    211,
+    261,
+    233
+   ],
+   "après": [
+    409,
+    210,
+    465,
+    233
+   ],
+   "Après": [
+    110,
+    250,
+    168,
+    272
+   ],
+   "général": [
+    175,
+    327,
+    254,
+    350
+   ],
+   "Pouls": [
+    722,
+    377,
+    777,
+    399
+   ],
+   "Poids": [
+    1000,
+    377,
+    1055,
+    399
+   ],
+   "conjonctives": [
+    215,
+    433,
+    337,
+    455
+   ],
+   "Normales": [
+    477,
+    433,
+    572,
+    455
+   ],
+   "Décolorées": [
+    727,
+    432,
+    840,
+    455
+   ],
+   "globe": [
+    292,
+    483,
+    346,
+    505
+   ],
+   "utérin": [
+    352,
+    483,
+    408,
+    505
+   ],
+   "lochies": [
+    220,
+    533,
+    297,
+    555
+   ],
+   "Fade": [
+    477,
+    533,
+    528,
+    555
+   ],
+   "fétide": [
+    672,
+    533,
+    726,
+    555
+   ],
+   "claires": [
+    477,
+    577,
+    542,
+    600
+   ],
+   "sanglantes": [
+    672,
+    577,
+    779,
+    599
+   ],
+   "Jaunâtres": [
+    894,
+    577,
+    992,
+    599
+   ],
+   "périnée": [
+    209,
+    633,
+    288,
+    655
+   ],
+   "Épisiotomie": [
+    200,
+    722,
+    315,
+    744
+   ],
+   "Réparée": [
+    589,
+    722,
+    674,
+    744
+   ],
+   "Déchirure": [
+    200,
+    766,
+    296,
+    789
+   ],
+   "sphincters": [
+    215,
+    827,
+    317,
+    850
+   ],
+   "(anal": [
+    323,
+    827,
+    372,
+    850
+   ],
+   "urétral)": [
+    403,
+    827,
+    473,
+    850
+   ],
+   "Anormal": [
+    867,
+    827,
+    949,
+    849
+   ],
+   "Césarienne": [
+    161,
+    883,
+    275,
+    906
+   ],
+   "cicatrice": [
+    600,
+    883,
+    682,
+    905
+   ],
+   "seins": [
+    215,
+    939,
+    267,
+    961
+   ],
+   "lymphangite": [
+    589,
+    938,
+    709,
+    961
+   ],
+   "mastite": [
+    839,
+    938,
+    911,
+    960
+   ],
+   "abcès": [
+    941,
+    938,
+    1001,
+    960
+   ],
+   "mollets": [
+    215,
+    994,
+    286,
+    1017
+   ],
+   "Rouges": [
+    394,
+    1038,
+    471,
+    1061
+   ],
+   "Chauds": [
+    589,
+    1038,
+    666,
+    1061
+   ],
+   "Douloureux": [
+    783,
+    1038,
+    897,
+    1061
+   ],
+   "dorsiflexion": [
+    945,
+    1038,
+    1058,
+    1060
+   ],
+   "complication": [
+    265,
+    1105,
+    402,
+    1128
+   ],
+   "Hémorragie": [
+    200,
+    1155,
+    316,
+    1178
+   ],
+   "Complications": [
+    645,
+    1155,
+    784,
+    1177
+   ],
+   "mammaires": [
+    790,
+    1155,
+    906,
+    1177
+   ],
+   "Infection": [
+    200,
+    1197,
+    284,
+    1219
+   ],
+   "Anémie": [
+    645,
+    1197,
+    720,
+    1219
+   ],
+   "Eclampsie": [
+    200,
+    1239,
+    303,
+    1261
+   ],
+   "Phlébite": [
+    200,
+    1280,
+    281,
+    1303
+   ],
+   "Notion": [
+    128,
+    1339,
+    192,
+    1361
+   ],
+   "prise": [
+    229,
+    1339,
+    277,
+    1361
+   ],
+   "médicaments": [
+    315,
+    1339,
+    447,
+    1361
+   ],
+   "CONDUITE": [
+    128,
+    1394,
+    244,
+    1417
+   ],
+   "TENIR": [
+    272,
+    1394,
+    339,
+    1417
+   ],
+   "Traitement": [
+    128,
+    1439,
+    234,
+    1461
+   ],
+   "prescrit": [
+    240,
+    1439,
+    313,
+    1461
+   ],
+   "Vitamine": [
+    423,
+    1483,
+    509,
+    1505
+   ],
+   "..........................................": [
+    315,
+    1538,
+    574,
+    1561
+   ],
+   "Prochain": [
+    128,
+    1578,
+    216,
+    1600
+   ],
+   "rendez-vous": [
+    222,
+    1578,
+    344,
+    1600
+   ],
+   "PLANIFICATION": [
+    128,
+    1689,
+    300,
+    1711
+   ],
+   "FAMILIALE": [
+    306,
+    1689,
+    425,
+    1711
+   ],
+   "Désire": [
+    162,
+    1739,
+    226,
+    1761
+   ],
+   "oui,": [
+    154,
+    1789,
+    190,
+    1811
+   ],
+   "laquelle": [
+    196,
+    1789,
+    273,
+    1811
+   ],
+   "pilule": [
+    423,
+    1789,
+    475,
+    1811
+   ],
+   "Autre": [
+    779,
+    1788,
+    832,
+    1811
+   ],
+   "..........................": [
+    954,
+    1788,
+    1115,
+    1811
+   ],
+   "Prescription": [
+    162,
+    1839,
+    279,
+    1861
+   ],
+   "faite": [
+    285,
+    1839,
+    327,
+    1861
+   ],
+   "Référée": [
+    162,
+    1883,
+    241,
+    1906
+   ],
+   "mère": [
+    178,
+    1933,
+    229,
+    1956
+   ],
+   "désire": [
+    266,
+    1933,
+    326,
+    1956
+   ],
+   "contraceptive": [
+    510,
+    1933,
+    642,
+    1956
+   ],
+   "Pourquoi": [
+    661,
+    1933,
+    750,
+    1955
+   ],
+   "Document": [
+    112,
+    2282,
+    188,
+    2299
+   ],
+   "synthétique": [
+    193,
+    2282,
+    278,
+    2299
+   ],
+   "généré": [
+    283,
+    2282,
+    335,
+    2299
+   ],
+   "pour": [
+    339,
+    2282,
+    373,
+    2299
+   ],
+   "l'entraînement": [
+    377,
+    2282,
+    482,
+    2299
+   ],
+   "modèles": [
+    510,
+    2282,
+    573,
+    2299
+   ],
+   "aucune": [
+    599,
+    2282,
+    654,
+    2299
+   ],
+   "donnée": [
+    658,
+    2282,
+    714,
+    2299
+   ],
+   "réelle": [
+    719,
+    2282,
+    759,
+    2299
+   ],
+   "comme": [
+    893,
+    2282,
+    947,
+    2299
+   ],
+   "dossier": [
+    952,
+    2282,
+    1006,
+    2298
+   ],
+   "médical.": [
+    1010,
+    2282,
+    1072,
+    2298
+   ]
+  },
+  "zones": [
+   {
+    "id": "page",
+    "bbox_px": [
+     0,
+     0,
+     1654,
+     2339
+    ],
+    "fields": [
+     "cicatrice_cesarienne",
+     "date_consultation",
+     "medicaments",
+     "pf_refus_raison",
+     "poids_kg",
+     "pouls",
+     "ta",
+     "temperature"
+    ],
+    "kind": "form"
+   }
+  ]
+ },
+ "PP_TARDIF_NOUVEAU_NE": {
+  "size_px": [
+   1654,
+   2339
+  ],
+  "title": "CONSULTATION DU POST-PARTUM TARDIF NOUVEAU-NÉ",
+  "lines": {
+   "h": [
+    78,
+    150,
+    228,
+    264,
+    328,
+    389,
+    798,
+    1084,
+    1645,
+    1728,
+    1812,
+    1909,
+    1970,
+    2081,
+    2145,
+    2214
+   ],
+   "v": [
+    108,
+    128,
+    1526,
+    1546
+   ]
+  },
+  "fields": {
+   "date_consultation": {
+    "bbox_px": [
+     1167,
+     191,
+     1395,
+     235
+    ],
+    "kind": "underline"
+   },
+   "age_jours": {
+    "bbox_px": [
+     179,
+     288,
+     310,
+     333
+    ],
+    "kind": "underline"
+   },
+   "temperature": {
+    "bbox_px": [
+     667,
+     289,
+     797,
+     333
+    ],
+    "kind": "underline"
+   },
+   "poids_g": {
+    "bbox_px": [
+     1123,
+     290,
+     1281,
+     335
+    ],
+    "kind": "underline"
+   },
+   "taille_cm": {
+    "bbox_px": [
+     193,
+     349,
+     323,
+     394
+    ],
+    "kind": "underline"
+   },
+   "perimetre_cranien_cm": {
+    "bbox_px": [
+     715,
+     351,
+     846,
+     395
+    ],
+    "kind": "underline"
+   },
+   "signes_graves_autres": {
+    "bbox_px": [
+     320,
+     759,
+     881,
+     803
+    ],
+    "kind": "underline"
+   },
+   "lesions_autres": {
+    "bbox_px": [
+     359,
+     1046,
+     920,
+     1090
+    ],
+    "kind": "underline"
+   },
+   "vu_par": {
+    "bbox_px": [
+     217,
+     1606,
+     918,
+     1650
+    ],
+    "kind": "underline"
+   },
+   "decision": {
+    "bbox_px": [
+     292,
+     1689,
+     1353,
+     1733
+    ],
+    "kind": "underline"
+   },
+   "traitement": {
+    "bbox_px": [
+     337,
+     1772,
+     1315,
+     1817
+    ],
+    "kind": "underline"
+   },
+   "prochain_rdv": {
+    "bbox_px": [
+     586,
+     2106,
+     814,
+     2151
+    ],
+    "kind": "underline"
+   }
+  },
+  "checkboxes": {
+   "etat.premature": [
+    128,
+    425,
+    150,
+    447
+   ],
+   "etat.hypotrophe": [
+    528,
+    425,
+    550,
+    447
+   ],
+   "allaitement.exclusif_sein": [
+    306,
+    486,
+    328,
+    508
+   ],
+   "allaitement.artificiel": [
+    694,
+    486,
+    717,
+    508
+   ],
+   "allaitement.mixte": [
+    917,
+    486,
+    939,
+    508
+   ],
+   "signes_graves.convulsions": [
+    139,
+    603,
+    161,
+    625
+   ],
+   "signes_graves.refus_teter": [
+    486,
+    603,
+    508,
+    625
+   ],
+   "signes_graves.hematemeses": [
+    834,
+    603,
+    856,
+    625
+   ],
+   "signes_graves.melaenas": [
+    1181,
+    603,
+    1203,
+    625
+   ],
+   "signes_graves.diarrhee": [
+    139,
+    653,
+    161,
+    675
+   ],
+   "signes_graves.ictere": [
+    486,
+    653,
+    508,
+    675
+   ],
+   "signes_graves.tirage_sous_costal": [
+    834,
+    653,
+    856,
+    675
+   ],
+   "signes_graves.toux": [
+    1181,
+    653,
+    1203,
+    675
+   ],
+   "signes_graves.rythme_respiratoire_anormal": [
+    139,
+    703,
+    161,
+    725
+   ],
+   "signes_graves.fievre": [
+    486,
+    703,
+    508,
+    725
+   ],
+   "signes_graves.hypothermie": [
+    834,
+    703,
+    856,
+    725
+   ],
+   "lesions.bosse_serosanguine_cephalohematome": [
+    167,
+    903,
+    189,
+    925
+   ],
+   "lesions.luxation_hanche": [
+    167,
+    948,
+    189,
+    970
+   ],
+   "lesions.mobilite_membre_diminuee": [
+    167,
+    992,
+    189,
+    1014
+   ],
+   "evaluation_allaitement.normal": [
+    695,
+    1125,
+    717,
+    1148
+   ],
+   "evaluation_allaitement.a_problemes": [
+    889,
+    1125,
+    911,
+    1148
+   ],
+   "vaccins.bcg": [
+    528,
+    1231,
+    550,
+    1253
+   ],
+   "vaccins.hb": [
+    695,
+    1231,
+    717,
+    1253
+   ],
+   "vitamine_d.oui": [
+    128,
+    1287,
+    150,
+    1309
+   ],
+   "complications.ictere": [
+    167,
+    1409,
+    189,
+    1431
+   ],
+   "complications.infection": [
+    389,
+    1409,
+    411,
+    1431
+   ],
+   "complications.conjonctivite": [
+    611,
+    1409,
+    634,
+    1431
+   ],
+   "complications.traumatisme": [
+    167,
+    1459,
+    189,
+    1481
+   ],
+   "complications.malformation": [
+    389,
+    1459,
+    411,
+    1481
+   ],
+   "complications.autres": [
+    167,
+    1509,
+    189,
+    1531
+   ],
+   "transfert.oui": [
+    128,
+    1884,
+    150,
+    1906
+   ]
+  },
+  "anchors": {
+   "Date": [
+    917,
+    205,
+    964,
+    227
+   ],
+   "consultation": [
+    1024,
+    205,
+    1143,
+    227
+   ],
+   "Température": [
+    528,
+    305,
+    655,
+    327
+   ],
+   "Poids": [
+    1056,
+    305,
+    1111,
+    327
+   ],
+   "Taille": [
+    128,
+    366,
+    181,
+    388
+   ],
+   "Périmètre": [
+    528,
+    366,
+    624,
+    388
+   ],
+   "crânien": [
+    630,
+    366,
+    703,
+    388
+   ],
+   "prématuré": [
+    288,
+    427,
+    390,
+    449
+   ],
+   "hypotrophe": [
+    688,
+    427,
+    800,
+    449
+   ],
+   "exclusivement": [
+    339,
+    488,
+    480,
+    510
+   ],
+   "sein": [
+    517,
+    488,
+    558,
+    510
+   ],
+   "Artificiel": [
+    728,
+    488,
+    806,
+    510
+   ],
+   "mixte": [
+    950,
+    488,
+    1003,
+    510
+   ],
+   "Signes": [
+    128,
+    549,
+    201,
+    572
+   ],
+   "d'une": [
+    207,
+    549,
+    265,
+    572
+   ],
+   "affection": [
+    271,
+    549,
+    364,
+    572
+   ],
+   "grave": [
+    370,
+    549,
+    429,
+    572
+   ],
+   "Convulsions": [
+    172,
+    606,
+    286,
+    627
+   ],
+   "Refus": [
+    520,
+    606,
+    574,
+    627
+   ],
+   "téter": [
+    609,
+    606,
+    650,
+    627
+   ],
+   "Hématémèses": [
+    867,
+    606,
+    1001,
+    627
+   ],
+   "Mélaenas": [
+    1214,
+    606,
+    1304,
+    627
+   ],
+   "Diarrhée": [
+    172,
+    656,
+    252,
+    677
+   ],
+   "Tirage": [
+    867,
+    656,
+    926,
+    677
+   ],
+   "sous": [
+    932,
+    656,
+    976,
+    677
+   ],
+   "costal": [
+    981,
+    656,
+    1036,
+    677
+   ],
+   "Toux": [
+    1214,
+    656,
+    1260,
+    677
+   ],
+   "Rythme": [
+    172,
+    706,
+    244,
+    727
+   ],
+   "respiratoire": [
+    250,
+    706,
+    354,
+    727
+   ],
+   "anormal": [
+    360,
+    706,
+    435,
+    727
+   ],
+   "Fièvre": [
+    520,
+    706,
+    577,
+    727
+   ],
+   "Hypothermie": [
+    867,
+    706,
+    985,
+    727
+   ],
+   "Contusions,": [
+    128,
+    849,
+    256,
+    872
+   ],
+   "lésions": [
+    262,
+    849,
+    339,
+    872
+   ],
+   "traumatiques": [
+    345,
+    849,
+    485,
+    872
+   ],
+   "malformations": [
+    517,
+    849,
+    670,
+    872
+   ],
+   "Bosse": [
+    200,
+    905,
+    262,
+    927
+   ],
+   "sérosanguine": [
+    268,
+    905,
+    401,
+    927
+   ],
+   "céphalohématome": [
+    438,
+    905,
+    621,
+    927
+   ],
+   "Luxation": [
+    200,
+    949,
+    284,
+    972
+   ],
+   "congénitale": [
+    290,
+    949,
+    404,
+    972
+   ],
+   "hanche": [
+    464,
+    949,
+    537,
+    972
+   ],
+   "Diminution": [
+    200,
+    994,
+    305,
+    1016
+   ],
+   "absence": [
+    342,
+    994,
+    426,
+    1016
+   ],
+   "mobilité": [
+    487,
+    994,
+    563,
+    1016
+   ],
+   "d'un": [
+    569,
+    994,
+    611,
+    1016
+   ],
+   "membre": [
+    617,
+    994,
+    698,
+    1016
+   ],
+   "Evaluation": [
+    128,
+    1127,
+    240,
+    1149
+   ],
+   "l'allaitement": [
+    279,
+    1127,
+    406,
+    1149
+   ],
+   "Normal": [
+    728,
+    1127,
+    800,
+    1149
+   ],
+   "problèmes": [
+    943,
+    1127,
+    1047,
+    1149
+   ],
+   "Etat": [
+    128,
+    1183,
+    170,
+    1205
+   ],
+   "vaccinal": [
+    176,
+    1183,
+    264,
+    1205
+   ],
+   "Vaccins": [
+    167,
+    1233,
+    245,
+    1255
+   ],
+   "administrés": [
+    251,
+    1233,
+    364,
+    1255
+   ],
+   "jour": [
+    400,
+    1233,
+    437,
+    1255
+   ],
+   "Supplémentation": [
+    161,
+    1288,
+    328,
+    1311
+   ],
+   "vitamine": [
+    365,
+    1288,
+    448,
+    1311
+   ],
+   "Présence": [
+    128,
+    1355,
+    227,
+    1377
+   ],
+   "complications": [
+    265,
+    1355,
+    414,
+    1377
+   ],
+   "malformation": [
+    479,
+    1355,
+    619,
+    1377
+   ],
+   "Infection": [
+    422,
+    1411,
+    506,
+    1433
+   ],
+   "Conjonctivite": [
+    645,
+    1411,
+    772,
+    1433
+   ],
+   "Traumatisme": [
+    200,
+    1461,
+    330,
+    1483
+   ],
+   "Malformation": [
+    422,
+    1461,
+    551,
+    1483
+   ],
+   "Décision": [
+    128,
+    1705,
+    213,
+    1727
+   ],
+   "Traitement": [
+    128,
+    1788,
+    234,
+    1811
+   ],
+   "prescrit": [
+    240,
+    1788,
+    313,
+    1811
+   ],
+   "Transfert": [
+    161,
+    1886,
+    250,
+    1908
+   ],
+   "Préciser": [
+    334,
+    1886,
+    415,
+    1908
+   ],
+   "l'établissement": [
+    421,
+    1886,
+    568,
+    1908
+   ],
+   "référence": [
+    605,
+    1886,
+    699,
+    1908
+   ],
+   "trois": [
+    189,
+    1994,
+    237,
+    2016
+   ],
+   "règles": [
+    243,
+    1994,
+    309,
+    2016
+   ],
+   "charge": [
+    463,
+    1994,
+    536,
+    2016
+   ],
+   "nouveau-né": [
+    576,
+    1994,
+    701,
+    2016
+   ],
+   "domicile": [
+    725,
+    1994,
+    815,
+    2016
+   ],
+   "exclusif": [
+    378,
+    2033,
+    452,
+    2055
+   ],
+   "Maintien": [
+    495,
+    2033,
+    579,
+    2055
+   ],
+   "chaud": [
+    617,
+    2033,
+    677,
+    2055
+   ],
+   "Quand": [
+    720,
+    2033,
+    787,
+    2055
+   ],
+   "revenir": [
+    793,
+    2033,
+    861,
+    2055
+   ],
+   "immédiatement": [
+    867,
+    2033,
+    1019,
+    2055
+   ],
+   "Revenir": [
+    128,
+    2122,
+    205,
+    2144
+   ],
+   "visite": [
+    305,
+    2122,
+    355,
+    2144
+   ],
+   "suivi": [
+    392,
+    2122,
+    437,
+    2144
+   ],
+   "nécessaire": [
+    443,
+    2122,
+    550,
+    2144
+   ],
+   "Document": [
+    111,
+    2282,
+    187,
+    2299
+   ],
+   "synthétique": [
+    192,
+    2282,
+    277,
+    2299
+   ],
+   "généré": [
+    282,
+    2282,
+    334,
+    2299
+   ],
+   "l'entraînement": [
+    376,
+    2282,
+    481,
+    2299
+   ],
+   "modèles": [
+    509,
+    2282,
+    572,
+    2299
+   ],
+   "aucune": [
+    598,
+    2282,
+    653,
+    2299
+   ],
+   "donnée": [
+    658,
+    2282,
+    713,
+    2299
+   ],
+   "réelle": [
+    718,
+    2282,
+    759,
+    2299
+   ],
+   "utiliser": [
+    839,
+    2282,
+    887,
+    2299
+   ],
+   "comme": [
+    892,
+    2282,
+    947,
+    2299
+   ],
+   "dossier": [
+    951,
+    2282,
+    1005,
+    2299
+   ],
+   "médical.": [
+    1010,
+    2282,
+    1072,
+    2299
+   ]
+  },
+  "zones": [
+   {
+    "id": "page",
+    "bbox_px": [
+     0,
+     0,
+     1654,
+     2339
+    ],
+    "fields": [
+     "age_jours",
+     "date_consultation",
+     "decision",
+     "lesions_autres",
+     "perimetre_cranien_cm",
+     "poids_g",
+     "prochain_rdv",
+     "signes_graves_autres",
+     "taille_cm",
+     "temperature",
+     "traitement",
+     "vu_par"
+    ],
+    "kind": "form"
+   }
+  ]
+ }
+}

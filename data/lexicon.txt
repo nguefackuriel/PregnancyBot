@@ -1,0 +1,197 @@
+# Vocabulaire du carnet : une entrée par ligne. Sert à rapprocher une lecture
+# de texte libre d'un mot connu (accents absents, lettre manquante).
+Acide folique
+Agriculteur
+Agricultrice
+Al Haouz
+Allaitement
+Allergie
+Allergie pénicilline
+Anormal
+Anormaux
+Antibiotique
+Anémie
+Appendicectomie
+Asthme
+Asthme léger
+Aucun
+Aucune
+Azilal
+Berkane
+Béni Mellal-Khénifra
+Calcium
+Cardiopathie
+Casa-Settat
+Casablanca-Settat
+Chauffeur
+Chefchaouen
+Cholécystectomie
+CHU
+Cicatrice propre
+CIS Sidi Smail
+Clinique
+Coiffeuse
+Collège
+Colorées
+Commerçant
+Commerçante
+Court
+Couturière
+CSC Al Amal
+CSC Hay Salam
+CSC Ksar Jdid
+CSCA Ait Mhamed
+CSCA Al Wifaq
+CSCA Lahraouiyine
+CSU Ennahda
+CSUA Hay Riad
+Cycles irréguliers
+Cycles réguliers
+Céphalique
+Césarienne
+Césarienne antérieure
+Dakhla-Oued Ed-Dahab
+Diabète
+Diabète gestationnel
+DIU
+Domicile
+Dr
+Dr Benjelloun
+DR Bni Ahmed
+Dr Chakir
+DR Tahannaout Sud
+Drâa-Tafilalet
+Dysménorrhée
+Décolorées
+Echo obst
+Effacé
+El Jadida
+Employée
+Enseignant
+Enseignante
+Errachidia
+Fausse couche
+Femme au foyer
+Fer
+Fer + acide folique
+Fer 2 cp/j
+Fermé
+Fibrome
+Fonctionnaire
+Forceps
+Fès-Meknès
+Grossesse
+Grossesse extra-utérine
+Guelmim-Oued Noun
+HCV nég
+Hospitalisation
+HTA
+Hypertension
+Hémorragie
+Hépatite B
+Hôpital provincial
+Hôpital régional
+IG
+Immune
+Implant
+Inf. Hajar
+Inf. Salima
+Inf. Zahra
+Infection urinaire
+Infirmier
+Infirmière
+Inflammatoire
+Injectable
+Journalier
+Jumeaux
+Khémisset
+Kyste ovarien
+Kénitra
+Laâyoune-Sakia El Hamra
+Limite
+Long fermé
+Lycée
+Macrosomie
+Maison d'accouchement
+Marrakech-Safi
+Maternité
+Maçon
+Meknès
+Myomectomie
+Mère
+Mécanicien
+Médecin
+Ménorragie
+Ne désire pas
+Neg
+NF
+Non
+Non fait
+Non immune
+Non vaccinée
+Normal
+Normale
+Normales
+Normaux
+Néant
+nég
+Oncle
+Oriental
+Oui
+Ouvert
+Ouvrier
+Ouvrière
+Paracétamol
+Pilule
+Pos
+pos
+Poursuivre l'allaitement
+Poursuivre l'allaitement exclusif
+Primaire
+Propre
+Propre, sèche
+Pré-éclampsie
+Pré-éclampsie sévère
+Prématurité
+Préservatif
+Pâles
+Père
+Rabat-Salé-Kénitra
+RAS
+Revoir dans 7 jours
+Reçu
+Rien à signaler
+Rue Al Massira
+Rue Al Qods
+Rue Ibn Sina
+Rue Mohammed V
+Rue Zerktouni
+Référée
+Rétréci
+Sage-femme
+Sans profession
+Settat
+Siège
+Souffrance fœtale
+Souhaite en discuter avec son mari
+Souss-Massa
+Stérilité
+Suintante
+Supérieur
+Tanger-Tétouan-Al Hoceïma
+Taroudant
+Test rapide
+Thyroïde
+Transverse
+Utérus cicatriciel
+Vaccinée
+Vendeur
+Vendeuse
+Ventouse
+Vitamine A
+Vitamine D
+Vitamine D 400 UI/j
+Voie basse
+Éclampsie
+Épilepsie
+Étudiante

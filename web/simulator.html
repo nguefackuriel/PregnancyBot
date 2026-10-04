@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DayOne, simulateur WhatsApp</title>
+<style>
+  :root { --bg:#0b141a; --panel:#111b21; --bubble-in:#202c33; --bubble-out:#005c4b; --text:#e9edef; --muted:#8696a0; --accent:#25d366; --warn:#f5a623; --line:#2a3942; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background:var(--bg); color:var(--text); height:100vh; display:grid; grid-template-columns: 420px 1fr; }
+  @media (max-width: 900px) { body { grid-template-columns: 1fr; grid-template-rows: 1fr auto; } #side { max-height: 40vh; } }
+  #phone { display:flex; flex-direction:column; border-right:1px solid var(--line); background:var(--panel); min-height:0; }
+  header { padding:12px 16px; background:#202c33; display:flex; align-items:center; gap:12px; }
+  header .avatar { width:40px; height:40px; border-radius:50%; background:var(--accent); display:grid; place-items:center; font-size:20px; }
+  header .title { font-weight:600; } header .sub { color:var(--muted); font-size:12px; }
+  #chat { flex:1; overflow-y:auto; padding:12px; background: #0b141a url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Ccircle cx='60' cy='60' r='1.2' fill='%231f2c33'/%3E%3C/svg%3E"); }
+  .msg { max-width:88%; margin:6px 0; padding:8px 10px; border-radius:8px; font-size:14px; line-height:1.4; white-space:pre-wrap; word-break:break-word; position:relative; }
+  .in { background:var(--bubble-in); border-top-left-radius:0; }
+  .out { background:var(--bubble-out); margin-left:auto; border-top-right-radius:0; }
+  .msg img { max-width:100%; border-radius:6px; display:block; margin-bottom:6px; }
+  .msg .time { font-size:10px; color:var(--muted); text-align:right; margin-top:4px; }
+  .btns { display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
+  .btns button { background:#2a3942; color:#53bdeb; border:0; border-radius:8px; padding:8px 10px; font-size:13px; cursor:pointer; }
+  .btns button:hover { background:#34444f; }
+  .sys { text-align:center; color:var(--muted); font-size:12px; margin:8px 0; }
+  footer { display:flex; gap:8px; padding:10px; background:#202c33; align-items:center; }
+  footer input[type=text] { flex:1; background:#2a3942; border:0; color:var(--text); padding:10px 12px; border-radius:20px; font-size:14px; outline:none; }
+  footer button, footer label { background:transparent; border:0; color:var(--muted); font-size:22px; cursor:pointer; }
+  footer label:hover, footer button:hover { color:var(--text); }
+  #side { padding:18px; overflow-y:auto; }
+  h2 { font-size:14px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin:18px 0 8px; }
+  .card { background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:12px 14px; margin-bottom:10px; }
+  .toggle { display:flex; align-items:center; gap:10px; }
+  .toggle input { width:44px; height:24px; appearance:none; background:#3b4a54; border-radius:12px; position:relative; cursor:pointer; }
+  .toggle input:checked { background:var(--accent); }
+  .toggle input::after { content:""; position:absolute; top:3px; left:3px; width:18px; height:18px; border-radius:50%; background:#fff; transition:left .15s; }
+  .toggle input:checked::after { left:23px; }
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  td, th { padding:6px 4px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; }
+  th { color:var(--muted); font-weight:500; }
+  .state { display:inline-block; padding:2px 8px; border-radius:10px; font-size:11px; background:#2a3942; }
+  .state.SYNCHRONISE { background:#1f5c3b; } .state.EN_ATTENTE_IA, .state.ECHEC_SYNCHRO, .state.ECHEC_TRAITEMENT { background:#6b4b12; }
+  .state.A_REVISER, .state.DOUBLON_SUSPECTE, .state.REVISION_MANUELLE_REQUISE { background:#5a2d2d; }
+  .samples { display:flex; flex-wrap:wrap; gap:6px; }
+  .samples button { background:#2a3942; color:var(--text); border:0; border-radius:6px; padding:6px 8px; font-size:12px; cursor:pointer; }
+  .mono { font-family: ui-monospace, Menlo, monospace; font-size:12px; color:var(--muted); }
+  a { color:#53bdeb; }
+</style>
+</head>
+<body>
+<section id="phone">
+  <header>
+    <div class="avatar">🤖</div>
+    <div><div class="title">Carnet maternel, agent</div><div class="sub" id="status">en ligne</div></div>
+    <div style="margin-left:auto" class="mono" id="sender">+212 6 00 00 00 01</div>
+  </header>
+  <div id="chat"></div>
+  <footer>
+    <label title="Envoyer une photo">📷<input type="file" id="file" accept="image/*" style="display:none"></label>
+    <input type="text" id="text" placeholder="Écrire un message… (menu, dossiers, connexion)">
+    <button id="send" title="Envoyer">➤</button>
+  </footer>
+</section>
+<section id="side">
+  <div class="card toggle">
+    <input type="checkbox" id="net" checked>
+    <div><b>Réseau du téléphone</b><br><span class="mono">coupez-le pour tester la capture hors ligne, rétablissez-le pour vider la file</span></div>
+  </div>
+  <div class="card">
+    <h2 style="margin-top:0">Photos d'exemple</h2>
+    <div class="samples" id="samples"></div>
+    <div class="mono" style="margin-top:8px">ou glissez-déposez n'importe quelle photo de page dans la conversation</div>
+  </div>
+  <h2>File d'attente (sur le téléphone, chiffrée)</h2>
+  <div class="card"><div id="queue" class="mono">vide</div></div>
+  <h2>Pages</h2>
+  <div class="card"><table><thead><tr><th>Page</th><th>État</th><th>Patiente</th><th>Capturée</th></tr></thead><tbody id="records"></tbody></table></div>
+  <h2>Patientes (identifiants internes, aucune donnée nominative)</h2>
+  <div class="card"><table><thead><tr><th>Code</th><th>Pages</th><th>Signaux de liaison</th></tr></thead><tbody id="patients"></tbody></table></div>
+  <div class="mono">Lecteur : <span id="reader"></span> · API : <a href="/docs" target="_blank">/docs</a></div>
+</section>
+<script>
+const SENDER = "+212600000001";
+const chat = document.getElementById('chat');
+const SAMPLES = [
+  ["Identification", "dossiers_specimen_10_patientes-02.png"],
+  ["Grossesse actuelle", "dossiers_specimen_10_patientes-59.png"],
+  ["Accouchement", "dossiers_specimen_10_patientes-04.png"],
+  ["Vraie photo (carnet)", "1-2.jpg"],
+];
+function now(){ return new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}); }
+function bubble(html, cls){ const d=document.createElement('div'); d.className='msg '+cls; d.innerHTML=html+`<div class="time">${now()}</div>`; chat.appendChild(d); chat.scrollTop=chat.scrollHeight; return d; }
+function sys(t){ const d=document.createElement('div'); d.className='sys'; d.textContent=t; chat.appendChild(d); chat.scrollTop=chat.scrollHeight; }
+function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/\*(.+?)\*/g,'<b>$1</b>'); }
+function render(m){
+  let html = (m.image?`<img src="${m.image}">`:'') + esc(m.text);
+  const d = bubble(html,'in');
+  if (m.buttons && m.buttons.length){
+    const b=document.createElement('div'); b.className='btns';
+    m.buttons.forEach(x=>{ const bt=document.createElement('button'); bt.textContent=x.title; bt.onclick=()=>{ bubble(esc(x.title),'out'); post({button_id:x.id}); b.querySelectorAll('button').forEach(q=>q.disabled=true); }; b.appendChild(bt); });
+    d.insertBefore(b, d.querySelector('.time'));
+  }
+}
+async function post(payload){
+  const r = await fetch('/api/message',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({sender:SENDER,...payload})});
+  const j = await r.json();
+  j.messages.forEach(render);
+  refresh();
+}
+document.getElementById('send').onclick = sendText;
+document.getElementById('text').addEventListener('keydown', e=>{ if(e.key==='Enter') sendText(); });
+function sendText(){ const i=document.getElementById('text'); const t=i.value.trim(); if(!t) return; i.value=''; bubble(esc(t),'out'); post({text:t}); }
+function sendFile(file){
+  const rd = new FileReader();
+  rd.onload = ()=>{ bubble(`<img src="${rd.result}">📷 ${esc(file.name)}`,'out'); post({image:rd.result, filename:file.name}); };
+  rd.readAsDataURL(file);
+}
+document.getElementById('file').onchange = e=>{ if(e.target.files[0]) sendFile(e.target.files[0]); e.target.value=''; };
+chat.addEventListener('dragover', e=>e.preventDefault());
+chat.addEventListener('drop', e=>{ e.preventDefault(); const f=e.dataTransfer.files[0]; if(f) sendFile(f); });
+document.getElementById('net').onchange = async e=>{
+  const r = await fetch('/api/connectivity',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({online:e.target.checked})});
+  const j = await r.json();
+  sys(j.online ? '🟢 réseau rétabli' : '🔴 réseau coupé');
+  (j.notifications||[]).filter(n=>n.to===SENDER).forEach(render);
+  refresh();
+};
+const samples = document.getElementById('samples');
+SAMPLES.forEach(([label,name])=>{ const b=document.createElement('button'); b.textContent=label; b.onclick=async()=>{ const blob=await (await fetch('/samples/'+name)).blob(); sendFile(new File([blob], name, {type: blob.type})); }; samples.appendChild(b); });
+async function refresh(){
+  const j = await (await fetch('/api/state?sender='+encodeURIComponent(SENDER))).json();
+  document.getElementById('status').textContent = (j.online?'en ligne':'hors ligne') + ' · ' + j.queue.length + ' en attente';
+  document.getElementById('net').checked = j.online;
+  document.getElementById('reader').textContent = j.reader;
+  document.getElementById('queue').textContent = j.queue.length ? j.queue.map(q=>`${q.kind.toUpperCase()} · ${q.state} · tentatives ${q.attempts}`).join('\n') : 'vide, rien en attente';
+  const pats = Object.fromEntries(j.patients.map(p=>[p.id,p.code]));
+  document.getElementById('records').innerHTML = j.records.slice(-15).reverse().map(r=>`<tr><td>${r.page_type||'?'}</td><td><span class="state ${r.state}">${r.state}</span></td><td>${r.patient_id?(pats[r.patient_id]||r.patient_id.slice(0,8)):''}</td><td class="mono">${r.created_at.slice(11,19)}</td></tr>`).join('') || '<tr><td colspan=4 class="mono">aucune page</td></tr>';
+  document.getElementById('patients').innerHTML = j.patients.map(p=>`<tr><td><b>${p.code||'?'}</b></td><td>${p.n_pages}</td><td class="mono">${Object.entries(p.signals).map(([k,v])=>k+'='+v).join(' · ')}</td></tr>`).join('') || '<tr><td colspan=3 class="mono">aucune patiente</td></tr>';
+}
+refresh(); setInterval(refresh, 4000);
+post({text:'menu'});
+</script>
+</body>
+</html>

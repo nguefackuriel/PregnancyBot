@@ -1,0 +1,5059 @@
+{
+ "name": "dayone_maternal_registry",
+ "version": "0.1.0",
+ "source_form": "Fiche de surveillance de la grossesse et du post-partum, Ministère de la Santé, Royaume du Maroc (carnet rose)",
+ "pages_per_booklet": [
+  "COUVERTURE",
+  "IDENTIFICATION_ANTECEDENTS",
+  "GROSSESSE_ACTUELLE",
+  "ACCOUCHEMENT",
+  "PP_PRECOCE_MERE",
+  "PP_PRECOCE_NOUVEAU_NE",
+  "PP_TARDIF_MERE",
+  "PP_TARDIF_NOUVEAU_NE"
+ ],
+ "statuses": {
+  "CONNU": "Valeur lue avec une confiance >= seuil_connu (0.85 par défaut). Montrée à la sage-femme pour confirmation groupée.",
+  "A_REVISER": "Valeur lue mais confiance entre seuil_revision (0.5) et seuil_connu, OU incohérence détectée par une règle (ex. parité > gestité), OU désaccord entre deux lectures. L'agent pose une question ciblée avec le recadrage de la cellule.",
+  "ILLISIBLE": "De l'encre est présente dans la zone mais aucune lecture n'atteint seuil_revision. L'agent propose : reprendre la photo / saisir à la main.",
+  "NON_FOURNI": "La zone est vide sur la page photographiée (la page a bien été capturée). Rien n'a été écrit par la sage-femme.",
+  "NON_APPLICABLE": "Le champ ne s'applique pas : tiret/barré explicite sur le papier, ou règle de dépendance (ex. indication de césarienne si voie basse ; RAI si Rhésus positif ; Accouch. 3 si parité = 2).",
+  "INCONNU": "On ne sait pas : la page/section n'a pas (encore) été photographiée dans cette session, l'IA est indisponible, ou la sage-femme a répondu « je ne sais pas »."
+ },
+ "status_rules": [
+  "Un champ a toujours exactement un statut ; `value` n'est renseigné que pour CONNU et A_REVISER (et pour ILLISIBLE si une lecture partielle existe, marquée `partial: true`).",
+  "`confidence` est un réel [0,1] obligatoire pour CONNU / A_REVISER / ILLISIBLE ; il doit être calibré (voir SCHEMA.md §Confiance).",
+  "NON_FOURNI ≠ NON_APPLICABLE ≠ INCONNU : un simple « N/A » est interdit (consigne du défi).",
+  "Une valeur hors vocabulaire fermé (enum) passe automatiquement en A_REVISER avec la meilleure correspondance proposée.",
+  "Toute réponse de la sage-femme (confirmation, correction, saisie manuelle) force CONNU avec confidence = 1.0 et `source = midwife`.",
+  "Les champs PII (pii = true) sont détectés pour être masqués sur l'image puis supprimés : ils ne sont JAMAIS stockés (statut interne REDACTED, jamais exporté)."
+ ],
+ "field_record": {
+  "value": "string | number | null, valeur normalisée selon `type`",
+  "raw": "string | null, texte tel que lu avant normalisation",
+  "status": "CONNU | A_REVISER | ILLISIBLE | NON_FOURNI | NON_APPLICABLE | INCONNU",
+  "confidence": "float [0,1] | null",
+  "source": "ai | midwife | rule, qui a fixé la valeur/le statut",
+  "bbox_px": "[x0, y0, x1, y1] dans l'image d'origine | null, permet le recadrage pour la question de suivi",
+  "page_id": "identifiant de la capture d'où vient la valeur",
+  "notes": "string | null, ex. 'NF écrit sur le papier', 'IG = primigeste'"
+ },
+ "types": {
+  "date": {
+   "format": "JJ/MM/AAAA",
+   "accepte": [
+    "JJ/MM/AA",
+    "JJ-MM-AAAA",
+    "JJ.MM.AAAA"
+   ],
+   "regex": "^\\d{2}/\\d{2}/\\d{4}$"
+  },
+  "int": {
+   "regex": "^\\d+$"
+  },
+  "float": {
+   "regex": "^\\d+([.,]\\d+)?$",
+   "note": "virgule décimale acceptée, stockée avec un point"
+  },
+  "text": {},
+  "enum": {
+   "note": "vocabulaire fermé ; correspondance floue (accents/casse/abréviations) puis A_REVISER si distance > 2"
+  },
+  "bool": {
+   "note": "case cochée / Oui-Non"
+  },
+  "ta": {
+   "format": "SYS/DIA en mmHg",
+   "regex": "^\\d{2,3}/\\d{2,3}$",
+   "accepte": [
+    "12/7 (cmHg → ×10)",
+    "120/70"
+   ]
+  },
+  "age_gestationnel": {
+   "format": "SA[+j]",
+   "regex": "^\\d{1,2}\\s*SA(\\s*\\+\\s*\\d\\s*j)?$",
+   "accepte": [
+    "16SA+3j",
+    "16 SA",
+    "16 sem"
+   ]
+  },
+  "poids_g": {
+   "unit": "g",
+   "accepte": [
+    "3,5 kg → 3500"
+   ]
+  },
+  "poids_kg": {
+   "unit": "kg"
+  },
+  "longueur_cm": {
+   "unit": "cm"
+  },
+  "temperature": {
+   "unit": "°C",
+   "regex": "^\\d{2}([.,]\\d)?$"
+  }
+ },
+ "aliases": {
+  "RAS": [
+   "RAS",
+   "R.A.S",
+   "Ras",
+   "rien à signaler",
+   "Aucun",
+   "Aucune",
+   "Néant",
+   "0"
+  ],
+  "Neg": [
+   "Neg",
+   "Nég",
+   "Négatif",
+   "négative",
+   "(-)",
+   "-"
+  ],
+  "Pos": [
+   "Pos",
+   "Positif",
+   "positive",
+   "(+)",
+   "+"
+  ],
+  "Oui": [
+   "Oui",
+   "oui",
+   "O",
+   "✓",
+   "✗ (dans une case)",
+   "Reçu"
+  ],
+  "Non": [
+   "Non",
+   "non",
+   "N",
+   "0"
+  ],
+  "Normales": [
+   "Normales",
+   "Normal",
+   "Nles",
+   "colorées",
+   "bien colorées"
+  ],
+  "Pâles": [
+   "Pâles",
+   "Pales",
+   "P les",
+   "décolorées"
+  ],
+  "Fermé": [
+   "Fermé",
+   "Ferm",
+   "fermé",
+   "long fermé",
+   "LF"
+  ],
+  "Céphalique": [
+   "Céphalique",
+   "C phalique",
+   "céph",
+   "sommet"
+  ],
+  "Voie basse": [
+   "Voie basse",
+   "VB",
+   "AVB",
+   "accouchement voie basse"
+  ],
+  "Césarienne": [
+   "Césarienne",
+   "César",
+   "C/S",
+   "CS"
+  ],
+  "Immune": [
+   "Immune",
+   "immunisée",
+   "+"
+  ],
+  "Non immune": [
+   "Non immune",
+   "non immunisée",
+   "-"
+  ]
+ },
+ "status_codes": {
+  "NF": {
+   "status": "NON_FOURNI",
+   "note": "« non fait » : l'examen n'a pas été réalisé"
+  },
+  "—": {
+   "status": "NON_APPLICABLE",
+   "note": "tiret explicite"
+  },
+  "/": {
+   "status": "NON_APPLICABLE",
+   "note": "cellule barrée"
+  },
+  "IG": {
+   "status": "CONNU",
+   "note": "« primigeste » écrit en travers des antécédents obstétricaux → gestation = 1, parité = 0, accouchements antérieurs = NON_APPLICABLE"
+  }
+ },
+ "pages": {
+  "COUVERTURE": {
+   "title": "Fiche de surveillance de la grossesse et du post-partum (couverture)",
+   "fields": [
+    {
+     "key": "numero_fiche",
+     "label": "N° de la fiche",
+     "type": "text",
+     "note": "peut servir de code de liaison si la sage-femme l'utilise ainsi"
+    },
+    {
+     "key": "region",
+     "label": "Région",
+     "type": "enum",
+     "values": [
+      "Tanger-Tétouan-Al Hoceïma",
+      "Oriental",
+      "Fès-Meknès",
+      "Rabat-Salé-Kénitra",
+      "Béni Mellal-Khénifra",
+      "Casablanca-Settat",
+      "Marrakech-Safi",
+      "Drâa-Tafilalet",
+      "Souss-Massa",
+      "Guelmim-Oued Noun",
+      "Laâyoune-Sakia El Hamra",
+      "Dakhla-Oued Ed-Dahab"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "province",
+     "label": "Province",
+     "type": "text"
+    },
+    {
+     "key": "etablissement",
+     "label": "Nom de l'établissement sanitaire",
+     "type": "text"
+    },
+    {
+     "key": "nom_prenom_parturiente",
+     "label": "Nom/Prénom de la parturiente",
+     "type": "text",
+     "pii": true,
+     "store": false
+    },
+    {
+     "key": "risque_autres",
+     "label": "Autres à préciser (type de risque)",
+     "type": "text"
+    }
+   ],
+   "checkbox_groups": [
+    {
+     "key": "type_etablissement",
+     "label": "Type de l'établissement sanitaire",
+     "choice": "single",
+     "options": [
+      "dr",
+      "csc",
+      "csu",
+      "csca",
+      "csua"
+     ]
+    },
+    {
+     "key": "mode_couverture",
+     "label": "Mode de la couverture",
+     "choice": "single",
+     "options": [
+      "fixe",
+      "mobile"
+     ]
+    },
+    {
+     "key": "grossesse_a_risque",
+     "label": "Grossesse classée à risque",
+     "choice": "bool",
+     "options": [
+      "oui"
+     ]
+    },
+    {
+     "key": "type_risque",
+     "label": "Si grossesse à risque, type de risque",
+     "choice": "multi",
+     "options": [
+      "anemie",
+      "hta",
+      "diabete",
+      "cardiopathie",
+      "metrorragie",
+      "infection",
+      "pre_eclampsie",
+      "eclampsie"
+     ],
+     "depends_on": "grossesse_a_risque == oui"
+    }
+   ]
+  },
+  "IDENTIFICATION_ANTECEDENTS": {
+   "title": "Identification et antécédents",
+   "fields": [
+    {
+     "key": "age",
+     "label": "Age",
+     "type": "int",
+     "unit": "ans",
+     "range": [
+      12,
+      55
+     ]
+    },
+    {
+     "key": "cin",
+     "label": "CIN",
+     "type": "text",
+     "pii": true,
+     "store": false
+    },
+    {
+     "key": "niveau_instruction",
+     "label": "Niveau d'instruction",
+     "type": "enum",
+     "values": [
+      "Aucun",
+      "Primaire",
+      "Collège",
+      "Lycée",
+      "Supérieur"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "profession",
+     "label": "Profession",
+     "type": "text"
+    },
+    {
+     "key": "adresse",
+     "label": "Adresse",
+     "type": "text",
+     "pii": true,
+     "store": false
+    },
+    {
+     "key": "telephone",
+     "label": "Téléphone",
+     "type": "text",
+     "pii": true,
+     "store": false
+    },
+    {
+     "key": "nom_mari",
+     "label": "Nom du Mari",
+     "type": "text",
+     "pii": true,
+     "store": false
+    },
+    {
+     "key": "profession_mari",
+     "label": "Profession (du mari)",
+     "type": "text"
+    },
+    {
+     "key": "antecedents_familiaux.hta.famille_femme",
+     "label": "Antécédents hérédit. et familiaux, hta, famille_femme",
+     "type": "text",
+     "group": "antecedents_familiaux",
+     "aliases": "RAS"
+    },
+    {
+     "key": "antecedents_familiaux.hta.famille_mari",
+     "label": "Antécédents hérédit. et familiaux, hta, famille_mari",
+     "type": "text",
+     "group": "antecedents_familiaux",
+     "aliases": "RAS"
+    },
+    {
+     "key": "antecedents_familiaux.diabete.famille_femme",
+     "label": "Antécédents hérédit. et familiaux, diabete, famille_femme",
+     "type": "text",
+     "group": "antecedents_familiaux",
+     "aliases": "RAS"
+    },
+    {
+     "key": "antecedents_familiaux.diabete.famille_mari",
+     "label": "Antécédents hérédit. et familiaux, diabete, famille_mari",
+     "type": "text",
+     "group": "antecedents_familiaux",
+     "aliases": "RAS"
+    },
+    {
+     "key": "antecedents_familiaux.maladies_hereditaires.famille_femme",
+     "label": "Antécédents hérédit. et familiaux, maladies_hereditaires, famille_femme",
+     "type": "text",
+     "group": "antecedents_familiaux",
+     "aliases": "RAS"
+    },
+    {
+     "key": "antecedents_familiaux.maladies_hereditaires.famille_mari",
+     "label": "Antécédents hérédit. et familiaux, maladies_hereditaires, famille_mari",
+     "type": "text",
+     "group": "antecedents_familiaux",
+     "aliases": "RAS"
+    },
+    {
+     "key": "antecedents_familiaux.malformations.famille_femme",
+     "label": "Antécédents hérédit. et familiaux, malformations, famille_femme",
+     "type": "text",
+     "group": "antecedents_familiaux",
+     "aliases": "RAS"
+    },
+    {
+     "key": "antecedents_familiaux.malformations.famille_mari",
+     "label": "Antécédents hérédit. et familiaux, malformations, famille_mari",
+     "type": "text",
+     "group": "antecedents_familiaux",
+     "aliases": "RAS"
+    },
+    {
+     "key": "antecedents_familiaux.allergies.famille_femme",
+     "label": "Antécédents hérédit. et familiaux, allergies, famille_femme",
+     "type": "text",
+     "group": "antecedents_familiaux",
+     "aliases": "RAS"
+    },
+    {
+     "key": "antecedents_familiaux.allergies.famille_mari",
+     "label": "Antécédents hérédit. et familiaux, allergies, famille_mari",
+     "type": "text",
+     "group": "antecedents_familiaux",
+     "aliases": "RAS"
+    },
+    {
+     "key": "antecedents_familiaux.autres.famille_femme",
+     "label": "Antécédents hérédit. et familiaux, autres, famille_femme",
+     "type": "text",
+     "group": "antecedents_familiaux",
+     "aliases": "RAS"
+    },
+    {
+     "key": "antecedents_familiaux.autres.famille_mari",
+     "label": "Antécédents hérédit. et familiaux, autres, famille_mari",
+     "type": "text",
+     "group": "antecedents_familiaux",
+     "aliases": "RAS"
+    },
+    {
+     "key": "antecedents_femme.medicaux",
+     "label": "Antécédents de la femme, medicaux",
+     "type": "text",
+     "group": "antecedents_femme",
+     "aliases": "RAS"
+    },
+    {
+     "key": "antecedents_femme.chirurgicaux",
+     "label": "Antécédents de la femme, chirurgicaux",
+     "type": "text",
+     "group": "antecedents_femme",
+     "aliases": "RAS"
+    },
+    {
+     "key": "antecedents_femme.gynecologiques",
+     "label": "Antécédents de la femme, gynecologiques",
+     "type": "text",
+     "group": "antecedents_femme",
+     "aliases": "RAS"
+    },
+    {
+     "key": "antecedents_obstetricaux.avortement.nombre",
+     "label": "Anomalies des grossesses antérieures, avortement, nombre",
+     "type": "int",
+     "group": "antecedents_obstetricaux"
+    },
+    {
+     "key": "antecedents_obstetricaux.avortement.date",
+     "label": "Anomalies des grossesses antérieures, avortement, date",
+     "type": "date",
+     "group": "antecedents_obstetricaux"
+    },
+    {
+     "key": "antecedents_obstetricaux.avortement.lieu",
+     "label": "Anomalies des grossesses antérieures, avortement, lieu",
+     "type": "text",
+     "group": "antecedents_obstetricaux"
+    },
+    {
+     "key": "antecedents_obstetricaux.avortement.age_gestationnel_sa",
+     "label": "Anomalies des grossesses antérieures, avortement, age_gestationnel_sa",
+     "type": "age_gestationnel",
+     "group": "antecedents_obstetricaux"
+    },
+    {
+     "key": "antecedents_obstetricaux.accouchement_premature.nombre",
+     "label": "Anomalies des grossesses antérieures, accouchement_premature, nombre",
+     "type": "int",
+     "group": "antecedents_obstetricaux"
+    },
+    {
+     "key": "antecedents_obstetricaux.accouchement_premature.date",
+     "label": "Anomalies des grossesses antérieures, accouchement_premature, date",
+     "type": "date",
+     "group": "antecedents_obstetricaux"
+    },
+    {
+     "key": "antecedents_obstetricaux.accouchement_premature.lieu",
+     "label": "Anomalies des grossesses antérieures, accouchement_premature, lieu",
+     "type": "text",
+     "group": "antecedents_obstetricaux"
+    },
+    {
+     "key": "antecedents_obstetricaux.accouchement_premature.age_gestationnel_sa",
+     "label": "Anomalies des grossesses antérieures, accouchement_premature, age_gestationnel_sa",
+     "type": "age_gestationnel",
+     "group": "antecedents_obstetricaux"
+    },
+    {
+     "key": "antecedents_obstetricaux.mort_foetale_in_utero.nombre",
+     "label": "Anomalies des grossesses antérieures, mort_foetale_in_utero, nombre",
+     "type": "int",
+     "group": "antecedents_obstetricaux"
+    },
+    {
+     "key": "antecedents_obstetricaux.mort_foetale_in_utero.date",
+     "label": "Anomalies des grossesses antérieures, mort_foetale_in_utero, date",
+     "type": "date",
+     "group": "antecedents_obstetricaux"
+    },
+    {
+     "key": "antecedents_obstetricaux.mort_foetale_in_utero.lieu",
+     "label": "Anomalies des grossesses antérieures, mort_foetale_in_utero, lieu",
+     "type": "text",
+     "group": "antecedents_obstetricaux"
+    },
+    {
+     "key": "antecedents_obstetricaux.mort_foetale_in_utero.age_gestationnel_sa",
+     "label": "Anomalies des grossesses antérieures, mort_foetale_in_utero, age_gestationnel_sa",
+     "type": "age_gestationnel",
+     "group": "antecedents_obstetricaux"
+    },
+    {
+     "key": "antecedents_obstetricaux.autres.nombre",
+     "label": "Anomalies des grossesses antérieures, autres, nombre",
+     "type": "int",
+     "group": "antecedents_obstetricaux"
+    },
+    {
+     "key": "antecedents_obstetricaux.autres.date",
+     "label": "Anomalies des grossesses antérieures, autres, date",
+     "type": "date",
+     "group": "antecedents_obstetricaux"
+    },
+    {
+     "key": "antecedents_obstetricaux.autres.lieu",
+     "label": "Anomalies des grossesses antérieures, autres, lieu",
+     "type": "text",
+     "group": "antecedents_obstetricaux"
+    },
+    {
+     "key": "antecedents_obstetricaux.autres.age_gestationnel_sa",
+     "label": "Anomalies des grossesses antérieures, autres, age_gestationnel_sa",
+     "type": "age_gestationnel",
+     "group": "antecedents_obstetricaux"
+    },
+    {
+     "key": "accouchements_anterieurs.1.date",
+     "label": "Accouchement antérieur 1, date",
+     "type": "date",
+     "group": "accouchements_anterieurs",
+     "not_applicable_if": "parite < 1"
+    },
+    {
+     "key": "accouchements_anterieurs.1.modalite",
+     "label": "Accouchement antérieur 1, modalite",
+     "type": "enum",
+     "group": "accouchements_anterieurs",
+     "values": [
+      "Voie basse",
+      "Césarienne",
+      "Forceps",
+      "Ventouse"
+     ],
+     "not_applicable_if": "parite < 1"
+    },
+    {
+     "key": "accouchements_anterieurs.1.indication_cesarienne",
+     "label": "Accouchement antérieur 1, indication_cesarienne",
+     "type": "text",
+     "group": "accouchements_anterieurs",
+     "not_applicable_if": "parite < 1 or accouchements_anterieurs.1.modalite != 'Césarienne'"
+    },
+    {
+     "key": "accouchements_anterieurs.1.complication",
+     "label": "Accouchement antérieur 1, complication",
+     "type": "text",
+     "group": "accouchements_anterieurs",
+     "not_applicable_if": "parite < 1"
+    },
+    {
+     "key": "accouchements_anterieurs.1.poids_nn_g",
+     "label": "Accouchement antérieur 1, poids_nn_g",
+     "type": "poids_g",
+     "group": "accouchements_anterieurs",
+     "not_applicable_if": "parite < 1"
+    },
+    {
+     "key": "accouchements_anterieurs.1.complication_nn",
+     "label": "Accouchement antérieur 1, complication_nn",
+     "type": "text",
+     "group": "accouchements_anterieurs",
+     "not_applicable_if": "parite < 1"
+    },
+    {
+     "key": "accouchements_anterieurs.2.date",
+     "label": "Accouchement antérieur 2, date",
+     "type": "date",
+     "group": "accouchements_anterieurs",
+     "not_applicable_if": "parite < 2"
+    },
+    {
+     "key": "accouchements_anterieurs.2.modalite",
+     "label": "Accouchement antérieur 2, modalite",
+     "type": "enum",
+     "group": "accouchements_anterieurs",
+     "values": [
+      "Voie basse",
+      "Césarienne",
+      "Forceps",
+      "Ventouse"
+     ],
+     "not_applicable_if": "parite < 2"
+    },
+    {
+     "key": "accouchements_anterieurs.2.indication_cesarienne",
+     "label": "Accouchement antérieur 2, indication_cesarienne",
+     "type": "text",
+     "group": "accouchements_anterieurs",
+     "not_applicable_if": "parite < 2 or accouchements_anterieurs.2.modalite != 'Césarienne'"
+    },
+    {
+     "key": "accouchements_anterieurs.2.complication",
+     "label": "Accouchement antérieur 2, complication",
+     "type": "text",
+     "group": "accouchements_anterieurs",
+     "not_applicable_if": "parite < 2"
+    },
+    {
+     "key": "accouchements_anterieurs.2.poids_nn_g",
+     "label": "Accouchement antérieur 2, poids_nn_g",
+     "type": "poids_g",
+     "group": "accouchements_anterieurs",
+     "not_applicable_if": "parite < 2"
+    },
+    {
+     "key": "accouchements_anterieurs.2.complication_nn",
+     "label": "Accouchement antérieur 2, complication_nn",
+     "type": "text",
+     "group": "accouchements_anterieurs",
+     "not_applicable_if": "parite < 2"
+    },
+    {
+     "key": "accouchements_anterieurs.3.date",
+     "label": "Accouchement antérieur 3, date",
+     "type": "date",
+     "group": "accouchements_anterieurs",
+     "not_applicable_if": "parite < 3"
+    },
+    {
+     "key": "accouchements_anterieurs.3.modalite",
+     "label": "Accouchement antérieur 3, modalite",
+     "type": "enum",
+     "group": "accouchements_anterieurs",
+     "values": [
+      "Voie basse",
+      "Césarienne",
+      "Forceps",
+      "Ventouse"
+     ],
+     "not_applicable_if": "parite < 3"
+    },
+    {
+     "key": "accouchements_anterieurs.3.indication_cesarienne",
+     "label": "Accouchement antérieur 3, indication_cesarienne",
+     "type": "text",
+     "group": "accouchements_anterieurs",
+     "not_applicable_if": "parite < 3 or accouchements_anterieurs.3.modalite != 'Césarienne'"
+    },
+    {
+     "key": "accouchements_anterieurs.3.complication",
+     "label": "Accouchement antérieur 3, complication",
+     "type": "text",
+     "group": "accouchements_anterieurs",
+     "not_applicable_if": "parite < 3"
+    },
+    {
+     "key": "accouchements_anterieurs.3.poids_nn_g",
+     "label": "Accouchement antérieur 3, poids_nn_g",
+     "type": "poids_g",
+     "group": "accouchements_anterieurs",
+     "not_applicable_if": "parite < 3"
+    },
+    {
+     "key": "accouchements_anterieurs.3.complication_nn",
+     "label": "Accouchement antérieur 3, complication_nn",
+     "type": "text",
+     "group": "accouchements_anterieurs",
+     "not_applicable_if": "parite < 3"
+    },
+    {
+     "key": "accouchements_anterieurs.4.date",
+     "label": "Accouchement antérieur 4, date",
+     "type": "date",
+     "group": "accouchements_anterieurs",
+     "not_applicable_if": "parite < 4"
+    },
+    {
+     "key": "accouchements_anterieurs.4.modalite",
+     "label": "Accouchement antérieur 4, modalite",
+     "type": "enum",
+     "group": "accouchements_anterieurs",
+     "values": [
+      "Voie basse",
+      "Césarienne",
+      "Forceps",
+      "Ventouse"
+     ],
+     "not_applicable_if": "parite < 4"
+    },
+    {
+     "key": "accouchements_anterieurs.4.indication_cesarienne",
+     "label": "Accouchement antérieur 4, indication_cesarienne",
+     "type": "text",
+     "group": "accouchements_anterieurs",
+     "not_applicable_if": "parite < 4 or accouchements_anterieurs.4.modalite != 'Césarienne'"
+    },
+    {
+     "key": "accouchements_anterieurs.4.complication",
+     "label": "Accouchement antérieur 4, complication",
+     "type": "text",
+     "group": "accouchements_anterieurs",
+     "not_applicable_if": "parite < 4"
+    },
+    {
+     "key": "accouchements_anterieurs.4.poids_nn_g",
+     "label": "Accouchement antérieur 4, poids_nn_g",
+     "type": "poids_g",
+     "group": "accouchements_anterieurs",
+     "not_applicable_if": "parite < 4"
+    },
+    {
+     "key": "accouchements_anterieurs.4.complication_nn",
+     "label": "Accouchement antérieur 4, complication_nn",
+     "type": "text",
+     "group": "accouchements_anterieurs",
+     "not_applicable_if": "parite < 4"
+    },
+    {
+     "key": "accouchements_anterieurs.5.date",
+     "label": "Accouchement antérieur 5, date",
+     "type": "date",
+     "group": "accouchements_anterieurs",
+     "not_applicable_if": "parite < 5"
+    },
+    {
+     "key": "accouchements_anterieurs.5.modalite",
+     "label": "Accouchement antérieur 5, modalite",
+     "type": "enum",
+     "group": "accouchements_anterieurs",
+     "values": [
+      "Voie basse",
+      "Césarienne",
+      "Forceps",
+      "Ventouse"
+     ],
+     "not_applicable_if": "parite < 5"
+    },
+    {
+     "key": "accouchements_anterieurs.5.indication_cesarienne",
+     "label": "Accouchement antérieur 5, indication_cesarienne",
+     "type": "text",
+     "group": "accouchements_anterieurs",
+     "not_applicable_if": "parite < 5 or accouchements_anterieurs.5.modalite != 'Césarienne'"
+    },
+    {
+     "key": "accouchements_anterieurs.5.complication",
+     "label": "Accouchement antérieur 5, complication",
+     "type": "text",
+     "group": "accouchements_anterieurs",
+     "not_applicable_if": "parite < 5"
+    },
+    {
+     "key": "accouchements_anterieurs.5.poids_nn_g",
+     "label": "Accouchement antérieur 5, poids_nn_g",
+     "type": "poids_g",
+     "group": "accouchements_anterieurs",
+     "not_applicable_if": "parite < 5"
+    },
+    {
+     "key": "accouchements_anterieurs.5.complication_nn",
+     "label": "Accouchement antérieur 5, complication_nn",
+     "type": "text",
+     "group": "accouchements_anterieurs",
+     "not_applicable_if": "parite < 5"
+    },
+    {
+     "key": "gestation",
+     "label": "Gestation (gestité)",
+     "type": "int",
+     "range": [
+      1,
+      15
+     ],
+     "note": "« IG » = 1"
+    },
+    {
+     "key": "parite",
+     "label": "Parité",
+     "type": "int",
+     "range": [
+      0,
+      15
+     ],
+     "check": "parite <= gestation"
+    },
+    {
+     "key": "enfants_vivants",
+     "label": "Nombre d'enfants vivants",
+     "type": "int",
+     "range": [
+      0,
+      15
+     ],
+     "check": "enfants_vivants <= parite"
+    },
+    {
+     "key": "date_vaccin_rubeole",
+     "label": "Vaccinée contre la rubéole, Le",
+     "type": "date",
+     "not_applicable_if": "vaccin_rubeole != oui"
+    },
+    {
+     "key": "date_vaccin_hepatite_b",
+     "label": "Vaccinée contre l'hépatite B, Le",
+     "type": "date",
+     "not_applicable_if": "vaccin_hepatite_b != oui"
+    },
+    {
+     "key": "frottis_iva",
+     "label": "Frottis cervical / IVA (moins de 3 ans)",
+     "type": "enum",
+     "values": [
+      "Normal",
+      "Anormal",
+      "Non fait"
+     ],
+     "fuzzy": true
+    }
+   ],
+   "checkbox_groups": [
+    {
+     "key": "consanguinite",
+     "label": "Consanguinité",
+     "choice": "bool",
+     "options": [
+      "oui"
+     ]
+    },
+    {
+     "key": "grossesse_desiree",
+     "label": "Grossesse désirée",
+     "choice": "bool",
+     "options": [
+      "oui"
+     ]
+    },
+    {
+     "key": "vat",
+     "label": "VAT (doses)",
+     "choice": "multi",
+     "options": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5"
+     ],
+     "note": "sur le vrai carnet : cases cochées cumulatives"
+    },
+    {
+     "key": "vaccin_rubeole",
+     "label": "Vaccinée contre la rubéole",
+     "choice": "bool",
+     "options": [
+      "oui"
+     ]
+    },
+    {
+     "key": "vaccin_hepatite_b",
+     "label": "Vaccinée contre l'hépatite B",
+     "choice": "bool",
+     "options": [
+      "oui"
+     ]
+    }
+   ]
+  },
+  "GROSSESSE_ACTUELLE": {
+   "title": "Grossesse actuelle (tableau longitudinal, 9 colonnes de visite)",
+   "note": "Sur le vrai carnet ce tableau est à cheval sur deux pages : les libellés de ligne ne sont que sur la page de gauche ; la page de droite (2e/3e trimestre) s'aligne par la géométrie du gabarit.",
+   "fields": [
+    {
+     "key": "ddr",
+     "label": "DDR (date des dernières règles)",
+     "type": "date"
+    },
+    {
+     "key": "taille_cm",
+     "label": "Taille",
+     "type": "longueur_cm",
+     "range": [
+      130,
+      200
+     ]
+    },
+    {
+     "key": "dpa",
+     "label": "Date prévue d'accouchement",
+     "type": "date",
+     "check": "dpa ≈ ddr + 280 j (±7)"
+    },
+    {
+     "key": "date_depassement_terme",
+     "label": "Date de dépassement de terme",
+     "type": "date",
+     "check": "≈ dpa + 7 j"
+    },
+    {
+     "key": "visites.t1_v1.rendez_vous",
+     "label": "1er trimestre, Visite 1, Rendez-vous",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "date"
+    },
+    {
+     "key": "visites.t1_v1.venue_le",
+     "label": "1er trimestre, Visite 1, Venue le",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "date"
+    },
+    {
+     "key": "visites.t1_v1.visite_relance",
+     "label": "1er trimestre, Visite 1, Visites de relance",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Oui",
+      "Non"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t1_v1.age_gestationnel",
+     "label": "1er trimestre, Visite 1, Age probable de la grossesse",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "age_gestationnel"
+    },
+    {
+     "key": "visites.t1_v1.poids_kg",
+     "label": "1er trimestre, Visite 1, Poids (kg)",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "poids_kg"
+    },
+    {
+     "key": "visites.t1_v1.ta",
+     "label": "1er trimestre, Visite 1, TA",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "ta"
+    },
+    {
+     "key": "visites.t1_v1.anomalies_squelette",
+     "label": "1er trimestre, Visite 1, Anomalies du squelette",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "text"
+    },
+    {
+     "key": "visites.t1_v1.conjonctives",
+     "label": "1er trimestre, Visite 1, État des conjonctives",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Normales",
+      "Pâles",
+      "Décolorées"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t1_v1.seins",
+     "label": "1er trimestre, Visite 1, Examen des seins",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Normaux",
+      "Anormaux"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t1_v1.oedemes",
+     "label": "1er trimestre, Visite 1, Œdèmes",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Oui",
+      "Non"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t1_v1.mouvements_actifs",
+     "label": "1er trimestre, Visite 1, Mouvements actifs",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Oui",
+      "Non"
+     ],
+     "fuzzy": true,
+     "note": "généralement «, » au 1er trimestre"
+    },
+    {
+     "key": "visites.t1_v1.hu_cm",
+     "label": "1er trimestre, Visite 1, HU (cm)",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "longueur_cm",
+     "note": "généralement «, » au 1er trimestre"
+    },
+    {
+     "key": "visites.t1_v1.bcf",
+     "label": "1er trimestre, Visite 1, BCF",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "int",
+     "note": "généralement «, » au 1er trimestre"
+    },
+    {
+     "key": "visites.t1_v1.speculum",
+     "label": "1er trimestre, Visite 1, Examen au spéculum",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "text"
+    },
+    {
+     "key": "visites.t1_v1.tv_col",
+     "label": "1er trimestre, Visite 1, TV : état du col",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Fermé",
+      "Ouvert",
+      "Long fermé",
+      "Court",
+      "Effacé"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t1_v1.tv_presentation",
+     "label": "1er trimestre, Visite 1, TV : présentation",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Céphalique",
+      "Siège",
+      "Transverse"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t1_v1.tv_bassin",
+     "label": "1er trimestre, Visite 1, TV : bassin",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Normal",
+      "Limite",
+      "Rétréci"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t1_v1.glucosurie",
+     "label": "1er trimestre, Visite 1, Glucosurie",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Neg",
+      "Pos"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t1_v1.albuminurie",
+     "label": "1er trimestre, Visite 1, Albuminurie",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Neg",
+      "Pos"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t1_v1.rubeole",
+     "label": "1er trimestre, Visite 1, Rubéole",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Immune",
+      "Non immune"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t1_v1.toxoplasmose",
+     "label": "1er trimestre, Visite 1, Toxoplasmose",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Immune",
+      "Non immune"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t1_v1.syphilis",
+     "label": "1er trimestre, Visite 1, Syphilis (TPHA/VDRL)",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Neg",
+      "Pos"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t1_v1.ag_hbs",
+     "label": "1er trimestre, Visite 1, Ag HBs",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Neg",
+      "Pos"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t1_v1.vih",
+     "label": "1er trimestre, Visite 1, Sérologie VIH",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Neg",
+      "Pos"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t1_v1.hemoglobine",
+     "label": "1er trimestre, Visite 1, Hémoglobine (g/dL)",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "float"
+    },
+    {
+     "key": "visites.t1_v1.plaquettes",
+     "label": "1er trimestre, Visite 1, Plaquettes",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "text"
+    },
+    {
+     "key": "visites.t1_v1.glycemie",
+     "label": "1er trimestre, Visite 1, Bilan glycémique (g/L)",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "float"
+    },
+    {
+     "key": "visites.t1_v1.rai",
+     "label": "1er trimestre, Visite 1, RAI (si Rh négatif)",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Neg",
+      "Pos"
+     ],
+     "fuzzy": true,
+     "not_applicable_if": "rhesus == positif"
+    },
+    {
+     "key": "visites.t1_v1.autres_bio",
+     "label": "1er trimestre, Visite 1, Autres (bio), vrai carnet uniquement",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "text"
+    },
+    {
+     "key": "visites.t1_v1.fer",
+     "label": "1er trimestre, Visite 1, Traitement, Fer",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Oui",
+      "Non",
+      "Reçu"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t1_v1.traitement_autres",
+     "label": "1er trimestre, Visite 1, Traitement, Autres à préciser (vrai carnet)",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "text"
+    },
+    {
+     "key": "visites.t1_v1.examinateur",
+     "label": "1er trimestre, Visite 1, Examen fait par",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "text"
+    },
+    {
+     "key": "visites.t1_v2.rendez_vous",
+     "label": "1er trimestre, Visite 2, Rendez-vous",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "date"
+    },
+    {
+     "key": "visites.t1_v2.venue_le",
+     "label": "1er trimestre, Visite 2, Venue le",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "date"
+    },
+    {
+     "key": "visites.t1_v2.visite_relance",
+     "label": "1er trimestre, Visite 2, Visites de relance",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Oui",
+      "Non"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t1_v2.age_gestationnel",
+     "label": "1er trimestre, Visite 2, Age probable de la grossesse",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "age_gestationnel"
+    },
+    {
+     "key": "visites.t1_v2.poids_kg",
+     "label": "1er trimestre, Visite 2, Poids (kg)",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "poids_kg"
+    },
+    {
+     "key": "visites.t1_v2.ta",
+     "label": "1er trimestre, Visite 2, TA",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "ta"
+    },
+    {
+     "key": "visites.t1_v2.anomalies_squelette",
+     "label": "1er trimestre, Visite 2, Anomalies du squelette",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "text"
+    },
+    {
+     "key": "visites.t1_v2.conjonctives",
+     "label": "1er trimestre, Visite 2, État des conjonctives",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Normales",
+      "Pâles",
+      "Décolorées"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t1_v2.seins",
+     "label": "1er trimestre, Visite 2, Examen des seins",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Normaux",
+      "Anormaux"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t1_v2.oedemes",
+     "label": "1er trimestre, Visite 2, Œdèmes",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Oui",
+      "Non"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t1_v2.mouvements_actifs",
+     "label": "1er trimestre, Visite 2, Mouvements actifs",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Oui",
+      "Non"
+     ],
+     "fuzzy": true,
+     "note": "généralement «, » au 1er trimestre"
+    },
+    {
+     "key": "visites.t1_v2.hu_cm",
+     "label": "1er trimestre, Visite 2, HU (cm)",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "longueur_cm",
+     "note": "généralement «, » au 1er trimestre"
+    },
+    {
+     "key": "visites.t1_v2.bcf",
+     "label": "1er trimestre, Visite 2, BCF",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "int",
+     "note": "généralement «, » au 1er trimestre"
+    },
+    {
+     "key": "visites.t1_v2.speculum",
+     "label": "1er trimestre, Visite 2, Examen au spéculum",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "text"
+    },
+    {
+     "key": "visites.t1_v2.tv_col",
+     "label": "1er trimestre, Visite 2, TV : état du col",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Fermé",
+      "Ouvert",
+      "Long fermé",
+      "Court",
+      "Effacé"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t1_v2.tv_presentation",
+     "label": "1er trimestre, Visite 2, TV : présentation",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Céphalique",
+      "Siège",
+      "Transverse"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t1_v2.tv_bassin",
+     "label": "1er trimestre, Visite 2, TV : bassin",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Normal",
+      "Limite",
+      "Rétréci"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t1_v2.glucosurie",
+     "label": "1er trimestre, Visite 2, Glucosurie",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Neg",
+      "Pos"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t1_v2.albuminurie",
+     "label": "1er trimestre, Visite 2, Albuminurie",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Neg",
+      "Pos"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t1_v2.rubeole",
+     "label": "1er trimestre, Visite 2, Rubéole",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Immune",
+      "Non immune"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t1_v2.toxoplasmose",
+     "label": "1er trimestre, Visite 2, Toxoplasmose",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Immune",
+      "Non immune"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t1_v2.syphilis",
+     "label": "1er trimestre, Visite 2, Syphilis (TPHA/VDRL)",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Neg",
+      "Pos"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t1_v2.ag_hbs",
+     "label": "1er trimestre, Visite 2, Ag HBs",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Neg",
+      "Pos"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t1_v2.vih",
+     "label": "1er trimestre, Visite 2, Sérologie VIH",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Neg",
+      "Pos"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t1_v2.hemoglobine",
+     "label": "1er trimestre, Visite 2, Hémoglobine (g/dL)",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "float"
+    },
+    {
+     "key": "visites.t1_v2.plaquettes",
+     "label": "1er trimestre, Visite 2, Plaquettes",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "text"
+    },
+    {
+     "key": "visites.t1_v2.glycemie",
+     "label": "1er trimestre, Visite 2, Bilan glycémique (g/L)",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "float"
+    },
+    {
+     "key": "visites.t1_v2.rai",
+     "label": "1er trimestre, Visite 2, RAI (si Rh négatif)",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Neg",
+      "Pos"
+     ],
+     "fuzzy": true,
+     "not_applicable_if": "rhesus == positif"
+    },
+    {
+     "key": "visites.t1_v2.autres_bio",
+     "label": "1er trimestre, Visite 2, Autres (bio), vrai carnet uniquement",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "text"
+    },
+    {
+     "key": "visites.t1_v2.fer",
+     "label": "1er trimestre, Visite 2, Traitement, Fer",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Oui",
+      "Non",
+      "Reçu"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t1_v2.traitement_autres",
+     "label": "1er trimestre, Visite 2, Traitement, Autres à préciser (vrai carnet)",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "text"
+    },
+    {
+     "key": "visites.t1_v2.examinateur",
+     "label": "1er trimestre, Visite 2, Examen fait par",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "text"
+    },
+    {
+     "key": "visites.t1_v3.rendez_vous",
+     "label": "1er trimestre, Visite 3, Rendez-vous",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "date"
+    },
+    {
+     "key": "visites.t1_v3.venue_le",
+     "label": "1er trimestre, Visite 3, Venue le",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "date"
+    },
+    {
+     "key": "visites.t1_v3.visite_relance",
+     "label": "1er trimestre, Visite 3, Visites de relance",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Oui",
+      "Non"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t1_v3.age_gestationnel",
+     "label": "1er trimestre, Visite 3, Age probable de la grossesse",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "age_gestationnel"
+    },
+    {
+     "key": "visites.t1_v3.poids_kg",
+     "label": "1er trimestre, Visite 3, Poids (kg)",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "poids_kg"
+    },
+    {
+     "key": "visites.t1_v3.ta",
+     "label": "1er trimestre, Visite 3, TA",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "ta"
+    },
+    {
+     "key": "visites.t1_v3.anomalies_squelette",
+     "label": "1er trimestre, Visite 3, Anomalies du squelette",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "text"
+    },
+    {
+     "key": "visites.t1_v3.conjonctives",
+     "label": "1er trimestre, Visite 3, État des conjonctives",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Normales",
+      "Pâles",
+      "Décolorées"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t1_v3.seins",
+     "label": "1er trimestre, Visite 3, Examen des seins",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Normaux",
+      "Anormaux"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t1_v3.oedemes",
+     "label": "1er trimestre, Visite 3, Œdèmes",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Oui",
+      "Non"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t1_v3.mouvements_actifs",
+     "label": "1er trimestre, Visite 3, Mouvements actifs",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Oui",
+      "Non"
+     ],
+     "fuzzy": true,
+     "note": "généralement «, » au 1er trimestre"
+    },
+    {
+     "key": "visites.t1_v3.hu_cm",
+     "label": "1er trimestre, Visite 3, HU (cm)",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "longueur_cm",
+     "note": "généralement «, » au 1er trimestre"
+    },
+    {
+     "key": "visites.t1_v3.bcf",
+     "label": "1er trimestre, Visite 3, BCF",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "int",
+     "note": "généralement «, » au 1er trimestre"
+    },
+    {
+     "key": "visites.t1_v3.speculum",
+     "label": "1er trimestre, Visite 3, Examen au spéculum",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "text"
+    },
+    {
+     "key": "visites.t1_v3.tv_col",
+     "label": "1er trimestre, Visite 3, TV : état du col",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Fermé",
+      "Ouvert",
+      "Long fermé",
+      "Court",
+      "Effacé"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t1_v3.tv_presentation",
+     "label": "1er trimestre, Visite 3, TV : présentation",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Céphalique",
+      "Siège",
+      "Transverse"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t1_v3.tv_bassin",
+     "label": "1er trimestre, Visite 3, TV : bassin",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Normal",
+      "Limite",
+      "Rétréci"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t1_v3.glucosurie",
+     "label": "1er trimestre, Visite 3, Glucosurie",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Neg",
+      "Pos"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t1_v3.albuminurie",
+     "label": "1er trimestre, Visite 3, Albuminurie",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Neg",
+      "Pos"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t1_v3.rubeole",
+     "label": "1er trimestre, Visite 3, Rubéole",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Immune",
+      "Non immune"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t1_v3.toxoplasmose",
+     "label": "1er trimestre, Visite 3, Toxoplasmose",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Immune",
+      "Non immune"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t1_v3.syphilis",
+     "label": "1er trimestre, Visite 3, Syphilis (TPHA/VDRL)",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Neg",
+      "Pos"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t1_v3.ag_hbs",
+     "label": "1er trimestre, Visite 3, Ag HBs",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Neg",
+      "Pos"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t1_v3.vih",
+     "label": "1er trimestre, Visite 3, Sérologie VIH",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Neg",
+      "Pos"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t1_v3.hemoglobine",
+     "label": "1er trimestre, Visite 3, Hémoglobine (g/dL)",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "float"
+    },
+    {
+     "key": "visites.t1_v3.plaquettes",
+     "label": "1er trimestre, Visite 3, Plaquettes",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "text"
+    },
+    {
+     "key": "visites.t1_v3.glycemie",
+     "label": "1er trimestre, Visite 3, Bilan glycémique (g/L)",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "float"
+    },
+    {
+     "key": "visites.t1_v3.rai",
+     "label": "1er trimestre, Visite 3, RAI (si Rh négatif)",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Neg",
+      "Pos"
+     ],
+     "fuzzy": true,
+     "not_applicable_if": "rhesus == positif"
+    },
+    {
+     "key": "visites.t1_v3.autres_bio",
+     "label": "1er trimestre, Visite 3, Autres (bio), vrai carnet uniquement",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "text"
+    },
+    {
+     "key": "visites.t1_v3.fer",
+     "label": "1er trimestre, Visite 3, Traitement, Fer",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Oui",
+      "Non",
+      "Reçu"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t1_v3.traitement_autres",
+     "label": "1er trimestre, Visite 3, Traitement, Autres à préciser (vrai carnet)",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "text"
+    },
+    {
+     "key": "visites.t1_v3.examinateur",
+     "label": "1er trimestre, Visite 3, Examen fait par",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "text"
+    },
+    {
+     "key": "visites.t2_v1.rendez_vous",
+     "label": "2ème trimestre, Visite 1, Rendez-vous",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "date"
+    },
+    {
+     "key": "visites.t2_v1.venue_le",
+     "label": "2ème trimestre, Visite 1, Venue le",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "date"
+    },
+    {
+     "key": "visites.t2_v1.visite_relance",
+     "label": "2ème trimestre, Visite 1, Visites de relance",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Oui",
+      "Non"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t2_v1.age_gestationnel",
+     "label": "2ème trimestre, Visite 1, Age probable de la grossesse",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "age_gestationnel"
+    },
+    {
+     "key": "visites.t2_v1.poids_kg",
+     "label": "2ème trimestre, Visite 1, Poids (kg)",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "poids_kg"
+    },
+    {
+     "key": "visites.t2_v1.ta",
+     "label": "2ème trimestre, Visite 1, TA",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "ta"
+    },
+    {
+     "key": "visites.t2_v1.anomalies_squelette",
+     "label": "2ème trimestre, Visite 1, Anomalies du squelette",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "text"
+    },
+    {
+     "key": "visites.t2_v1.conjonctives",
+     "label": "2ème trimestre, Visite 1, État des conjonctives",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Normales",
+      "Pâles",
+      "Décolorées"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t2_v1.seins",
+     "label": "2ème trimestre, Visite 1, Examen des seins",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Normaux",
+      "Anormaux"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t2_v1.oedemes",
+     "label": "2ème trimestre, Visite 1, Œdèmes",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Oui",
+      "Non"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t2_v1.mouvements_actifs",
+     "label": "2ème trimestre, Visite 1, Mouvements actifs",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Oui",
+      "Non"
+     ],
+     "fuzzy": true,
+     "note": "généralement «, » au 1er trimestre"
+    },
+    {
+     "key": "visites.t2_v1.hu_cm",
+     "label": "2ème trimestre, Visite 1, HU (cm)",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "longueur_cm",
+     "note": "généralement «, » au 1er trimestre"
+    },
+    {
+     "key": "visites.t2_v1.bcf",
+     "label": "2ème trimestre, Visite 1, BCF",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "int",
+     "note": "généralement «, » au 1er trimestre"
+    },
+    {
+     "key": "visites.t2_v1.speculum",
+     "label": "2ème trimestre, Visite 1, Examen au spéculum",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "text"
+    },
+    {
+     "key": "visites.t2_v1.tv_col",
+     "label": "2ème trimestre, Visite 1, TV : état du col",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Fermé",
+      "Ouvert",
+      "Long fermé",
+      "Court",
+      "Effacé"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t2_v1.tv_presentation",
+     "label": "2ème trimestre, Visite 1, TV : présentation",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Céphalique",
+      "Siège",
+      "Transverse"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t2_v1.tv_bassin",
+     "label": "2ème trimestre, Visite 1, TV : bassin",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Normal",
+      "Limite",
+      "Rétréci"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t2_v1.glucosurie",
+     "label": "2ème trimestre, Visite 1, Glucosurie",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Neg",
+      "Pos"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t2_v1.albuminurie",
+     "label": "2ème trimestre, Visite 1, Albuminurie",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Neg",
+      "Pos"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t2_v1.rubeole",
+     "label": "2ème trimestre, Visite 1, Rubéole",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Immune",
+      "Non immune"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t2_v1.toxoplasmose",
+     "label": "2ème trimestre, Visite 1, Toxoplasmose",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Immune",
+      "Non immune"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t2_v1.syphilis",
+     "label": "2ème trimestre, Visite 1, Syphilis (TPHA/VDRL)",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Neg",
+      "Pos"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t2_v1.ag_hbs",
+     "label": "2ème trimestre, Visite 1, Ag HBs",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Neg",
+      "Pos"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t2_v1.vih",
+     "label": "2ème trimestre, Visite 1, Sérologie VIH",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Neg",
+      "Pos"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t2_v1.hemoglobine",
+     "label": "2ème trimestre, Visite 1, Hémoglobine (g/dL)",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "float"
+    },
+    {
+     "key": "visites.t2_v1.plaquettes",
+     "label": "2ème trimestre, Visite 1, Plaquettes",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "text"
+    },
+    {
+     "key": "visites.t2_v1.glycemie",
+     "label": "2ème trimestre, Visite 1, Bilan glycémique (g/L)",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "float"
+    },
+    {
+     "key": "visites.t2_v1.rai",
+     "label": "2ème trimestre, Visite 1, RAI (si Rh négatif)",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Neg",
+      "Pos"
+     ],
+     "fuzzy": true,
+     "not_applicable_if": "rhesus == positif"
+    },
+    {
+     "key": "visites.t2_v1.autres_bio",
+     "label": "2ème trimestre, Visite 1, Autres (bio), vrai carnet uniquement",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "text"
+    },
+    {
+     "key": "visites.t2_v1.fer",
+     "label": "2ème trimestre, Visite 1, Traitement, Fer",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Oui",
+      "Non",
+      "Reçu"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t2_v1.traitement_autres",
+     "label": "2ème trimestre, Visite 1, Traitement, Autres à préciser (vrai carnet)",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "text"
+    },
+    {
+     "key": "visites.t2_v1.examinateur",
+     "label": "2ème trimestre, Visite 1, Examen fait par",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "text"
+    },
+    {
+     "key": "visites.t2_v2.rendez_vous",
+     "label": "2ème trimestre, Visite 2, Rendez-vous",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "date"
+    },
+    {
+     "key": "visites.t2_v2.venue_le",
+     "label": "2ème trimestre, Visite 2, Venue le",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "date"
+    },
+    {
+     "key": "visites.t2_v2.visite_relance",
+     "label": "2ème trimestre, Visite 2, Visites de relance",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Oui",
+      "Non"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t2_v2.age_gestationnel",
+     "label": "2ème trimestre, Visite 2, Age probable de la grossesse",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "age_gestationnel"
+    },
+    {
+     "key": "visites.t2_v2.poids_kg",
+     "label": "2ème trimestre, Visite 2, Poids (kg)",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "poids_kg"
+    },
+    {
+     "key": "visites.t2_v2.ta",
+     "label": "2ème trimestre, Visite 2, TA",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "ta"
+    },
+    {
+     "key": "visites.t2_v2.anomalies_squelette",
+     "label": "2ème trimestre, Visite 2, Anomalies du squelette",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "text"
+    },
+    {
+     "key": "visites.t2_v2.conjonctives",
+     "label": "2ème trimestre, Visite 2, État des conjonctives",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Normales",
+      "Pâles",
+      "Décolorées"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t2_v2.seins",
+     "label": "2ème trimestre, Visite 2, Examen des seins",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Normaux",
+      "Anormaux"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t2_v2.oedemes",
+     "label": "2ème trimestre, Visite 2, Œdèmes",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Oui",
+      "Non"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t2_v2.mouvements_actifs",
+     "label": "2ème trimestre, Visite 2, Mouvements actifs",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Oui",
+      "Non"
+     ],
+     "fuzzy": true,
+     "note": "généralement «, » au 1er trimestre"
+    },
+    {
+     "key": "visites.t2_v2.hu_cm",
+     "label": "2ème trimestre, Visite 2, HU (cm)",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "longueur_cm",
+     "note": "généralement «, » au 1er trimestre"
+    },
+    {
+     "key": "visites.t2_v2.bcf",
+     "label": "2ème trimestre, Visite 2, BCF",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "int",
+     "note": "généralement «, » au 1er trimestre"
+    },
+    {
+     "key": "visites.t2_v2.speculum",
+     "label": "2ème trimestre, Visite 2, Examen au spéculum",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "text"
+    },
+    {
+     "key": "visites.t2_v2.tv_col",
+     "label": "2ème trimestre, Visite 2, TV : état du col",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Fermé",
+      "Ouvert",
+      "Long fermé",
+      "Court",
+      "Effacé"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t2_v2.tv_presentation",
+     "label": "2ème trimestre, Visite 2, TV : présentation",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Céphalique",
+      "Siège",
+      "Transverse"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t2_v2.tv_bassin",
+     "label": "2ème trimestre, Visite 2, TV : bassin",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Normal",
+      "Limite",
+      "Rétréci"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t2_v2.glucosurie",
+     "label": "2ème trimestre, Visite 2, Glucosurie",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Neg",
+      "Pos"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t2_v2.albuminurie",
+     "label": "2ème trimestre, Visite 2, Albuminurie",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Neg",
+      "Pos"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t2_v2.rubeole",
+     "label": "2ème trimestre, Visite 2, Rubéole",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Immune",
+      "Non immune"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t2_v2.toxoplasmose",
+     "label": "2ème trimestre, Visite 2, Toxoplasmose",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Immune",
+      "Non immune"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t2_v2.syphilis",
+     "label": "2ème trimestre, Visite 2, Syphilis (TPHA/VDRL)",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Neg",
+      "Pos"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t2_v2.ag_hbs",
+     "label": "2ème trimestre, Visite 2, Ag HBs",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Neg",
+      "Pos"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t2_v2.vih",
+     "label": "2ème trimestre, Visite 2, Sérologie VIH",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Neg",
+      "Pos"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t2_v2.hemoglobine",
+     "label": "2ème trimestre, Visite 2, Hémoglobine (g/dL)",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "float"
+    },
+    {
+     "key": "visites.t2_v2.plaquettes",
+     "label": "2ème trimestre, Visite 2, Plaquettes",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "text"
+    },
+    {
+     "key": "visites.t2_v2.glycemie",
+     "label": "2ème trimestre, Visite 2, Bilan glycémique (g/L)",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "float"
+    },
+    {
+     "key": "visites.t2_v2.rai",
+     "label": "2ème trimestre, Visite 2, RAI (si Rh négatif)",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Neg",
+      "Pos"
+     ],
+     "fuzzy": true,
+     "not_applicable_if": "rhesus == positif"
+    },
+    {
+     "key": "visites.t2_v2.autres_bio",
+     "label": "2ème trimestre, Visite 2, Autres (bio), vrai carnet uniquement",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "text"
+    },
+    {
+     "key": "visites.t2_v2.fer",
+     "label": "2ème trimestre, Visite 2, Traitement, Fer",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Oui",
+      "Non",
+      "Reçu"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t2_v2.traitement_autres",
+     "label": "2ème trimestre, Visite 2, Traitement, Autres à préciser (vrai carnet)",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "text"
+    },
+    {
+     "key": "visites.t2_v2.examinateur",
+     "label": "2ème trimestre, Visite 2, Examen fait par",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "text"
+    },
+    {
+     "key": "visites.t2_v3.rendez_vous",
+     "label": "2ème trimestre, Visite 3, Rendez-vous",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "date"
+    },
+    {
+     "key": "visites.t2_v3.venue_le",
+     "label": "2ème trimestre, Visite 3, Venue le",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "date"
+    },
+    {
+     "key": "visites.t2_v3.visite_relance",
+     "label": "2ème trimestre, Visite 3, Visites de relance",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Oui",
+      "Non"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t2_v3.age_gestationnel",
+     "label": "2ème trimestre, Visite 3, Age probable de la grossesse",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "age_gestationnel"
+    },
+    {
+     "key": "visites.t2_v3.poids_kg",
+     "label": "2ème trimestre, Visite 3, Poids (kg)",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "poids_kg"
+    },
+    {
+     "key": "visites.t2_v3.ta",
+     "label": "2ème trimestre, Visite 3, TA",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "ta"
+    },
+    {
+     "key": "visites.t2_v3.anomalies_squelette",
+     "label": "2ème trimestre, Visite 3, Anomalies du squelette",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "text"
+    },
+    {
+     "key": "visites.t2_v3.conjonctives",
+     "label": "2ème trimestre, Visite 3, État des conjonctives",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Normales",
+      "Pâles",
+      "Décolorées"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t2_v3.seins",
+     "label": "2ème trimestre, Visite 3, Examen des seins",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Normaux",
+      "Anormaux"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t2_v3.oedemes",
+     "label": "2ème trimestre, Visite 3, Œdèmes",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Oui",
+      "Non"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t2_v3.mouvements_actifs",
+     "label": "2ème trimestre, Visite 3, Mouvements actifs",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Oui",
+      "Non"
+     ],
+     "fuzzy": true,
+     "note": "généralement «, » au 1er trimestre"
+    },
+    {
+     "key": "visites.t2_v3.hu_cm",
+     "label": "2ème trimestre, Visite 3, HU (cm)",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "longueur_cm",
+     "note": "généralement «, » au 1er trimestre"
+    },
+    {
+     "key": "visites.t2_v3.bcf",
+     "label": "2ème trimestre, Visite 3, BCF",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "int",
+     "note": "généralement «, » au 1er trimestre"
+    },
+    {
+     "key": "visites.t2_v3.speculum",
+     "label": "2ème trimestre, Visite 3, Examen au spéculum",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "text"
+    },
+    {
+     "key": "visites.t2_v3.tv_col",
+     "label": "2ème trimestre, Visite 3, TV : état du col",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Fermé",
+      "Ouvert",
+      "Long fermé",
+      "Court",
+      "Effacé"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t2_v3.tv_presentation",
+     "label": "2ème trimestre, Visite 3, TV : présentation",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Céphalique",
+      "Siège",
+      "Transverse"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t2_v3.tv_bassin",
+     "label": "2ème trimestre, Visite 3, TV : bassin",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Normal",
+      "Limite",
+      "Rétréci"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t2_v3.glucosurie",
+     "label": "2ème trimestre, Visite 3, Glucosurie",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Neg",
+      "Pos"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t2_v3.albuminurie",
+     "label": "2ème trimestre, Visite 3, Albuminurie",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Neg",
+      "Pos"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t2_v3.rubeole",
+     "label": "2ème trimestre, Visite 3, Rubéole",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Immune",
+      "Non immune"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t2_v3.toxoplasmose",
+     "label": "2ème trimestre, Visite 3, Toxoplasmose",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Immune",
+      "Non immune"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t2_v3.syphilis",
+     "label": "2ème trimestre, Visite 3, Syphilis (TPHA/VDRL)",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Neg",
+      "Pos"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t2_v3.ag_hbs",
+     "label": "2ème trimestre, Visite 3, Ag HBs",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Neg",
+      "Pos"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t2_v3.vih",
+     "label": "2ème trimestre, Visite 3, Sérologie VIH",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Neg",
+      "Pos"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t2_v3.hemoglobine",
+     "label": "2ème trimestre, Visite 3, Hémoglobine (g/dL)",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "float"
+    },
+    {
+     "key": "visites.t2_v3.plaquettes",
+     "label": "2ème trimestre, Visite 3, Plaquettes",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "text"
+    },
+    {
+     "key": "visites.t2_v3.glycemie",
+     "label": "2ème trimestre, Visite 3, Bilan glycémique (g/L)",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "float"
+    },
+    {
+     "key": "visites.t2_v3.rai",
+     "label": "2ème trimestre, Visite 3, RAI (si Rh négatif)",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Neg",
+      "Pos"
+     ],
+     "fuzzy": true,
+     "not_applicable_if": "rhesus == positif"
+    },
+    {
+     "key": "visites.t2_v3.autres_bio",
+     "label": "2ème trimestre, Visite 3, Autres (bio), vrai carnet uniquement",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "text"
+    },
+    {
+     "key": "visites.t2_v3.fer",
+     "label": "2ème trimestre, Visite 3, Traitement, Fer",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Oui",
+      "Non",
+      "Reçu"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t2_v3.traitement_autres",
+     "label": "2ème trimestre, Visite 3, Traitement, Autres à préciser (vrai carnet)",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "text"
+    },
+    {
+     "key": "visites.t2_v3.examinateur",
+     "label": "2ème trimestre, Visite 3, Examen fait par",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "text"
+    },
+    {
+     "key": "visites.t3_m7.rendez_vous",
+     "label": "3ème trimestre, 7ème mois, Rendez-vous",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "date"
+    },
+    {
+     "key": "visites.t3_m7.venue_le",
+     "label": "3ème trimestre, 7ème mois, Venue le",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "date"
+    },
+    {
+     "key": "visites.t3_m7.visite_relance",
+     "label": "3ème trimestre, 7ème mois, Visites de relance",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Oui",
+      "Non"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t3_m7.age_gestationnel",
+     "label": "3ème trimestre, 7ème mois, Age probable de la grossesse",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "age_gestationnel"
+    },
+    {
+     "key": "visites.t3_m7.poids_kg",
+     "label": "3ème trimestre, 7ème mois, Poids (kg)",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "poids_kg"
+    },
+    {
+     "key": "visites.t3_m7.ta",
+     "label": "3ème trimestre, 7ème mois, TA",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "ta"
+    },
+    {
+     "key": "visites.t3_m7.anomalies_squelette",
+     "label": "3ème trimestre, 7ème mois, Anomalies du squelette",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "text"
+    },
+    {
+     "key": "visites.t3_m7.conjonctives",
+     "label": "3ème trimestre, 7ème mois, État des conjonctives",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Normales",
+      "Pâles",
+      "Décolorées"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t3_m7.seins",
+     "label": "3ème trimestre, 7ème mois, Examen des seins",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Normaux",
+      "Anormaux"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t3_m7.oedemes",
+     "label": "3ème trimestre, 7ème mois, Œdèmes",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Oui",
+      "Non"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t3_m7.mouvements_actifs",
+     "label": "3ème trimestre, 7ème mois, Mouvements actifs",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Oui",
+      "Non"
+     ],
+     "fuzzy": true,
+     "note": "généralement «, » au 1er trimestre"
+    },
+    {
+     "key": "visites.t3_m7.hu_cm",
+     "label": "3ème trimestre, 7ème mois, HU (cm)",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "longueur_cm",
+     "note": "généralement «, » au 1er trimestre"
+    },
+    {
+     "key": "visites.t3_m7.bcf",
+     "label": "3ème trimestre, 7ème mois, BCF",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "int",
+     "note": "généralement «, » au 1er trimestre"
+    },
+    {
+     "key": "visites.t3_m7.speculum",
+     "label": "3ème trimestre, 7ème mois, Examen au spéculum",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "text"
+    },
+    {
+     "key": "visites.t3_m7.tv_col",
+     "label": "3ème trimestre, 7ème mois, TV : état du col",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Fermé",
+      "Ouvert",
+      "Long fermé",
+      "Court",
+      "Effacé"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t3_m7.tv_presentation",
+     "label": "3ème trimestre, 7ème mois, TV : présentation",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Céphalique",
+      "Siège",
+      "Transverse"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t3_m7.tv_bassin",
+     "label": "3ème trimestre, 7ème mois, TV : bassin",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Normal",
+      "Limite",
+      "Rétréci"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t3_m7.glucosurie",
+     "label": "3ème trimestre, 7ème mois, Glucosurie",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Neg",
+      "Pos"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t3_m7.albuminurie",
+     "label": "3ème trimestre, 7ème mois, Albuminurie",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Neg",
+      "Pos"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t3_m7.rubeole",
+     "label": "3ème trimestre, 7ème mois, Rubéole",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Immune",
+      "Non immune"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t3_m7.toxoplasmose",
+     "label": "3ème trimestre, 7ème mois, Toxoplasmose",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Immune",
+      "Non immune"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t3_m7.syphilis",
+     "label": "3ème trimestre, 7ème mois, Syphilis (TPHA/VDRL)",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Neg",
+      "Pos"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t3_m7.ag_hbs",
+     "label": "3ème trimestre, 7ème mois, Ag HBs",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Neg",
+      "Pos"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t3_m7.vih",
+     "label": "3ème trimestre, 7ème mois, Sérologie VIH",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Neg",
+      "Pos"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t3_m7.hemoglobine",
+     "label": "3ème trimestre, 7ème mois, Hémoglobine (g/dL)",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "float"
+    },
+    {
+     "key": "visites.t3_m7.plaquettes",
+     "label": "3ème trimestre, 7ème mois, Plaquettes",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "text"
+    },
+    {
+     "key": "visites.t3_m7.glycemie",
+     "label": "3ème trimestre, 7ème mois, Bilan glycémique (g/L)",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "float"
+    },
+    {
+     "key": "visites.t3_m7.rai",
+     "label": "3ème trimestre, 7ème mois, RAI (si Rh négatif)",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Neg",
+      "Pos"
+     ],
+     "fuzzy": true,
+     "not_applicable_if": "rhesus == positif"
+    },
+    {
+     "key": "visites.t3_m7.autres_bio",
+     "label": "3ème trimestre, 7ème mois, Autres (bio), vrai carnet uniquement",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "text"
+    },
+    {
+     "key": "visites.t3_m7.fer",
+     "label": "3ème trimestre, 7ème mois, Traitement, Fer",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Oui",
+      "Non",
+      "Reçu"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t3_m7.traitement_autres",
+     "label": "3ème trimestre, 7ème mois, Traitement, Autres à préciser (vrai carnet)",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "text"
+    },
+    {
+     "key": "visites.t3_m7.examinateur",
+     "label": "3ème trimestre, 7ème mois, Examen fait par",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "text"
+    },
+    {
+     "key": "visites.t3_m8.rendez_vous",
+     "label": "3ème trimestre, 8ème mois, Rendez-vous",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "date"
+    },
+    {
+     "key": "visites.t3_m8.venue_le",
+     "label": "3ème trimestre, 8ème mois, Venue le",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "date"
+    },
+    {
+     "key": "visites.t3_m8.visite_relance",
+     "label": "3ème trimestre, 8ème mois, Visites de relance",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Oui",
+      "Non"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t3_m8.age_gestationnel",
+     "label": "3ème trimestre, 8ème mois, Age probable de la grossesse",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "age_gestationnel"
+    },
+    {
+     "key": "visites.t3_m8.poids_kg",
+     "label": "3ème trimestre, 8ème mois, Poids (kg)",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "poids_kg"
+    },
+    {
+     "key": "visites.t3_m8.ta",
+     "label": "3ème trimestre, 8ème mois, TA",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "ta"
+    },
+    {
+     "key": "visites.t3_m8.anomalies_squelette",
+     "label": "3ème trimestre, 8ème mois, Anomalies du squelette",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "text"
+    },
+    {
+     "key": "visites.t3_m8.conjonctives",
+     "label": "3ème trimestre, 8ème mois, État des conjonctives",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Normales",
+      "Pâles",
+      "Décolorées"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t3_m8.seins",
+     "label": "3ème trimestre, 8ème mois, Examen des seins",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Normaux",
+      "Anormaux"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t3_m8.oedemes",
+     "label": "3ème trimestre, 8ème mois, Œdèmes",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Oui",
+      "Non"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t3_m8.mouvements_actifs",
+     "label": "3ème trimestre, 8ème mois, Mouvements actifs",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Oui",
+      "Non"
+     ],
+     "fuzzy": true,
+     "note": "généralement «, » au 1er trimestre"
+    },
+    {
+     "key": "visites.t3_m8.hu_cm",
+     "label": "3ème trimestre, 8ème mois, HU (cm)",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "longueur_cm",
+     "note": "généralement «, » au 1er trimestre"
+    },
+    {
+     "key": "visites.t3_m8.bcf",
+     "label": "3ème trimestre, 8ème mois, BCF",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "int",
+     "note": "généralement «, » au 1er trimestre"
+    },
+    {
+     "key": "visites.t3_m8.speculum",
+     "label": "3ème trimestre, 8ème mois, Examen au spéculum",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "text"
+    },
+    {
+     "key": "visites.t3_m8.tv_col",
+     "label": "3ème trimestre, 8ème mois, TV : état du col",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Fermé",
+      "Ouvert",
+      "Long fermé",
+      "Court",
+      "Effacé"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t3_m8.tv_presentation",
+     "label": "3ème trimestre, 8ème mois, TV : présentation",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Céphalique",
+      "Siège",
+      "Transverse"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t3_m8.tv_bassin",
+     "label": "3ème trimestre, 8ème mois, TV : bassin",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Normal",
+      "Limite",
+      "Rétréci"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t3_m8.glucosurie",
+     "label": "3ème trimestre, 8ème mois, Glucosurie",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Neg",
+      "Pos"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t3_m8.albuminurie",
+     "label": "3ème trimestre, 8ème mois, Albuminurie",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Neg",
+      "Pos"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t3_m8.rubeole",
+     "label": "3ème trimestre, 8ème mois, Rubéole",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Immune",
+      "Non immune"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t3_m8.toxoplasmose",
+     "label": "3ème trimestre, 8ème mois, Toxoplasmose",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Immune",
+      "Non immune"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t3_m8.syphilis",
+     "label": "3ème trimestre, 8ème mois, Syphilis (TPHA/VDRL)",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Neg",
+      "Pos"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t3_m8.ag_hbs",
+     "label": "3ème trimestre, 8ème mois, Ag HBs",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Neg",
+      "Pos"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t3_m8.vih",
+     "label": "3ème trimestre, 8ème mois, Sérologie VIH",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Neg",
+      "Pos"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t3_m8.hemoglobine",
+     "label": "3ème trimestre, 8ème mois, Hémoglobine (g/dL)",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "float"
+    },
+    {
+     "key": "visites.t3_m8.plaquettes",
+     "label": "3ème trimestre, 8ème mois, Plaquettes",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "text"
+    },
+    {
+     "key": "visites.t3_m8.glycemie",
+     "label": "3ème trimestre, 8ème mois, Bilan glycémique (g/L)",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "float"
+    },
+    {
+     "key": "visites.t3_m8.rai",
+     "label": "3ème trimestre, 8ème mois, RAI (si Rh négatif)",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Neg",
+      "Pos"
+     ],
+     "fuzzy": true,
+     "not_applicable_if": "rhesus == positif"
+    },
+    {
+     "key": "visites.t3_m8.autres_bio",
+     "label": "3ème trimestre, 8ème mois, Autres (bio), vrai carnet uniquement",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "text"
+    },
+    {
+     "key": "visites.t3_m8.fer",
+     "label": "3ème trimestre, 8ème mois, Traitement, Fer",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Oui",
+      "Non",
+      "Reçu"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t3_m8.traitement_autres",
+     "label": "3ème trimestre, 8ème mois, Traitement, Autres à préciser (vrai carnet)",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "text"
+    },
+    {
+     "key": "visites.t3_m8.examinateur",
+     "label": "3ème trimestre, 8ème mois, Examen fait par",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "text"
+    },
+    {
+     "key": "visites.t3_m9.rendez_vous",
+     "label": "3ème trimestre, 9ème mois, Rendez-vous",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "date"
+    },
+    {
+     "key": "visites.t3_m9.venue_le",
+     "label": "3ème trimestre, 9ème mois, Venue le",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "date"
+    },
+    {
+     "key": "visites.t3_m9.visite_relance",
+     "label": "3ème trimestre, 9ème mois, Visites de relance",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Oui",
+      "Non"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t3_m9.age_gestationnel",
+     "label": "3ème trimestre, 9ème mois, Age probable de la grossesse",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "age_gestationnel"
+    },
+    {
+     "key": "visites.t3_m9.poids_kg",
+     "label": "3ème trimestre, 9ème mois, Poids (kg)",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "poids_kg"
+    },
+    {
+     "key": "visites.t3_m9.ta",
+     "label": "3ème trimestre, 9ème mois, TA",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "ta"
+    },
+    {
+     "key": "visites.t3_m9.anomalies_squelette",
+     "label": "3ème trimestre, 9ème mois, Anomalies du squelette",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "text"
+    },
+    {
+     "key": "visites.t3_m9.conjonctives",
+     "label": "3ème trimestre, 9ème mois, État des conjonctives",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Normales",
+      "Pâles",
+      "Décolorées"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t3_m9.seins",
+     "label": "3ème trimestre, 9ème mois, Examen des seins",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Normaux",
+      "Anormaux"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t3_m9.oedemes",
+     "label": "3ème trimestre, 9ème mois, Œdèmes",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Oui",
+      "Non"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t3_m9.mouvements_actifs",
+     "label": "3ème trimestre, 9ème mois, Mouvements actifs",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Oui",
+      "Non"
+     ],
+     "fuzzy": true,
+     "note": "généralement «, » au 1er trimestre"
+    },
+    {
+     "key": "visites.t3_m9.hu_cm",
+     "label": "3ème trimestre, 9ème mois, HU (cm)",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "longueur_cm",
+     "note": "généralement «, » au 1er trimestre"
+    },
+    {
+     "key": "visites.t3_m9.bcf",
+     "label": "3ème trimestre, 9ème mois, BCF",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "int",
+     "note": "généralement «, » au 1er trimestre"
+    },
+    {
+     "key": "visites.t3_m9.speculum",
+     "label": "3ème trimestre, 9ème mois, Examen au spéculum",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "text"
+    },
+    {
+     "key": "visites.t3_m9.tv_col",
+     "label": "3ème trimestre, 9ème mois, TV : état du col",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Fermé",
+      "Ouvert",
+      "Long fermé",
+      "Court",
+      "Effacé"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t3_m9.tv_presentation",
+     "label": "3ème trimestre, 9ème mois, TV : présentation",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Céphalique",
+      "Siège",
+      "Transverse"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t3_m9.tv_bassin",
+     "label": "3ème trimestre, 9ème mois, TV : bassin",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Normal",
+      "Limite",
+      "Rétréci"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t3_m9.glucosurie",
+     "label": "3ème trimestre, 9ème mois, Glucosurie",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Neg",
+      "Pos"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t3_m9.albuminurie",
+     "label": "3ème trimestre, 9ème mois, Albuminurie",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Neg",
+      "Pos"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t3_m9.rubeole",
+     "label": "3ème trimestre, 9ème mois, Rubéole",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Immune",
+      "Non immune"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t3_m9.toxoplasmose",
+     "label": "3ème trimestre, 9ème mois, Toxoplasmose",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Immune",
+      "Non immune"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t3_m9.syphilis",
+     "label": "3ème trimestre, 9ème mois, Syphilis (TPHA/VDRL)",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Neg",
+      "Pos"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t3_m9.ag_hbs",
+     "label": "3ème trimestre, 9ème mois, Ag HBs",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Neg",
+      "Pos"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t3_m9.vih",
+     "label": "3ème trimestre, 9ème mois, Sérologie VIH",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Neg",
+      "Pos"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t3_m9.hemoglobine",
+     "label": "3ème trimestre, 9ème mois, Hémoglobine (g/dL)",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "float"
+    },
+    {
+     "key": "visites.t3_m9.plaquettes",
+     "label": "3ème trimestre, 9ème mois, Plaquettes",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "text"
+    },
+    {
+     "key": "visites.t3_m9.glycemie",
+     "label": "3ème trimestre, 9ème mois, Bilan glycémique (g/L)",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "float"
+    },
+    {
+     "key": "visites.t3_m9.rai",
+     "label": "3ème trimestre, 9ème mois, RAI (si Rh négatif)",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Neg",
+      "Pos"
+     ],
+     "fuzzy": true,
+     "not_applicable_if": "rhesus == positif"
+    },
+    {
+     "key": "visites.t3_m9.autres_bio",
+     "label": "3ème trimestre, 9ème mois, Autres (bio), vrai carnet uniquement",
+     "cardinality": "any_visit",
+     "group": "visites",
+     "type": "text"
+    },
+    {
+     "key": "visites.t3_m9.fer",
+     "label": "3ème trimestre, 9ème mois, Traitement, Fer",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "enum",
+     "values": [
+      "Oui",
+      "Non",
+      "Reçu"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "visites.t3_m9.traitement_autres",
+     "label": "3ème trimestre, 9ème mois, Traitement, Autres à préciser (vrai carnet)",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "text"
+    },
+    {
+     "key": "visites.t3_m9.examinateur",
+     "label": "3ème trimestre, 9ème mois, Examen fait par",
+     "cardinality": "per_visit",
+     "group": "visites",
+     "type": "text"
+    }
+   ],
+   "checkbox_groups": [
+    {
+     "key": "groupage",
+     "label": "Groupage",
+     "choice": "single",
+     "options": [
+      "A",
+      "B",
+      "O",
+      "AB"
+     ],
+     "note": "sur le vrai carnet : lettre ENCERCLÉE, pas de case"
+    },
+    {
+     "key": "rhesus",
+     "label": "Rhésus",
+     "choice": "single",
+     "options": [
+      "negatif",
+      "positif"
+     ],
+     "note": "sur le vrai carnet : mention encerclée"
+    }
+   ]
+  },
+  "ACCOUCHEMENT": {
+   "title": "Déroulement de l'accouchement",
+   "fields": [
+    {
+     "key": "patiente_nom",
+     "label": "Patiente",
+     "type": "text",
+     "pii": true,
+     "store": false
+    },
+    {
+     "key": "lieu_surveille_autres",
+     "label": "Lieu (milieu surveillé), Autres",
+     "type": "text"
+    },
+    {
+     "key": "lieu_domicile_autres",
+     "label": "Lieu (à domicile), Autres",
+     "type": "text"
+    },
+    {
+     "key": "date_accouchement",
+     "label": "Date de l'accouchement",
+     "type": "date"
+    },
+    {
+     "key": "indication_cesarienne",
+     "label": "Préciser l'indication (césarienne)",
+     "type": "text",
+     "not_applicable_if": "mode not in (cesarienne_programmee, cesarienne_urgence)"
+    },
+    {
+     "key": "complication_autres",
+     "label": "Si autres à préciser (complications)",
+     "type": "text",
+     "not_applicable_if": "'autres' not in complications_type"
+    },
+    {
+     "key": "sexe",
+     "label": "Sexe",
+     "type": "enum",
+     "values": [
+      "F",
+      "M"
+     ],
+     "fuzzy": true
+    },
+    {
+     "key": "poids_naissance_g",
+     "label": "Poids à la naissance",
+     "type": "poids_g",
+     "range": [
+      500,
+      6000
+     ]
+    },
+    {
+     "key": "perimetre_cranien_cm",
+     "label": "Périmètre crânien à la naissance",
+     "type": "longueur_cm",
+     "range": [
+      25,
+      40
+     ]
+    },
+    {
+     "key": "anomalie",
+     "label": "Anomalie à préciser",
+     "type": "text",
+     "aliases": "RAS"
+    },
+    {
+     "key": "age_gestationnel_sa",
+     "label": "Âge gestationnel",
+     "type": "age_gestationnel",
+     "range": [
+      22,
+      44
+     ]
+    }
+   ],
+   "checkbox_groups": [
+    {
+     "key": "lieu",
+     "label": "Lieu",
+     "choice": "single",
+     "options": [
+      "milieu_surveille",
+      "domicile"
+     ]
+    },
+    {
+     "key": "lieu_detail",
+     "label": "Lieu, détail",
+     "choice": "single",
+     "options": [
+      "maison_accouchement",
+      "maternite",
+      "clinique_privee",
+      "domicile_assiste_qualifie"
+     ],
+     "depends_on": "lieu"
+    },
+    {
+     "key": "mode",
+     "label": "Mode de l'accouchement",
+     "choice": "single",
+     "options": [
+      "voie_basse_non_instrumentale",
+      "voie_basse_instrumentale",
+      "cesarienne_programmee",
+      "cesarienne_urgence"
+     ]
+    },
+    {
+     "key": "mode_instrument",
+     "label": "Voie basse instrumentale, détail",
+     "choice": "multi",
+     "options": [
+      "forceps",
+      "ventouse",
+      "episiotomie"
+     ],
+     "depends_on": "mode == voie_basse_instrumentale"
+    },
+    {
+     "key": "complications",
+     "label": "Présence de complications",
+     "choice": "bool",
+     "options": [
+      "presence"
+     ]
+    },
+    {
+     "key": "complications_moment",
+     "label": "Moment des complications",
+     "choice": "multi",
+     "options": [
+      "accouchement",
+      "suites_de_couches"
+     ],
+     "depends_on": "complications == presence"
+    },
+    {
+     "key": "complications_type",
+     "label": "Type de complications",
+     "choice": "multi",
+     "options": [
+      "pre_eclampsie",
+      "eclampsie",
+      "hemorragie",
+      "infection",
+      "autres"
+     ],
+     "depends_on": "complications == presence"
+    },
+    {
+     "key": "etat_nouveau_ne",
+     "label": "Etat du nouveau-né",
+     "choice": "single",
+     "options": [
+      "vivant",
+      "mort_ne",
+      "deces_moins_24h"
+     ]
+    }
+   ]
+  },
+  "PP_PRECOCE_MERE": {
+   "title": "Consultation du post-partum précoce, Mère",
+   "fields": [
+    {
+     "key": "patiente_nom",
+     "label": "MÈRE, nom",
+     "type": "text",
+     "pii": true,
+     "store": false
+    },
+    {
+     "key": "date_consultation",
+     "label": "Date de la consultation",
+     "type": "date"
+    },
+    {
+     "key": "temperature",
+     "label": "T°",
+     "type": "temperature",
+     "range": [
+      35,
+      42
+     ]
+    },
+    {
+     "key": "ta",
+     "label": "TA",
+     "type": "ta"
+    },
+    {
+     "key": "pouls",
+     "label": "Pouls",
+     "type": "int",
+     "range": [
+      40,
+      180
+     ]
+    },
+    {
+     "key": "poids_kg",
+     "label": "Poids",
+     "type": "poids_kg"
+    },
+    {
+     "key": "cicatrice_cesarienne",
+     "label": "Césarienne : état de la cicatrice",
+     "type": "text",
+     "not_applicable_if": "cesarienne != oui"
+    },
+    {
+     "key": "medicaments",
+     "label": "Notion de prise de médicaments (détail)",
+     "type": "text"
+    },
+    {
+     "key": "traitement_autres",
+     "label": "Traitement prescrit, Autres à préciser",
+     "type": "text"
+    },
+    {
+     "key": "prochain_rdv",
+     "label": "Prochain rendez-vous le",
+     "type": "date"
+    },
+    {
+     "key": "pf_autre_methode",
+     "label": "Planification familiale, Autre à préciser",
+     "type": "text"
+    },
+    {
+     "key": "pf_referee",
+     "label": "Référée (détail)",
+     "type": "text"
+    },
+    {
+     "key": "pf_refus_raison",
+     "label": "Si la mère ne désire pas une méthode contraceptive : Pourquoi ?",
+     "type": "text",
+     "not_applicable_if": "'desire_methode' in pf"
+    }
+   ],
+   "checkbox_groups": [
+    {
+     "key": "periode",
+     "label": "Moment de la consultation",
+     "choice": "single",
+     "options": [
+      "dans_fenetre",
+      "apres_fenetre"
+     ],
+     "note": "dans_fenetre = entre le 7ème et 8ème jour ; apres_fenetre = après le 8ème jour"
+    },
+    {
+     "key": "conjonctives",
+     "label": "Etat des conjonctives",
+     "choice": "single",
+     "options": [
+      "normales",
+      "decolorees"
+     ]
+    },
+    {
+     "key": "globe_uterin",
+     "label": "Présence du globe utérin",
+     "choice": "bool",
+     "options": [
+      "present"
+     ]
+    },
+    {
+     "key": "lochies_odeur",
+     "label": "Etat des lochies, odeur",
+     "choice": "single",
+     "options": [
+      "fade",
+      "fetide"
+     ]
+    },
+    {
+     "key": "lochies_aspect",
+     "label": "Etat des lochies, aspect",
+     "choice": "single",
+     "options": [
+      "claires",
+      "sanglantes",
+      "jaunatres"
+     ]
+    },
+    {
+     "key": "perinee",
+     "label": "Etat du périnée",
+     "choice": "multi",
+     "options": [
+      "normal",
+      "episiotomie",
+      "episiotomie_reparee",
+      "dechirure"
+     ]
+    },
+    {
+     "key": "sphincters",
+     "label": "Etat des sphincters (anal et urétral)",
+     "choice": "single",
+     "options": [
+      "normal",
+      "anormal"
+     ]
+    },
+    {
+     "key": "cesarienne",
+     "label": "Césarienne",
+     "choice": "bool",
+     "options": [
+      "oui"
+     ]
+    },
+    {
+     "key": "seins",
+     "label": "Etat des seins",
+     "choice": "single",
+     "options": [
+      "normal",
+      "lymphangite",
+      "mastite_abces"
+     ]
+    },
+    {
+     "key": "mollets",
+     "label": "Etat des mollets",
+     "choice": "multi",
+     "options": [
+      "normal",
+      "rouges",
+      "chauds",
+      "douloureux_dorsiflexion"
+     ]
+    },
+    {
+     "key": "complication",
+     "label": "Présence de complication",
+     "choice": "bool",
+     "options": [
+      "presence"
+     ]
+    },
+    {
+     "key": "complication_type",
+     "label": "Type de complication",
+     "choice": "multi",
+     "options": [
+      "hemorragie",
+      "mammaires",
+      "infection",
+      "anemie",
+      "eclampsie",
+      "autres",
+      "phlebite"
+     ],
+     "depends_on": "complication == presence"
+    },
+    {
+     "key": "medicaments",
+     "label": "Notion de prise de médicaments",
+     "choice": "bool",
+     "options": [
+      "prise"
+     ]
+    },
+    {
+     "key": "traitement",
+     "label": "Traitement prescrit",
+     "choice": "multi",
+     "options": [
+      "fer",
+      "vitamine_a"
+     ]
+    },
+    {
+     "key": "pf",
+     "label": "Planification familiale",
+     "choice": "multi",
+     "options": [
+      "desire_methode",
+      "prescription_faite",
+      "referee"
+     ]
+    },
+    {
+     "key": "pf_methode",
+     "label": "Si oui, laquelle",
+     "choice": "single",
+     "options": [
+      "pilule",
+      "diu"
+     ],
+     "depends_on": "'desire_methode' in pf"
+    }
+   ]
+  },
+  "PP_PRECOCE_NOUVEAU_NE": {
+   "title": "Consultation du post-partum précoce, Nouveau-né",
+   "fields": [
+    {
+     "key": "date_consultation",
+     "label": "Date de la consultation",
+     "type": "date"
+    },
+    {
+     "key": "age_jours",
+     "label": "Age (jours)",
+     "type": "int",
+     "range": [
+      0,
+      90
+     ]
+    },
+    {
+     "key": "temperature",
+     "label": "Température",
+     "type": "temperature",
+     "range": [
+      34,
+      42
+     ]
+    },
+    {
+     "key": "poids_g",
+     "label": "Poids",
+     "type": "poids_g",
+     "range": [
+      500,
+      10000
+     ]
+    },
+    {
+     "key": "taille_cm",
+     "label": "Taille",
+     "type": "longueur_cm",
+     "range": [
+      30,
+      70
+     ]
+    },
+    {
+     "key": "perimetre_cranien_cm",
+     "label": "Périmètre crânien",
+     "type": "longueur_cm",
+     "range": [
+      25,
+      45
+     ]
+    },
+    {
+     "key": "signes_graves_autres",
+     "label": "Signes d'une affection grave, Autres à préciser",
+     "type": "text",
+     "aliases": "RAS"
+    },
+    {
+     "key": "lesions_autres",
+     "label": "Contusions, lésions, malformations, Autres à préciser",
+     "type": "text",
+     "aliases": "RAS"
+    },
+    {
+     "key": "vu_par",
+     "label": "Vu par",
+     "type": "text"
+    },
+    {
+     "key": "decision",
+     "label": "Décision prise",
+     "type": "text"
+    },
+    {
+     "key": "traitement",
+     "label": "Traitement prescrit",
+     "type": "text",
+     "aliases": "RAS"
+    },
+    {
+     "key": "etablissement_reference",
+     "label": "Transfert, établissement de référence",
+     "type": "text",
+     "not_applicable_if": "transfert != oui"
+    },
+    {
+     "key": "prochain_rdv",
+     "label": "Revenir pour une visite de suivi nécessaire le",
+     "type": "date"
+    }
+   ],
+   "checkbox_groups": [
+    {
+     "key": "etat",
+     "label": "Nouveau-né prématuré / hypotrophe",
+     "choice": "multi",
+     "options": [
+      "premature",
+      "hypotrophe"
+     ]
+    },
+    {
+     "key": "allaitement",
+     "label": "Allaitement",
+     "choice": "single",
+     "options": [
+      "exclusif_sein",
+      "artificiel",
+      "mixte"
+     ]
+    },
+    {
+     "key": "signes_graves",
+     "label": "Signes d'une affection grave",
+     "choice": "multi",
+     "options": [
+      "convulsions",
+      "refus_teter",
+      "hematemeses",
+      "melaenas",
+      "diarrhee",
+      "ictere",
+      "tirage_sous_costal",
+      "toux",
+      "rythme_respiratoire_anormal",
+      "fievre",
+      "hypothermie"
+     ]
+    },
+    {
+     "key": "lesions",
+     "label": "Contusions, lésions traumatiques et malformations",
+     "choice": "multi",
+     "options": [
+      "bosse_serosanguine_cephalohematome",
+      "luxation_hanche",
+      "mobilite_membre_diminuee"
+     ]
+    },
+    {
+     "key": "evaluation_allaitement",
+     "label": "Evaluation de l'allaitement maternel",
+     "choice": "single",
+     "options": [
+      "normal",
+      "a_problemes"
+     ]
+    },
+    {
+     "key": "vaccins",
+     "label": "Vaccins administrés ce jour",
+     "choice": "multi",
+     "options": [
+      "bcg",
+      "hb"
+     ]
+    },
+    {
+     "key": "vitamine_d",
+     "label": "Supplémentation en vitamine D",
+     "choice": "bool",
+     "options": [
+      "oui"
+     ]
+    },
+    {
+     "key": "complications",
+     "label": "Présence de complications et de malformation",
+     "choice": "multi",
+     "options": [
+      "ictere",
+      "infection",
+      "conjonctivite",
+      "traumatisme",
+      "malformation",
+      "autres"
+     ]
+    },
+    {
+     "key": "transfert",
+     "label": "Transfert",
+     "choice": "bool",
+     "options": [
+      "oui"
+     ]
+    }
+   ]
+  },
+  "PP_TARDIF_MERE": {
+   "title": "Consultation du post-partum tardif, Mère",
+   "fields": [
+    {
+     "key": "patiente_nom",
+     "label": "MÈRE, nom",
+     "type": "text",
+     "pii": true,
+     "store": false
+    },
+    {
+     "key": "date_consultation",
+     "label": "Date de la consultation",
+     "type": "date"
+    },
+    {
+     "key": "temperature",
+     "label": "T°",
+     "type": "temperature",
+     "range": [
+      35,
+      42
+     ]
+    },
+    {
+     "key": "ta",
+     "label": "TA",
+     "type": "ta"
+    },
+    {
+     "key": "pouls",
+     "label": "Pouls",
+     "type": "int",
+     "range": [
+      40,
+      180
+     ]
+    },
+    {
+     "key": "poids_kg",
+     "label": "Poids",
+     "type": "poids_kg"
+    },
+    {
+     "key": "cicatrice_cesarienne",
+     "label": "Césarienne : état de la cicatrice",
+     "type": "text",
+     "not_applicable_if": "cesarienne != oui"
+    },
+    {
+     "key": "medicaments",
+     "label": "Notion de prise de médicaments (détail)",
+     "type": "text"
+    },
+    {
+     "key": "traitement_autres",
+     "label": "Traitement prescrit, Autres à préciser",
+     "type": "text"
+    },
+    {
+     "key": "prochain_rdv",
+     "label": "Prochain rendez-vous le",
+     "type": "date"
+    },
+    {
+     "key": "pf_autre_methode",
+     "label": "Planification familiale, Autre à préciser",
+     "type": "text"
+    },
+    {
+     "key": "pf_referee",
+     "label": "Référée (détail)",
+     "type": "text"
+    },
+    {
+     "key": "pf_refus_raison",
+     "label": "Si la mère ne désire pas une méthode contraceptive : Pourquoi ?",
+     "type": "text",
+     "not_applicable_if": "'desire_methode' in pf"
+    }
+   ],
+   "checkbox_groups": [
+    {
+     "key": "periode",
+     "label": "Moment de la consultation",
+     "choice": "single",
+     "options": [
+      "dans_fenetre",
+      "apres_fenetre"
+     ],
+     "note": "dans_fenetre = entre le 40ème et 50ème jour ; apres_fenetre = après le 50ème jour"
+    },
+    {
+     "key": "conjonctives",
+     "label": "Etat des conjonctives",
+     "choice": "single",
+     "options": [
+      "normales",
+      "decolorees"
+     ]
+    },
+    {
+     "key": "globe_uterin",
+     "label": "Présence du globe utérin",
+     "choice": "bool",
+     "options": [
+      "present"
+     ]
+    },
+    {
+     "key": "lochies_odeur",
+     "label": "Etat des lochies, odeur",
+     "choice": "single",
+     "options": [
+      "fade",
+      "fetide"
+     ]
+    },
+    {
+     "key": "lochies_aspect",
+     "label": "Etat des lochies, aspect",
+     "choice": "single",
+     "options": [
+      "claires",
+      "sanglantes",
+      "jaunatres"
+     ]
+    },
+    {
+     "key": "perinee",
+     "label": "Etat du périnée",
+     "choice": "multi",
+     "options": [
+      "normal",
+      "episiotomie",
+      "episiotomie_reparee",
+      "dechirure"
+     ]
+    },
+    {
+     "key": "sphincters",
+     "label": "Etat des sphincters (anal et urétral)",
+     "choice": "single",
+     "options": [
+      "normal",
+      "anormal"
+     ]
+    },
+    {
+     "key": "cesarienne",
+     "label": "Césarienne",
+     "choice": "bool",
+     "options": [
+      "oui"
+     ]
+    },
+    {
+     "key": "seins",
+     "label": "Etat des seins",
+     "choice": "single",
+     "options": [
+      "normal",
+      "lymphangite",
+      "mastite_abces"
+     ]
+    },
+    {
+     "key": "mollets",
+     "label": "Etat des mollets",
+     "choice": "multi",
+     "options": [
+      "normal",
+      "rouges",
+      "chauds",
+      "douloureux_dorsiflexion"
+     ]
+    },
+    {
+     "key": "complication",
+     "label": "Présence de complication",
+     "choice": "bool",
+     "options": [
+      "presence"
+     ]
+    },
+    {
+     "key": "complication_type",
+     "label": "Type de complication",
+     "choice": "multi",
+     "options": [
+      "hemorragie",
+      "mammaires",
+      "infection",
+      "anemie",
+      "eclampsie",
+      "autres",
+      "phlebite"
+     ],
+     "depends_on": "complication == presence"
+    },
+    {
+     "key": "medicaments",
+     "label": "Notion de prise de médicaments",
+     "choice": "bool",
+     "options": [
+      "prise"
+     ]
+    },
+    {
+     "key": "traitement",
+     "label": "Traitement prescrit",
+     "choice": "multi",
+     "options": [
+      "fer",
+      "vitamine_a"
+     ]
+    },
+    {
+     "key": "pf",
+     "label": "Planification familiale",
+     "choice": "multi",
+     "options": [
+      "desire_methode",
+      "prescription_faite",
+      "referee"
+     ]
+    },
+    {
+     "key": "pf_methode",
+     "label": "Si oui, laquelle",
+     "choice": "single",
+     "options": [
+      "pilule",
+      "diu"
+     ],
+     "depends_on": "'desire_methode' in pf"
+    }
+   ]
+  },
+  "PP_TARDIF_NOUVEAU_NE": {
+   "title": "Consultation du post-partum tardif, Nouveau-né",
+   "fields": [
+    {
+     "key": "date_consultation",
+     "label": "Date de la consultation",
+     "type": "date"
+    },
+    {
+     "key": "age_jours",
+     "label": "Age (jours)",
+     "type": "int",
+     "range": [
+      0,
+      90
+     ]
+    },
+    {
+     "key": "temperature",
+     "label": "Température",
+     "type": "temperature",
+     "range": [
+      34,
+      42
+     ]
+    },
+    {
+     "key": "poids_g",
+     "label": "Poids",
+     "type": "poids_g",
+     "range": [
+      500,
+      10000
+     ]
+    },
+    {
+     "key": "taille_cm",
+     "label": "Taille",
+     "type": "longueur_cm",
+     "range": [
+      30,
+      70
+     ]
+    },
+    {
+     "key": "perimetre_cranien_cm",
+     "label": "Périmètre crânien",
+     "type": "longueur_cm",
+     "range": [
+      25,
+      45
+     ]
+    },
+    {
+     "key": "signes_graves_autres",
+     "label": "Signes d'une affection grave, Autres à préciser",
+     "type": "text",
+     "aliases": "RAS"
+    },
+    {
+     "key": "lesions_autres",
+     "label": "Contusions, lésions, malformations, Autres à préciser",
+     "type": "text",
+     "aliases": "RAS"
+    },
+    {
+     "key": "vu_par",
+     "label": "Vu par",
+     "type": "text"
+    },
+    {
+     "key": "decision",
+     "label": "Décision prise",
+     "type": "text"
+    },
+    {
+     "key": "traitement",
+     "label": "Traitement prescrit",
+     "type": "text",
+     "aliases": "RAS"
+    },
+    {
+     "key": "etablissement_reference",
+     "label": "Transfert, établissement de référence",
+     "type": "text",
+     "not_applicable_if": "transfert != oui"
+    },
+    {
+     "key": "prochain_rdv",
+     "label": "Revenir pour une visite de suivi nécessaire le",
+     "type": "date"
+    }
+   ],
+   "checkbox_groups": [
+    {
+     "key": "etat",
+     "label": "Nouveau-né prématuré / hypotrophe",
+     "choice": "multi",
+     "options": [
+      "premature",
+      "hypotrophe"
+     ]
+    },
+    {
+     "key": "allaitement",
+     "label": "Allaitement",
+     "choice": "single",
+     "options": [
+      "exclusif_sein",
+      "artificiel",
+      "mixte"
+     ]
+    },
+    {
+     "key": "signes_graves",
+     "label": "Signes d'une affection grave",
+     "choice": "multi",
+     "options": [
+      "convulsions",
+      "refus_teter",
+      "hematemeses",
+      "melaenas",
+      "diarrhee",
+      "ictere",
+      "tirage_sous_costal",
+      "toux",
+      "rythme_respiratoire_anormal",
+      "fievre",
+      "hypothermie"
+     ]
+    },
+    {
+     "key": "lesions",
+     "label": "Contusions, lésions traumatiques et malformations",
+     "choice": "multi",
+     "options": [
+      "bosse_serosanguine_cephalohematome",
+      "luxation_hanche",
+      "mobilite_membre_diminuee"
+     ]
+    },
+    {
+     "key": "evaluation_allaitement",
+     "label": "Evaluation de l'allaitement maternel",
+     "choice": "single",
+     "options": [
+      "normal",
+      "a_problemes"
+     ]
+    },
+    {
+     "key": "vaccins",
+     "label": "Vaccins administrés ce jour",
+     "choice": "multi",
+     "options": [
+      "bcg",
+      "hb"
+     ]
+    },
+    {
+     "key": "vitamine_d",
+     "label": "Supplémentation en vitamine D",
+     "choice": "bool",
+     "options": [
+      "oui"
+     ]
+    },
+    {
+     "key": "complications",
+     "label": "Présence de complications et de malformation",
+     "choice": "multi",
+     "options": [
+      "ictere",
+      "infection",
+      "conjonctivite",
+      "traumatisme",
+      "malformation",
+      "autres"
+     ]
+    },
+    {
+     "key": "transfert",
+     "label": "Transfert",
+     "choice": "bool",
+     "options": [
+      "oui"
+     ]
+    }
+   ]
+  }
+ },
+ "consistency_checks": [
+  {
+   "id": "parite_le_gestation",
+   "expr": "parite <= gestation",
+   "on_fail": "A_REVISER sur les deux champs"
+  },
+  {
+   "id": "vivants_le_parite",
+   "expr": "enfants_vivants <= parite",
+   "on_fail": "A_REVISER"
+  },
+  {
+   "id": "nb_accouchements",
+   "expr": "nombre d'Accouch. renseignés == parite",
+   "on_fail": "A_REVISER (ou NON_APPLICABLE pour les colonnes > parité)"
+  },
+  {
+   "id": "dpa_vs_ddr",
+   "expr": "|dpa - (ddr + 280 j)| <= 7 j",
+   "on_fail": "A_REVISER sur dpa et ddr"
+  },
+  {
+   "id": "depassement",
+   "expr": "|date_depassement_terme - (dpa + 7 j)| <= 2 j",
+   "on_fail": "A_REVISER"
+  },
+  {
+   "id": "ag_vs_date",
+   "expr": "|age_gestationnel(visite) - (venue_le - ddr)/7| <= 1 SA",
+   "on_fail": "A_REVISER sur age_gestationnel ou venue_le"
+  },
+  {
+   "id": "visites_chrono",
+   "expr": "venue_le croissant de t1_v1 à t3_m9",
+   "on_fail": "A_REVISER"
+  },
+  {
+   "id": "ta_plausible",
+   "expr": "60 <= sys <= 250 and 30 <= dia <= 150 and sys > dia",
+   "on_fail": "A_REVISER ; si valeurs à 1 chiffre (12/7) → ×10"
+  },
+  {
+   "id": "poids_nn",
+   "expr": "500 <= poids_naissance_g <= 6000",
+   "on_fail": "A_REVISER (kg ↔ g ?)"
+  },
+  {
+   "id": "rai_rhesus",
+   "expr": "rhesus == positif → rai NON_APPLICABLE",
+   "on_fail": "statut forcé"
+  },
+  {
+   "id": "cesarienne_indication",
+   "expr": "mode cesarienne → indication attendue ; sinon NON_APPLICABLE",
+   "on_fail": "statut forcé"
+  },
+  {
+   "id": "age_jours_pp",
+   "expr": "précoce : 5 <= age_jours <= 15 ; tardif : 35 <= age_jours <= 60",
+   "on_fail": "A_REVISER"
+  },
+  {
+   "id": "date_consult_vs_accouchement",
+   "expr": "date_consultation - date_accouchement ≈ age_jours",
+   "on_fail": "A_REVISER"
+  }
+ ],
+ "record_lifecycle": {
+  "states": [
+   "CAPTURE",
+   "EN_ATTENTE_IA",
+   "TRAITE_IA",
+   "A_REVISER",
+   "VALIDE",
+   "PATIENTE_LIEE",
+   "ENREGISTRE",
+   "SYNCHRONISE"
+  ],
+  "failure_states": [
+   "ECHEC_TRAITEMENT",
+   "ECHEC_SYNCHRO",
+   "DOUBLON_SUSPECTE",
+   "REVISION_MANUELLE_REQUISE"
+  ],
+  "transitions": [
+   [
+    "CAPTURE",
+    "EN_ATTENTE_IA",
+    "photo acceptée (qualité OK), chiffrée et mise en file locale"
+   ],
+   [
+    "EN_ATTENTE_IA",
+    "TRAITE_IA",
+    "connexion disponible, extraction réussie"
+   ],
+   [
+    "EN_ATTENTE_IA",
+    "ECHEC_TRAITEMENT",
+    "erreur IA / timeout (retry avec backoff, max N) → REVISION_MANUELLE_REQUISE si IA indisponible durablement"
+   ],
+   [
+    "TRAITE_IA",
+    "A_REVISER",
+    "au moins un champ A_REVISER / ILLISIBLE, ou doute de l'agent"
+   ],
+   [
+    "TRAITE_IA",
+    "VALIDE",
+    "tous les champs CONNU / NON_FOURNI / NON_APPLICABLE et sage-femme confirme"
+   ],
+   [
+    "A_REVISER",
+    "VALIDE",
+    "sage-femme a confirmé / corrigé / saisi chaque champ douteux"
+   ],
+   [
+    "A_REVISER",
+    "CAPTURE",
+    "sage-femme choisit « Reprendre la photo »"
+   ],
+   [
+    "REVISION_MANUELLE_REQUISE",
+    "VALIDE",
+    "saisie manuelle complète par questions"
+   ],
+   [
+    "VALIDE",
+    "PATIENTE_LIEE",
+    "code sage-femme reconnu OU choix explicite [Patiente 1] [Patiente 2] [Aucune, créer]"
+   ],
+   [
+    "VALIDE",
+    "DOUBLON_SUSPECTE",
+    "correspondance plausible mais non tranchée ([Je ne sais pas]) ou registre déjà numérisé"
+   ],
+   [
+    "DOUBLON_SUSPECTE",
+    "PATIENTE_LIEE",
+    "sage-femme tranche ; si registre rephotographié : choisit les champs à mettre à jour"
+   ],
+   [
+    "PATIENTE_LIEE",
+    "ENREGISTRE",
+    "fusion dans le profil longitudinal, image masquée attachée"
+   ],
+   [
+    "ENREGISTRE",
+    "SYNCHRONISE",
+    "envoi au serveur accusé"
+   ],
+   [
+    "ENREGISTRE",
+    "ECHEC_SYNCHRO",
+    "erreur réseau (reste en file, retry), jamais de perte"
+   ],
+   [
+    "ECHEC_SYNCHRO",
+    "SYNCHRONISE",
+    "retry réussi"
+   ]
+  ],
+  "invariants": [
+   "Un enregistrement n'est jamais supprimé par le système ; toute capture a un état.",
+   "Le stockage local est chiffré ; la file survit à la fermeture de l'app.",
+   "Les identifiants internes (record_id, patient_id) sont des UUID v4, jamais dérivés d'informations personnelles.",
+   "L'image d'origine est stockée masquée (PII floutée) avec record_id, date de capture, midwife_id, statut ; accès par rôle."
+  ]
+ },
+ "patient_linking": {
+  "code_sage_femme": "code aléatoire court (ex. 4 lettres + 2 chiffres) écrit par la sage-femme sur le carnet (N° de fiche sur le carnet marocain) ; clé primaire de liaison",
+  "signaux_secondaires_non_identifiants": [
+   "etablissement",
+   "age",
+   "gestation",
+   "parite",
+   "ddr",
+   "dpa",
+   "date_accouchement",
+   "groupage/rhesus"
+  ],
+  "regle": "code exact → proposer la correspondance ; sinon score de similarité sur les signaux secondaires → si score >= seuil, proposer [Patiente 1] [Patiente 2] [Aucune, créer] [Je ne sais pas] ; jamais de création automatique quand une correspondance est plausible"
+ }
+}
