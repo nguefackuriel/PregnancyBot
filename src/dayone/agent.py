@@ -326,10 +326,17 @@ class Agent:
         empty = [k for k, f in fields.items() if f["status"] == "NON_FOURNI"]
         na = [k for k, f in fields.items() if f["status"] == "NON_APPLICABLE"]
         summary = self._summary(page_type, fields, payload.get("choices", {}))
-        head = (f"📄 *{PAGE_LABELS[page_type]}*\n{summary}\n\n"
+        reg = payload.get("registration") or {}
+        elsewhere = [k for k, f in fields.items() if f["status"] == "INCONNU" and f.get("notes") == "pas sur cette page du carnet"]
+        booklet = ""
+        if reg.get("variant"):
+            booklet = "📘 Carnet au petit format reconnu"
+            if elsewhere:
+                booklet += f" ({len(elsewhere)} champs sont sur une autre page du carnet)"
+            booklet += "\n"
+        head = (f"📄 *{PAGE_LABELS[page_type]}*\n{booklet}{summary}\n\n"
                 f"✅ {len(known)} champs lus · ⬜ {len(empty)} vides · ➖ {len(na)} non applicables · ❓ {len(doubts)} doute(s)")
         s["numbered"] = self._numbered(page_type, fields)
-        reg = payload.get("registration") or {}
         if reg.get("template_fit") is False and not reg.get("template_free"):
             # vrai carnet ou autre version du formulaire : la lecture par cellules n'est pas fiable
             s["mode"], s["record_id"] = "confirming", rid
@@ -339,6 +346,14 @@ class Agent:
                              f"📄 Type de page : *{PAGE_LABELS[page_type]}*\n\n"
                              "Le plus sûr est la saisie à la main, guidée champ par champ.",
                              [("manual", "✍️ Saisir à la main"), ("retake", "📷 Reprendre la photo"), ("correct", "✏️ Voir ma lecture")])]
+        if doubts and reg.get("variant") and len(doubts) > 8:
+            # vrai carnet : le modèle d'écriture n'est pas encore entraîné dessus, les doutes sont
+            # nombreux ; la sage-femme choisit comment faire plutôt que de subir 30 questions
+            s["mode"], s["pending"], s["record_id"] = "confirming", doubts, rid
+            self.store.transition(rid, "A_REVISER", f"{len(doubts)} champ(s) à réviser")
+            return [Outgoing(head + f"\n\nSur ce carnet, mon modèle d'écriture n'est pas encore entraîné : je doute de {len(doubts)} champs "
+                             "et je n'en enregistre aucun sans vous. Comment voulez-vous faire ?",
+                             [("review", "🔍 Réviser un par un"), ("manual", "✍️ Saisir l'essentiel"), ("keep", "💾 Garder, réviser après")])]
         if doubts:
             s["mode"], s["pending"], s["record_id"] = "reviewing", doubts, rid
             self.store.transition(rid, "A_REVISER", f"{len(doubts)} champ(s) à réviser")
@@ -523,6 +538,16 @@ class Agent:
 
     def _on_confirm(self, sender: str, s: dict, bid: str, txt: str) -> list[Outgoing]:
         rid = s["record_id"]
+        if bid == "review" or txt.lower() in ("réviser", "reviser", "un par un"):
+            if s.get("pending"):
+                s["mode"] = "reviewing"
+                return self._ask_next(sender, s)
+        if bid == "keep" or txt.lower() in ("garder", "plus tard"):
+            # la page reste « à réviser » (rien n'est validé), on passe à la liaison patiente
+            n = len(s.get("pending") or [])
+            s["pending"] = []
+            return [Outgoing(f"💾 Page gardée telle quelle, état *À réviser* ({n} champs à confirmer plus tard, "
+                             "visibles dans *dossiers*). Rien n'est enregistré comme certain.")] + self._start_linking(sender, s, rid)
         if bid == "correct" or txt.lower().startswith("corr"):
             s["mode"] = "correcting"
             s["correcting_key"] = None

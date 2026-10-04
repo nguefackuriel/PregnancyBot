@@ -60,6 +60,8 @@ class Registration:
     H: np.ndarray                # homographie original -> gabarit
     method: str
     score: float                 # 0..1 (accord des lignes avec le gabarit)
+    template: str = ""           # nom du gabarit retenu (type de page, ou variant du vrai carnet)
+    tpl: dict | None = None      # le gabarit lui-même (lines, fields, checkboxes)
 
     def to_original(self, bbox_px):
         """bbox dans le repère gabarit -> bbox dans l'image d'origine."""
@@ -158,8 +160,14 @@ def _best_affine_1d(prof: np.ndarray, positions: list[int], length: int):
     return best
 
 
-def warp_to_page(img: np.ndarray) -> tuple[np.ndarray, np.ndarray, str]:
-    """Étape 1, indépendante du type de page : ramène la page dans le cadre 1654 × 2339."""
+def warp_to_page(img: np.ndarray, level: bool = False) -> tuple[np.ndarray, np.ndarray, str]:
+    """Étape 1, indépendante du type de page : ramène la page dans le cadre 1654 × 2339.
+
+    `level=True` met en plus la page d'aplomb sur ses traits longs (vrai carnet : le
+    contour de la page est souvent approximatif, reliure ou page courbée). Dans le
+    pipeline, cette rotation est plutôt proposée par `register`, qui ne la garde que si
+    l'accord avec le gabarit s'améliore.
+    """
     h, w = img.shape[:2]
     quad = _page_quad(img)
     full_frame = abs(w / h - TPL_W / TPL_H) < 0.03
@@ -172,7 +180,60 @@ def warp_to_page(img: np.ndarray) -> tuple[np.ndarray, np.ndarray, str]:
         H = np.array([[TPL_W / w, 0, 0], [0, TPL_H / h, 0], [0, 0, 1]], dtype=np.float64)
         method = "scale"
     warped = cv2.warpPerspective(img, H, (TPL_W, TPL_H), flags=cv2.INTER_LINEAR, borderValue=(245, 190, 205))
+    if level:
+        warped2, H2, ang = level_page(img, warped, H)
+        if ang:
+            warped, H, method = warped2, H2, method + "+level"
     return warped, H, method
+
+
+def level_page(img: np.ndarray, warped: np.ndarray, H: np.ndarray) -> tuple[np.ndarray, np.ndarray, float]:
+    """Tourne la page redressée pour mettre ses traits d'aplomb. Retourne (image, H, angle) ;
+    angle = 0.0 quand rien n'a été fait."""
+    ang = skew_angle(cv2.cvtColor(warped, cv2.COLOR_BGR2GRAY))
+    if abs(ang) < 0.3:
+        return warped, H, 0.0
+    R = np.vstack([cv2.getRotationMatrix2D((TPL_W / 2, TPL_H / 2), ang, 1.0), [0, 0, 1]]).astype(np.float64)
+    H2 = R @ H
+    warped2 = cv2.warpPerspective(img, H2, (TPL_W, TPL_H), flags=cv2.INTER_LINEAR, borderValue=(245, 190, 205))
+    ang2 = skew_angle(cv2.cvtColor(warped2, cv2.COLOR_BGR2GRAY))
+    if abs(ang2) < abs(ang) - 0.1:
+        return warped2, H2, ang
+    return warped, H, 0.0
+
+
+def skew_angle(gray: np.ndarray) -> float:
+    """Rotation (degrés, sens de cv2.getRotationMatrix2D) qui met les traits horizontaux
+    de la page d'aplomb : on cherche l'angle où le profil des traits est le plus net.
+    0.0 quand la page est droite ou n'a pas assez de traits."""
+    blur = cv2.GaussianBlur(gray, (0, 0), 15).astype(np.int16)
+    thr = np.maximum(8, (0.10 * blur).astype(np.int16))
+    dark = ((gray.astype(np.int16) < blur - thr) & (gray < 190)).astype(np.uint8) * 255
+    opened = cv2.morphologyEx(dark, cv2.MORPH_OPEN, cv2.getStructuringElement(cv2.MORPH_RECT, (41, 1)))
+    small = cv2.resize(opened, None, fx=0.5, fy=0.5, interpolation=cv2.INTER_AREA)
+    if (small > 0).sum() < 200:
+        return 0.0
+    h, w = small.shape[:2]
+    center = (w / 2, h / 2)
+
+    def sharp(a: float) -> float:
+        M = cv2.getRotationMatrix2D(center, a, 1.0)
+        r = cv2.warpAffine(small, M, (w, h), flags=cv2.INTER_NEAREST)
+        prof = (r > 0).sum(axis=1).astype(np.float64)
+        return float((prof ** 2).sum())
+
+    e0 = sharp(0.0)
+    best_a, best_e = 0.0, e0
+    for a in np.arange(-4.0, 4.01, 0.25):
+        e = sharp(float(a))
+        if e > best_e:
+            best_a, best_e = float(a), e
+    for a in np.arange(best_a - 0.25, best_a + 0.26, 0.05):
+        e = sharp(float(a))
+        if e > best_e:
+            best_a, best_e = float(a), e
+    # on ne tourne que si c'est nettement meilleur que la page telle quelle
+    return round(best_a, 2) if best_e > 1.10 * e0 else 0.0
 
 
 def _profile_peaks(prof: np.ndarray, min_gap: int = 8) -> list[int]:
@@ -194,10 +255,13 @@ def line_signature_scores(warped: np.ndarray) -> dict[str, float]:
     expliquées par le gabarit : un gabarit pauvre en lignes ne peut donc pas
     « gagner » sur une page qui en a beaucoup.
     """
+    from .schema import load_variants
     gray = cv2.cvtColor(warped, cv2.COLOR_BGR2GRAY)
     peaks = {axis: np.array(_profile_peaks(_line_profile(gray, axis))) for axis in (0, 1)}
     scores = {}
-    for pt, tpl in load_templates().items():
+    # gabarits du spécimen, puis variants du vrai carnet (comptés pour leur type de base)
+    entries = list(load_templates().items()) + [(v["base"], v) for v in load_variants().values()]
+    for pt, tpl in entries:
         tot, wsum = 0.0, 0.0
         for axis, key, wgt in ((0, "h", 1.0), (1, "v", 0.5)):
             pos = np.array(tpl["lines"][key])
@@ -213,7 +277,8 @@ def line_signature_scores(warped: np.ndarray) -> dict[str, float]:
                 best = max(best, f1)
             tot += wgt * best
             wsum += wgt
-        scores[pt] = tot / wsum if wsum else 0.0
+        s = tot / wsum if wsum else 0.0
+        scores[pt] = max(scores.get(pt, 0.0), s)
     return scores
 
 
@@ -239,20 +304,32 @@ def _line_hit(gray: np.ndarray, hs: list[int], vs: list[int]) -> float:
     return float(np.mean(vals)) if vals else 0.0
 
 
-def register(img: np.ndarray, page_type: str, prewarped: tuple | None = None) -> Registration:
+def register(img: np.ndarray, page_type: str, prewarped: tuple | None = None,
+             template: tuple[str, dict] | None = None) -> Registration:
     """Ramène une photo dans le repère du gabarit du type de page donné.
 
     1. perspective par le contour de la page (indépendant du type),
     2. affinage échelle + décalage par les lignes du formulaire, conservé
        seulement s'il améliore l'accord avec le gabarit.
+    `template` = (nom, gabarit) pour recaler sur un variant du vrai carnet ;
+    sans lui, le gabarit du spécimen du type de page.
     """
-    tpl = load_templates()[page_type]
+    name, tpl = template if template is not None else (page_type, load_templates()[page_type])
     warped, H, method = prewarped if prewarped is not None else warp_to_page(img)
     hs, vs = tpl["lines"]["h"], tpl["lines"]["v"]
     gray = cv2.cvtColor(warped, cv2.COLOR_BGR2GRAY)
     h0, v0 = _line_hit_axes(gray, hs, vs)
     score0 = float(np.mean([v for v in (h0, v0) if v is not None])) if (h0 is not None or v0 is not None) else 0.0
-    best = Registration(warped, H, method, round(score0, 2))
+    # page encore un peu tournée (vrai carnet) : on la met d'aplomb si le gabarit colle mieux
+    # (seulement si le gabarit colle mal : une page du spécimen déjà bien recalée ne bouge pas)
+    warped_l, H_l, ang = level_page(img, warped, H) if (score0 < 0.85 and "@" in name) else (warped, H, 0.0)
+    if ang:
+        gray_l = cv2.cvtColor(warped_l, cv2.COLOR_BGR2GRAY)
+        h_l, v_l = _line_hit_axes(gray_l, hs, vs)
+        score_l = float(np.mean([v for v in (h_l, v_l) if v is not None])) if (h_l is not None or v_l is not None) else 0.0
+        if score_l > score0 + 0.02:
+            warped, H, method, gray, h0, v0, score0 = warped_l, H_l, method + "+level", gray_l, h_l, v_l, score_l
+    best = Registration(warped, H, method, round(score0, 2), name, tpl)
     if len(hs) >= 4:
         prof_h = _line_profile(gray, 0)
         sy, oy, _ = _best_affine_1d(prof_h, hs, TPL_H)
@@ -280,7 +357,27 @@ def register(img: np.ndarray, page_type: str, prewarped: tuple | None = None) ->
             x_ok = (cx == 1.0 and cox == 0) or v1 is None or v0 is None or v1 >= v0 - 1e-6
             y_ok = (cy == 1.0 and coy == 0) or h1 is None or h0 is None or h1 >= h0 - 1e-6
             if x_ok and y_ok and score1 >= 0.3 and score1 > best.score + 0.05:
-                best = Registration(warped2, H2, method + "+lines", round(score1, 2))
+                best = Registration(warped2, H2, method + "+lines", round(score1, 2), name, tpl)
+    return best
+
+
+def register_best(img: np.ndarray, page_type: str, prewarped: tuple | None = None, min_fit: float = 0.5) -> Registration:
+    """Recale sur le gabarit du spécimen ; s'il ne colle pas (score < min_fit),
+    essaie les variants du vrai carnet pour ce type de page et garde le meilleur.
+
+    Le spécimen garde la priorité dès qu'il colle : les 80 pages du jeu de données
+    ne changent donc pas de gabarit.
+    """
+    from .schema import templates_for
+    prewarped = prewarped if prewarped is not None else warp_to_page(img)
+    cands = templates_for(page_type)
+    best = register(img, page_type, prewarped=prewarped, template=cands[0])
+    if best.score >= min_fit or len(cands) == 1:
+        return best
+    for cand in cands[1:]:
+        r = register(img, page_type, prewarped=prewarped, template=cand)
+        if r.score > best.score + 0.05:
+            best = r
     return best
 
 
@@ -501,7 +598,7 @@ def looks_like_dash(img: np.ndarray, bbox) -> bool:
     return frac >= 0.5 and 4 <= w <= 16 and 2 <= h <= 7 and w <= 6 * h
 
 
-def checkbox_checked(img: np.ndarray, bbox, margin: int = 8, bg=None) -> tuple[bool, float]:
+def checkbox_checked(img: np.ndarray, bbox, margin: int = 8, bg=None, loose: bool = False) -> tuple[bool, float]:
     """Une case cochée a de l'encre à l'intérieur de sa bordure.
 
     La bordure est localisée dans l'image (pics des sommes de lignes/colonnes
@@ -515,13 +612,17 @@ def checkbox_checked(img: np.ndarray, bbox, margin: int = 8, bg=None) -> tuple[b
     if m is None or m.size == 0:
         return False, 0.0
     h, w = m.shape
-    side = max(6, min(x1 - x0, y1 - y0))
+    # la case peut être un rectangle (vrai carnet : plus large que haute) : un côté par axe
+    side_x, side_y = max(6, x1 - x0), max(6, y1 - y0)
     cols, rows = m.sum(axis=0), m.sum(axis=1)
     # bordure gauche/droite : meilleure paire de colonnes distantes de ~side
-    def best_pair(prof, length):
+    def best_pair(prof, length, side):
+        # la case du gabarit peut être un peu plus grande que la bordure réelle (photo floue)
         best, bs = (margin, margin + side), -1
-        for a in range(0, length - side + 1):
-            for d in (side - 2, side - 1, side, side + 1, side + 2):
+        # loose (vrai carnet) : bordure photographiée, taille réelle moins sûre
+        ds = list(range(max(6, int(side * 0.72)), int(side * 1.1) + 2)) if loose else list(range(side - 2, side + 3))
+        for a in range(0, length - min(ds) + 1):
+            for d in ds:
                 b = a + d
                 if b >= length:
                     continue
@@ -529,9 +630,14 @@ def checkbox_checked(img: np.ndarray, bbox, margin: int = 8, bg=None) -> tuple[b
                 if s > bs:
                     best, bs = (a, b), s
         return best
-    cx0, cx1 = best_pair(cols, w)
-    cy0, cy1 = best_pair(rows, h)
-    inner = m[cy0 + 4: cy1 - 3, cx0 + 4: cx1 - 3]
+    cx0, cx1 = best_pair(cols, w, side_x)
+    cy0, cy1 = best_pair(rows, h, side_y)
+    # retrait proportionnel à la taille : une bordure photographiée est épaisse et floue
+    if loose:
+        ix, iy = max(4, int(round(0.18 * side_x))), max(4, int(round(0.18 * side_y)))
+        inner = m[cy0 + iy: cy1 - iy + 1, cx0 + ix: cx1 - ix + 1]
+    else:
+        inner = m[cy0 + 4: cy1 - 3, cx0 + 4: cx1 - 3]
     r = float(inner.mean()) if inner.size else 0.0
     # vide ≈ 0 ; cochée (croix / hachures) ≥ 0.2
     checked = r > 0.16

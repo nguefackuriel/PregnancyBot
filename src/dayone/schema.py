@@ -30,8 +30,34 @@ def load_schema(path: str | None = None) -> dict:
 
 @lru_cache(maxsize=1)
 def load_templates(path: str | None = None) -> dict:
+    """Gabarits du spécimen (un par type de page)."""
     p = Path(path) if path else DATA / "templates.json"
     return json.loads(p.read_text(encoding="utf-8"))
+
+
+@lru_cache(maxsize=1)
+def load_variants(path: str | None = None) -> dict:
+    """Gabarits du vrai carnet (petit format), construits par scripts/build_real_template.py.
+
+    Chaque entrée a un « base » (type de page du spécimen) et ne porte que les champs
+    présents sur cette page physique. Fichier absent => aucun variant.
+    Mettre DAYONE_VARIANTS=0 pour les ignorer (évaluation du spécimen seul).
+    """
+    import os
+    if os.environ.get("DAYONE_VARIANTS", "1") == "0":
+        return {}
+    p = Path(path) if path else DATA / "templates_carnet.json"
+    if not p.exists():
+        return {}
+    data = json.loads(p.read_text(encoding="utf-8"))
+    return {k: v for k, v in data.items() if v.get("base") in PAGE_TYPES}
+
+
+def templates_for(page_type: str) -> list[tuple[str, dict]]:
+    """[(nom, gabarit)] : le gabarit du spécimen d'abord, puis les variants du vrai carnet."""
+    out = [(page_type, load_templates()[page_type])]
+    out += [(k, v) for k, v in load_variants().items() if v.get("base") == page_type]
+    return out
 
 
 @lru_cache(maxsize=None)

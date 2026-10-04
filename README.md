@@ -167,11 +167,27 @@ Couche géométrique seule (lecteur simulé qui renvoie la vérité terrain) : 8
 type de page 100 %, valeurs 99.7 %, statuts 99.2 %, cases 99.1 %. Tesseract seul :
 21 % des valeurs, c'est pour cela qu'il n'est qu'un secours.
 
-Sur les 5 vraies photos du défi (vrai carnet, petit format, deux pages par vue) : il
-n'y a pas de vérité terrain, donc pas de pourcentage. Le type de page est juste 2 fois
-sur 5 avec forte confiance, et les 3 autres fois l'agent demande confirmation. La mise
-en page ne correspond pas aux gabarits du spécimen : l'agent le détecte, ne garde
-aucun champ comme `CONNU`, et propose la saisie à la main. Voir la section 12.
+Sur les 5 vraies photos du défi (vrai carnet, petit format, deux pages par vue), on a
+construit un gabarit pour chacune des 5 pages physiques (`data/templates_carnet.json`,
+fait par `scripts/build_real_template.py` à partir des traits du formulaire), puis noté
+à l'œil 108 cellules lisibles (`data/ground_truth/real_photos_sample.json`).
+`python scripts/score_real.py` donne, sans arrondir la réalité :
+
+| Mesure | Résultat |
+|---|---|
+| Type de page reconnu | 5 / 5 |
+| Gabarit du vrai carnet reconnu, traits alignés | 5 / 5 |
+| Groupes de cases à cocher justes | 9 / 9 |
+| Cellules vides reconnues vides | 25 / 27 (93 %) |
+| Cellules écrites lues exactement | 1 / 81 |
+| Champ enregistré comme sûr sans la sage-femme | 0 |
+
+La géométrie suit : chaque cellule est découpée au bon endroit. La lecture de l'écriture
+ne suit pas : le modèle n'a jamais vu d'écriture cursive réelle. L'agent le sait, il ne
+garde rien comme `CONNU` sur ce carnet et propose trois choix à la sage-femme : réviser
+un par un (avec la photo de chaque cellule), saisir l'essentiel, ou garder la page à
+réviser plus tard. La prochaine étape est claire : annoter des photos du vrai carnet et
+réentraîner, avec le même outillage que pour le spécimen.
 
 Ce qui a fait monter le score, dans l'ordre : entraîner sur les 80 pages (74.9 % vers
 92.6 %), recaler axe par axe (93.8 %), lire ligne par ligne les grandes zones de texte
@@ -363,9 +379,10 @@ WHATSAPP.md        brancher le vrai WhatsApp, pas à pas
 
 ## 12. Limites connues et suite
 
-- Le modèle n'a vu que l'écriture synthétique du spécimen (5 polices). Sur les vraies
-  photos, il faut d'abord un gabarit du vrai carnet (petit format, deux pages par vue),
-  puis des photos annotées. L'agent le détecte aujourd'hui et bascule en saisie manuelle.
+- Le modèle n'a vu que l'écriture synthétique du spécimen (5 polices). Les gabarits du
+  vrai carnet existent (5 pages physiques) et découpent les bonnes cellules, mais la
+  lecture de l'écriture réelle reste à apprendre : il faut des photos annotées. D'ici là,
+  l'agent ne garde rien comme sûr sur ce carnet et s'appuie sur la sage-femme.
 - Le lexique contient le vocabulaire du spécimen, y compris les noms du personnel qui y
   figurent ; les scores sont donnés avec et sans.
 - L'arabe n'est pas traité : il est absent des données fournies.
@@ -373,7 +390,7 @@ WHATSAPP.md        brancher le vrai WhatsApp, pas à pas
 - Le numéro de test Meta limite à 5 destinataires ; un vrai numéro demande la
   vérification de l'entreprise.
 
-Suite prévue, dans l'ordre : gabarit et annotations du vrai carnet ; contrôle qualité
+Suite prévue, dans l'ordre : annotations du vrai carnet et réentraînement ; contrôle qualité
 sur l'appareil avant envoi ; interface bilingue français/anglais ; tableau de bord
 d'agrégats anonymisés (tension, température, VIH, syphilis, hépatite) ; pages
 multilingues et écriture arabe.

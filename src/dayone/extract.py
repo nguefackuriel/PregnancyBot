@@ -103,12 +103,13 @@ def extract_page(image: np.ndarray | str, reader: Reader, page_type: str | None 
                 page_type, score = guess, 0.8
     if page_type is None:
         return PageExtraction(None, score, quality, {}, error="type de page non reconnu", reader=reader.name)
-    tpl = load_templates()[page_type]
 
-    # ---- recalage fin sur le gabarit ----
-    reg = G.register(img, page_type, prewarped=prewarped)
+    # ---- recalage fin sur le gabarit (spécimen d'abord, sinon variants du vrai carnet) ----
+    reg = G.register_best(img, page_type, prewarped=prewarped)
+    tpl = reg.tpl if reg.tpl is not None else load_templates()[page_type]
+    variant = reg.template if reg.template and reg.template != page_type else None
     page = reg.image
-    registration = {"method": reg.method, "line_score": reg.score}
+    registration = {"method": reg.method, "line_score": reg.score, "template": reg.template or page_type, "variant": variant}
     bg = G.page_background(page)
 
     # ---- PII : zones d'identifiants directs masquées AVANT toute lecture ----
@@ -145,8 +146,13 @@ def extract_page(image: np.ndarray | str, reader: Reader, page_type: str | None 
                 inked.append(k)
             continue
         if tb is None:
-            fields[k] = {"value": None, "raw": None, "status": "NON_FOURNI", "confidence": None, "source": "rule",
-                         "bbox_px": None, "notes": "ligne absente de cette version du formulaire", "pii": is_pii(page_type, k)}
+            if variant:
+                # vrai carnet : ce champ est sur une autre page physique du carnet, on ne sait rien
+                fields[k] = {"value": None, "raw": None, "status": "INCONNU", "confidence": None, "source": "rule",
+                             "bbox_px": None, "notes": "pas sur cette page du carnet", "pii": is_pii(page_type, k)}
+            else:
+                fields[k] = {"value": None, "raw": None, "status": "NON_FOURNI", "confidence": None, "source": "rule",
+                             "bbox_px": None, "notes": "ligne absente de cette version du formulaire", "pii": is_pii(page_type, k)}
             continue
         ink = G.has_ink(page, tb["bbox_px"]) and not fd.get("pii")
         bbox_orig = reg.to_original(tb["bbox_px"])
@@ -193,6 +199,10 @@ def extract_page(image: np.ndarray | str, reader: Reader, page_type: str | None 
             # gabarit incertain : jamais CONNU sans la sage-femme
             conf = min(conf, T_CONNU - 0.01)
             f["notes"] = "mise en page non reconnue, à confirmer" + (f" ; {n.note}" if n.note else "")
+        elif variant and not tpl.get("handwriting_trusted", False):
+            # vrai carnet : le modèle n'a pas encore appris cette écriture, on propose, on n'enregistre pas seul
+            conf = min(conf, T_CONNU - 0.01)
+            f["notes"] = "écriture du vrai carnet, à confirmer" + (f" ; {n.note}" if n.note else "")
         else:
             f["notes"] = n.note
         f["value"] = n.value
@@ -219,7 +229,7 @@ def extract_page(image: np.ndarray | str, reader: Reader, page_type: str | None 
         choices.update(reader.read_choices(img, page_type, groups_of(page_type)))
     else:
         for key, bbox in tpl["checkboxes"].items():
-            checked, conf = G.checkbox_checked(page, bbox, bg=bg)
+            checked, conf = G.checkbox_checked(page, bbox, bg=bg, loose=bool(variant))
             checkboxes[key] = {"checked": checked, "confidence": conf, "bbox_px": reg.to_original(bbox)}
             grp, opt = key.split(".", 1)
             if checked:
