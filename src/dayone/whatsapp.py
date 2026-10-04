@@ -87,6 +87,12 @@ class WhatsApp:
         self.sent: list[tuple[str, dict]] = []                    # mode à blanc : messages « envoyés »
         self.last_status: dict[str, dict] = {}                    # dernier statut de livraison par destinataire
         self.alias: dict[str, str] = {}                           # id WhatsApp -> forme du numéro acceptée par Meta
+        # messages en cours de traitement : une photo prend quelques secondes ; pendant ce temps
+        # la boucle de fond ou un renvoi de Meta ne doivent pas la traiter une deuxième fois
+        self.inflight: set[str] = set()
+        # dernier message à boutons envoyé à chaque personne (id WhatsApp) : un appui sur un
+        # bouton d'un message plus ancien (double appui, retour en arrière) n'est pas rejoué
+        self.last_interactive: dict[str, str] = {}
 
     @property
     def dry_run(self) -> bool:
@@ -141,7 +147,7 @@ class WhatsApp:
         """True si le message n'a jamais été traité (mémoire + base, qui survit au redémarrage)."""
         if not mid:
             return True
-        if mid in self.seen:
+        if mid in self.seen or mid in self.inflight:
             return False
         if self.store is not None and self.store.is_processed(mid):
             return False
@@ -174,6 +180,14 @@ class WhatsApp:
                             sent_at=_ts(m))
         return None
 
+    def _stale_tap(self, m: dict) -> bool:
+        """True si c'est un appui sur un bouton d'un message plus ancien que le dernier message à boutons."""
+        if m.get("type") != "interactive":
+            return False
+        ctx = (m.get("context") or {}).get("id")
+        last = self.last_interactive.get(m.get("from", ""))
+        return bool(ctx and last and ctx != last)
+
     def _number_to_button(self, sender: str, txt: str) -> str | None:
         """« 2 » tapé au clavier vaut le deuxième bouton proposé (utile sans boutons interactifs)."""
         s = txt.strip()
@@ -195,7 +209,7 @@ class WhatsApp:
         for m in self.parse(body):
             mid = m.get("id", "")
             if not self._is_new(mid):
-                log.info("message déjà traité, ignoré : %s", mid)
+                log.info("message déjà traité ou en cours, ignoré : %s", mid)
                 continue
             if self.store is not None:
                 self.store.inbox_put(mid, m.get("from", ""), m)
@@ -205,6 +219,17 @@ class WhatsApp:
 
     async def _handle_one(self, m: dict) -> bool:
         """Un message -> réponses. True si traité (ou abandonné), False s'il faut réessayer plus tard."""
+        mid = m.get("id", "")
+        if mid:
+            if mid in self.inflight:
+                return True                          # déjà en cours ailleurs (boucle de fond, renvoi de Meta)
+            self.inflight.add(mid)
+        try:
+            return await self._handle_one_inner(m)
+        finally:
+            self.inflight.discard(mid)
+
+    async def _handle_one_inner(self, m: dict) -> bool:
         mid, sender, t = m.get("id", ""), m.get("from", ""), m.get("type")
         log.info("message %s reçu de +%s (numéro tel que WhatsApp l'identifie)", t, sender)
         try:
@@ -221,6 +246,13 @@ class WhatsApp:
                     self._done(mid)
                     return True
                 media, mime = await self.download_media(info.get("id", ""), mime)
+            if self._stale_tap(m):
+                # bouton d'une question déjà passée : on ne l'applique pas à la question en cours
+                log.info("appui sur un ancien bouton ignoré (%s)", mid)
+                await self.send(sender, Outgoing("Ce bouton correspond à une question précédente. "
+                                                 "Répondez à la dernière question, juste au-dessus."))
+                self._done(mid)
+                return True
             inc = self.to_incoming(m, media, mime)
             if inc is None:
                 await self.send(sender, Outgoing("Envoyez la photo d'une page du carnet, ou tapez *menu*."))
@@ -460,6 +492,10 @@ class WhatsApp:
                     continue
                 p["image"]["id"] = mid
             data = await self._post(f"{self.phone_id}/messages", json=p)
+            if p["type"] == "interactive":
+                sent_id = ((data.get("messages") or [{}])[0] or {}).get("id")
+                if sent_id:
+                    self.last_interactive[to] = sent_id
             if (data.get("error") or {}).get("code") == 131030 and dest == to:
                 # numéro de test : la liste des destinataires contient la forme « composée » du numéro,
                 # WhatsApp nous donne parfois une autre forme (Cameroun, Argentine, Mexique) : on essaie

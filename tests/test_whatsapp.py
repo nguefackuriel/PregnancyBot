@@ -222,3 +222,54 @@ def test_no_simulation_button_in_production_menu(tmp_path):
     assert not any("coupure" in t.lower() or "réseau" in t.lower() for t in titles)
     asyncio.run(wa.process(_meta_message({"from": PHONE, "id": "wamid.m2", "timestamp": "1", "type": "text", "text": {"body": "connexion"}})))
     assert "en ligne" in _text_of(wa.sent[-1][1]) and agent.online is True     # état réel, pas de bascule
+
+
+def test_message_in_progress_is_not_processed_twice(srv):
+    """Une photo prend quelques secondes : la boucle de fond (ou un renvoi de Meta) qui passe
+    pendant ce temps ne doit pas la traiter une deuxième fois (questions en double)."""
+    import asyncio
+    server, c = srv
+    wa = server.wa
+    m = {"from": PHONE, "id": "wamid.lent", "timestamp": "1", "type": "image", "image": {"id": "media-1", "mime_type": "image/png"}}
+    calls = {"n": 0}
+    real_handle = wa.agent.handle
+
+    def slow_handle(inc):
+        calls["n"] += 1
+        import time
+        time.sleep(0.5)
+        return real_handle(inc)
+
+    wa.agent.handle = slow_handle
+
+    async def scenario():
+        first = asyncio.create_task(wa.process(_meta_message(m)))
+        await asyncio.sleep(0.1)                      # en plein traitement
+        again = await wa.process(_meta_message(m))    # renvoi de Meta
+        flushed = await wa.flush(due_only=False)      # passage de la boucle de fond
+        await first
+        return again, flushed
+
+    again, flushed = asyncio.run(scenario())
+    assert calls["n"] == 1
+    assert again == 0 and flushed["inbox"] == 0
+
+
+def test_tap_on_an_old_button_is_not_replayed(srv):
+    server, c = srv
+    wa = server.wa
+    wa.last_interactive[PHONE] = "wamid.question2"
+    old_tap = {"from": PHONE, "id": "wamid.tap", "timestamp": "1", "type": "interactive",
+               "context": {"from": "15550000000", "id": "wamid.question1"},
+               "interactive": {"type": "button_reply", "button_reply": {"id": "yes", "title": "Oui"}}}
+    called = {"n": 0}
+    wa.agent.handle = lambda inc: called.__setitem__("n", called["n"] + 1) or []
+    raw, h = _signed(_meta_message(old_tap))
+    c.post("/webhook", content=raw, headers=h)
+    assert called["n"] == 0
+    assert "question précédente" in json.dumps(wa.sent[-1][1], ensure_ascii=False)
+    # le bouton du dernier message, lui, passe
+    new_tap = dict(old_tap, id="wamid.tap2", context={"from": "15550000000", "id": "wamid.question2"})
+    raw, h = _signed(_meta_message(new_tap))
+    c.post("/webhook", content=raw, headers=h)
+    assert called["n"] == 1
