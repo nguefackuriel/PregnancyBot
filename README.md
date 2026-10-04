@@ -11,7 +11,7 @@ lecture tourne sur l'ordinateur du centre de santé, sans clé API.
 
 Projet de l'équipe **Side Quest** pour le défi DayOne (hackathon CodeML, défi 17).
 
-🎬 Vidéo de démonstration (5 min) : [docs/DayOne.mp4](docs/DayOne.mp4) (lien YouTube : à venir)
+🎬 Vidéo de démonstration (5 min) : [docs/DayOne.mp4](docs/DayOne.mp4) — [YouTube](https://youtu.be/_lOit6A2P5A)
 
 ```
 photo WhatsApp > qualité > type de page > recalage sur le gabarit > masquage des identifiants
