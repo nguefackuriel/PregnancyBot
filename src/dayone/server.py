@@ -33,6 +33,7 @@ from .schema import ROOT
 from .store import Store
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(name)s %(levelname)s %(message)s")
+logging.getLogger("httpx").setLevel(logging.WARNING)       # la sonde réseau ne doit pas remplir le terminal
 
 
 def _load_dotenv() -> int:

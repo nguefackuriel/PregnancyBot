@@ -9,7 +9,7 @@
 | Code source : pipeline d'extraction, flux conversationnel, file hors ligne, liaison patiente | `src/dayone/` (`extract.py`, `agent.py`, `store.py` + `whatsapp.py`, `linking.py`) |
 | Prototype conversationnel type WhatsApp, simulé ou réel | simulateur web `web/simulator.html` et vrai WhatsApp (`WHATSAPP.md`), testé avec de vrais téléphones |
 | README : installation, choix de conception, cycle de vie, limites connues | `README.md` sections 2, 6, 7, 12 |
-| Démo : capture hors ligne, retour de la connexion, révision d'un champ incertain, décision de correspondance | vidéo (lien dans le README) et `python scripts/demo.py` qui rejoue le même scénario |
+| Démo : capture hors ligne, retour de la connexion, révision d'un champ incertain, décision de correspondance | vidéo `docs/DayOne.mp4` (5 min, vrai WhatsApp) et `python scripts/demo.py` qui rejoue le même scénario dans le terminal |
 
 ## 2. Le barème, et ce qu'on met en avant
 
@@ -84,57 +84,15 @@ python, opencv, pytorch, onnxruntime, fastapi, sqlite, cryptography, whatsapp-cl
 ### Liens
 
 - Dépôt : https://github.com/nguefackuriel/PregnancyBot
-- Vidéo : (à compléter)
+- Vidéo : `docs/DayOne.mp4` dans le dépôt ; lien YouTube (non répertorié) à coller ici et sur Devpost : (à compléter)
 
 ## 4. Liste de contrôle avant d'envoyer
 
 - [ ] Le dépôt est public, le README s'affiche bien, les liens internes marchent.
 - [ ] `pip install -r requirements.txt` puis `pytest -q` passent sur une machine propre.
-- [ ] Le lien de la vidéo est dans le README et sur Devpost.
-- [ ] La vidéo montre les 4 moments demandés : capture hors ligne, retour de la connexion, révision d'un champ incertain, décision de correspondance.
+- [ ] La vidéo est sur YouTube (non répertorié) et le lien est dans le README et sur Devpost (Devpost n'accepte pas un fichier du dépôt).
 - [ ] Les textes Devpost sont collés (FR, et EN si le formulaire le demande).
 - [ ] Les captures d'écran : conversation WhatsApp avec les boutons, résumé de page avec doutes, question avec recadrage, choix de correspondance, `/health` avec le réseau coupé puis rétabli.
 - [ ] Le `.env` n'est pas dans le dépôt (vérifier `git log --all -- .env` vide).
 - [ ] Les vraies photos du défi ne sont pas dans le dépôt.
 - [ ] Les membres de l'équipe sont ajoutés sur Devpost.
-
-## 5. Script de la vidéo (2 min 30)
-
-Format : écran partagé, le téléphone à gauche (enregistrement d'écran ou caméra), le
-terminal du serveur à droite. Voix calme, phrases courtes. Pas de musique forte.
-
-**0:00 à 0:20, le problème.** Une main pose le carnet rose sur une table. Voix : « Au
-Maroc, le suivi de grossesse se fait sur ce carnet. Les sages-femmes ont déjà
-WhatsApp. On a construit PregnancyBot : une photo, et le dossier existe. L'IA tourne
-en local, rien ne sort du centre de santé. »
-
-**0:20 à 0:50, capture hors ligne et retour du réseau.** Mode avion sur le téléphone.
-On écrit « bonjour », on envoie la photo d'une page : WhatsApp la laisse en attente.
-Voix : « Pas de réseau. La photo reste sur le téléphone. » On coupe le mode avion : la
-photo part, le terminal montre le webhook, et l'agent répond : « Votre photo de 10h02
-vient d'arriver, je la lis maintenant ; sa date de capture reste 10h02. » Puis le
-résumé de la page : champs lus, vides, non applicables, doutes.
-
-**0:50 à 1:30, révision d'un champ incertain.** L'agent pose son premier doute avec
-le recadrage de la cellule : « Est-ce bien 12/05/2026 ? » Oui. Deuxième doute : la
-sage-femme corrige en tapant « 3 = 64 kg ». Troisième : « Je ne sais pas » : le champ
-passe en inconnu, pas inventé. Voix : « L'agent dit ce dont il doute. Il ne cache rien,
-il n'invente rien. » Validation de la page.
-
-**1:30 à 2:00, décision de correspondance.** L'agent demande le code patiente ; on
-répond « aucun » : il crée un profil et donne un code à écrire sur le carnet. Deuxième
-carnet, autre page, même type de signaux : l'agent montre « Patiente 1, Patiente 2,
-Aucune, Je ne sais pas ». On choisit Patiente 1. Voix : « Il ne crée jamais un doublon
-tout seul. »
-
-**2:00 à 2:20, le serveur coupé.** On coupe le wifi de l'ordinateur ; un testeur envoie
-une photo ; le terminal affiche « réseau coupé », `/health` montre la boîte d'entrée à
-1. On remet le wifi : « réseau rétabli », « rattrapage », la réponse part. Voix :
-« Rien n'est perdu, jamais. »
-
-**2:20 à 2:30, fin.** Le README avec les chiffres : 98.7 % des valeurs, ECE 0.012,
-modèle de 8 Mo, 34 tests. « PregnancyBot, par Side Quest. »
-
-Conseils : préparer les deux carnets avant, écrire le code patiente au crayon pour
-pouvoir refaire la prise, afficher le terminal en gros caractères, couper les
-notifications du téléphone.

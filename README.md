@@ -11,7 +11,7 @@ lecture tourne sur l'ordinateur du centre de santé, sans clé API.
 
 Projet de l'équipe **Side Quest** pour le défi DayOne (hackathon CodeML, défi 17).
 
-🎬 Vidéo de démonstration : *(lien à venir)*
+🎬 Vidéo de démonstration (5 min) : [docs/DayOne.mp4](docs/DayOne.mp4) (lien YouTube : à venir)
 
 ```
 photo WhatsApp > qualité > type de page > recalage sur le gabarit > masquage des identifiants
@@ -357,7 +357,7 @@ tests/             34 tests
 web/simulator.html simulateur WhatsApp
 data/              schema, templates.json, ground_truth, fonts, lexicon.txt, models/crnn.onnx, samples
 analysis/          analyse du défi, schéma lisible (SCHEMA.md), outils d'annotation et d'évaluation
-docs/              soumission, script de la vidéo
+docs/              soumission Devpost, vidéo de démonstration
 WHATSAPP.md        brancher le vrai WhatsApp, pas à pas
 ```
 
